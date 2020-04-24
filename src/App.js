@@ -1,26 +1,35 @@
-import React from 'react';
+import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Waveform from './components/Waveform.jsx';
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      mp3: null,
+    }
+  }
+
+  setmp3file = (file) => {
+    this.setState({mp3: file});
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <p>
+            Edit <code>src/App.js</code> and save to reload.
+          </p>
+        </header>
+        <Waveform mp3={this.state.mp3}/>
+        <p> put shit here</p>
+      </div>
+    );
+  }
 }
 
 export default App;

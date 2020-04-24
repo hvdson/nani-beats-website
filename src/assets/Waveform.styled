@@ -1,0 +1,15 @@
+import styled from 'styled-components';
+
+const WaveformContainer = styled.div`
+  color: grey;
+`
+
+const PlayButton = styled.button`
+  color: #DD2121;
+`
+
+const Wave = styled.div`
+ color: white;
+`
+
+export { WaveformContainer, Wave, PlayButton };
