@@ -25,8 +25,8 @@ class App extends Component {
             Edit <code>src/App.js</code> and save to reload.
           </p>
         </header>
+        
         <Waveform mp3={this.state.mp3}/>
-        <p> put shit here</p>
       </div>
     );
   }

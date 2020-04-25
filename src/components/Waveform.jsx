@@ -3,7 +3,8 @@ import WaveSurfer from 'wavesurfer.js';
 // import { WaveformContainer, Wave, PlayButton } from '../assets/Waveform.styled';
 
 import styled from 'styled-components';
-// import '../public/test.mp3';
+import url from '../assets/test.mp3';
+const url2 = 'https://nanibeats.com/wp-content/uploads/2020/04/monahhh.mp3';
 
 const WaveformContainer = styled.div`
 //
@@ -24,6 +25,8 @@ export default class Waveform extends Component {
       mp3: null,
       playing: false,
     };
+
+    // this.newSong = this.newSong.bind(this);
   };
 
   componentDidMount() {
@@ -54,20 +57,46 @@ export default class Waveform extends Component {
     this.waveform.playPause();
   };
 
+  newSong = (newTrack) => {
+    this.setState({mp3: newTrack});
+  }
+
   render() {
-    const url = 'https://nanibeats.com/wp-content/uploads/2020/04/monahhh.mp3'
-    // const url = 'https://www.mfiles.co.uk/mp3-downloads/gs-cd-track2.mp3'
-    // const url = '/public/test.mp3'
-    
   
     return (
-      <WaveformContainer>
-        <PlayButton onClick={this.handlePlay}>
-          {!this.state.playing ? 'Play' : 'Pause'}
-        </PlayButton>
-        <Wave id="waveform"/>
-        <audio id="track" src={url} controls/>
-      </WaveformContainer>
+      // decide if using styled components or nah
+      <div>
+        <WaveformContainer>
+          <PlayButton onClick={this.handlePlay}>
+            {!this.state.playing ? 'Play' : 'Pause'}
+          </PlayButton>
+          <Wave id="waveform"/>
+          {/* <audio id="track" src={url} controls/> */}
+        </WaveformContainer>
+
+        {/* for playlist - need to separate and put into function to pull from array also put into different component file*/}
+        <div id="playlist-container" class="container">
+          <h1>Playlist</h1>
+          
+          <div class="row">
+            <button class="col-md-3" onClick={this.newSong}>
+              <i class="fas fa-play"></i>
+            </button>
+            <h2 class="col-md-9">
+              monahhhh
+            </h2>
+          </div>
+
+          <div class="row">
+            <button class="col-md-3" onClick={this.newSong}>
+              <i class="fas fa-play"></i>
+            </button>
+            <h2 class="col-md-9">
+              Xo tour life
+            </h2>
+          </div>
+        </div>
+      </div>
     );
   }
 };
