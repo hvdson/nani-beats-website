@@ -3,17 +3,35 @@ import logo from './logo.svg';
 import './App.css';
 
 import Waveform from './components/Waveform.jsx';
+import Playlist from './components/Playlist.jsx';
+
+const url = 'https://nanibeats.com/wp-content/uploads/2020/04/monahhh.mp3';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mp3: null,
+      song: url,
+      isPlaying: false,
     }
+    this.setSong = this.setSong.bind(this);
+    this.getSong = this.getSong.bind(this);
+    this.setPlay = this.setPlay.bind(this);
   }
 
-  setmp3file = (file) => {
-    this.setState({mp3: file});
+  setSong = (file) => {
+    console.log(`setting:`, file)
+    this.setState({song: file});
+  }
+
+  getSong = () => {
+    console.log(`i got ${this.state.song}`)
+    return this.state.song;
+  }
+
+  setPlay = () => {
+    console.log('setting play');
+    this.setState({isPlaying: !this.state.isPlaying});
   }
 
   render() {
@@ -25,8 +43,8 @@ class App extends Component {
             Edit <code>src/App.js</code> and save to reload.
           </p>
         </header>
-        
-        <Waveform mp3={this.state.mp3}/>
+        <Waveform isPlaying={this.state.isPlaying} setPlay={this.setPlay} song={this.state.song}/>
+        <Playlist setSong={this.setSong}/>
       </div>
     );
   }
