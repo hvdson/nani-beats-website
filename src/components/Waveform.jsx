@@ -4,6 +4,9 @@ import WaveSurfer from 'wavesurfer.js';
 
 import styled from 'styled-components';
 
+import url2 from '../assets/test.mp3';
+const url = 'https://nanibeats.com/wp-content/uploads/2020/04/monahhh.mp3';
+
 const WaveformContainer = styled.div`
 //
 `
@@ -36,6 +39,8 @@ export default class Waveform extends Component {
     this.waveform = WaveSurfer.create({
       barWidth: 3,
       cursorWidth: 1,
+      barRadius: 3,
+      barGap: 3,
       container: '#waveform',
       backend: 'WebAudio',
       height: 80,
@@ -51,7 +56,7 @@ export default class Waveform extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps.song !== this.props.song) {
       // this.waveform.stop();
-      // this.setState({ playing: !this.state.playing }); 
+      this.setState({ playing: !this.state.playing }); 
       this.waveform.load(this.props.song);
       // this.waveform.play();
     }
@@ -71,16 +76,28 @@ export default class Waveform extends Component {
 
   render() {
   
+    // return (
+    //   // todo: decide if using styled components or nah
+    //   <div>
+    //     <WaveformContainer>
+    //       <PlayButton onClick={this.handlePlay}>
+    //         {!this.state.playing ? 'Play' : 'Pause'}
+    //       </PlayButton>
+    //       <Wave id="waveform"/>
+    //       {/* <audio id="track" src={url} controls/> */}
+    //     </WaveformContainer>
+    //   </div>
+    // );
+  
     return (
-      // decide if using styled components or nah
-      <div>
-        <WaveformContainer>
-          <PlayButton onClick={this.handlePlay}>
-            {!this.state.playing ? 'Play' : 'Pause'}
-          </PlayButton>
-          <Wave id="waveform"/>
-          {/* <audio id="track" src={url} controls/> */}
-        </WaveformContainer>
+      // todo: decide if using styled components or nah
+      <div className="fixed-bottom">
+        <div className="row">
+          <div className="col-3" onClick={this.handlePlay}>
+            {!this.state.playing ? <i className="far fa-play-circle fa-5x"></i> : <i className="far fa-stop-circle fa-5x"></i>}
+          </div>
+          <div className="col" id="waveform" />
+        </div>
       </div>
     );
   }

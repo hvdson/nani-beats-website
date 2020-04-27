@@ -3,33 +3,57 @@ import WaveSurfer from 'wavesurfer.js';
 // import { WaveformContainer, Wave, PlayButton } from '../assets/Waveform.styled';
 
 import styled from 'styled-components';
-import url2 from '../assets/test.mp3';
-const url = 'https://nanibeats.com/wp-content/uploads/2020/04/monahhh.mp3';
+
+//TODO: update playlist to create forEACH song in playlist received
 
 export default class Playlist extends Component {
+  /**
+    @function createTrack returns a song component to be rendered in React
+    @param {track} String url of song.mp3
+  */
+  createTrack = (track) => {
+    return (
+      <div className="row">
+        <div className="col-md-3" onClick={() => this.props.setSong(track)}>
+          <i className="far fa-play-circle fa-3x"></i>
+        </div>
+        <h2 className="col-md-9">
+          blah
+        </h2>
+      </div>
+    )
+  }
+
+  createPlaylist = (playlist) => {
+    const songs = this.createTrack('test');
+    return (songs);
+  }
+
   render() {
 
+    const playlist = this.createPlaylist(this.props.playlist);
+    console.log("in render")
+    console.log(this.props.playlist)
+    console.log(playlist);
+
     return (
-      <div id="playlist-container" class="container">
-        <h1>Playlist</h1>
+      <div id="playlist-container" className="container">
+        <h1>Tracklist</h1>
 
-        <div class="row">
-          <button class="col-md-3" onClick={() => this.props.setSong(url)}>
-            <i class="fas fa-play"></i>
-          </button>
-          <h2 class="col-md-9">
-            monahhhh
-          </h2>
-        </div>
-
-        <div class="row">
-          <button class="col-md-3" onClick={() => this.props.setSong(url2)}>
-            <i class="fas fa-play"></i>
-          </button>
-          <h2 class="col-md-9">
-            Xo tour life
-          </h2>
-        </div>
+        <ul>
+          {this.props.playlist.map((val, idx) => {
+            return (
+              <li key={idx}>
+                <div className="row">
+                  <div className="col-md-3" onClick={() => this.props.setSong(val)}>
+                    <i className="far fa-play-circle fa-3x"></i>
+                  </div>
+                  <h2 className="col-md-9">val</h2>
+                </div>
+              </li>
+            )
+          })}
+        </ul>
       </div>
     )
   }
