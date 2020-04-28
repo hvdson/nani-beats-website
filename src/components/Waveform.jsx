@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import WaveSurfer from 'wavesurfer.js';
+import { useSelector } from 'react-redux';
 // import { WaveformContainer, Wave, PlayButton } from '../assets/Waveform.styled';
 
 import styled from 'styled-components';
@@ -19,7 +20,10 @@ const Wave = styled.div`
 //
 `
 
-export default class Waveform extends Component {
+
+// apparently this is a container component
+// Subscribes to the 'playing' state
+class Waveform extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,6 +55,8 @@ export default class Waveform extends Component {
     });
     this.waveform.load(this.props.song);
   };
+
+
 
 // this is broken - need to figure out something to do with state and lifecycle and async - race condition with user pressing play before song is loaded?
   componentDidUpdate(prevProps) {
@@ -95,6 +101,9 @@ export default class Waveform extends Component {
         <div className="row">
           <div className="col-3" onClick={this.handlePlay}>
             {!this.state.playing ? <i className="far fa-play-circle fa-5x"></i> : <i className="far fa-stop-circle fa-5x"></i>}
+            <h1>From Redux Playing</h1>
+
+
           </div>
           <div className="col" id="waveform" />
         </div>
@@ -102,3 +111,5 @@ export default class Waveform extends Component {
     );
   }
 };
+
+export default Waveform;
