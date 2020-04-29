@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import WaveSurfer from 'wavesurfer.js';
-import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 // import { WaveformContainer, Wave, PlayButton } from '../assets/Waveform.styled';
+import { playSong } from '../actions/actions'
 
 import styled from 'styled-components';
 
@@ -29,6 +30,7 @@ class Waveform extends Component {
     this.state = {
       playing: false,
       currSong: this.props.song,
+      reduxPlayTest: false,
     };
     // this.newSong = this.newSong.bind(this);
     // const song = this.props.getSong();
@@ -68,7 +70,7 @@ class Waveform extends Component {
     }
   }
 
-
+  // todo: refactor for redux state to be handled
   handlePlay = (e) => {
     e.preventDefault();
     // this.setState ({playing: !this.state.playing});
@@ -77,7 +79,14 @@ class Waveform extends Component {
     } else {
       this.waveform.play();
     }
-    this.setState ({playing: !this.state.playing}); 
+    // todo: apparently this works in debug... find out why.
+    // need to use the toggle reducer and action
+    this.props.playSong(this.state.reduxPlayTest);
+    this.setState ({
+      playing: !this.state.playing,
+      reduxPlayTest: true
+    }); 
+
   };
 
   render() {
@@ -112,4 +121,4 @@ class Waveform extends Component {
   }
 };
 
-export default Waveform;
+export default connect(null, {playSong})(Waveform);
