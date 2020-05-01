@@ -3,7 +3,7 @@ import playReducer from './isPlaying';
 import { combineReducers } from 'redux';
 
 const allReducers = combineReducers({
-  currentSong: songReducer,
+  currSong: songReducer,
   isPlaying: playReducer
 })
 

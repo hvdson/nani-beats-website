@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import WaveSurfer from 'wavesurfer.js';
+import { connect } from 'react-redux';
 // import { WaveformContainer, Wave, PlayButton } from '../assets/Waveform.styled';
+import { loadSong } from '../actions/actions'
 
 import styled from 'styled-components';
 
 //TODO: update playlist to create forEACH song in playlist received
 
-export default class Playlist extends Component {
+class Playlist extends Component {
   /**
     @function createTrack returns a song component to be rendered in React
     @param {track} String url of song.mp3
@@ -14,7 +16,7 @@ export default class Playlist extends Component {
   createTrack = (track) => {
     return (
       <div className="row">
-        <div className="col-md-3" onClick={() => this.props.setSong(track)}>
+        <div className="col-md-3" onClick={() => this.props.loadSong(track)}>
           <i className="far fa-play-circle fa-3x"></i>
         </div>
         <h2 className="col-md-9">
@@ -30,11 +32,8 @@ export default class Playlist extends Component {
   }
 
   render() {
-
     const playlist = this.createPlaylist(this.props.playlist);
     console.log("in render")
-    console.log(this.props.playlist)
-    console.log(playlist);
 
     return (
       <div id="playlist-container" className="container">
@@ -45,7 +44,7 @@ export default class Playlist extends Component {
             return (
               <li key={idx}>
                 <div className="row">
-                  <div className="col-md-3" onClick={() => this.props.setSong(val)}>
+                  <div className="col-md-3" onClick={() => this.props.loadSong(val)}>
                     <i className="far fa-play-circle fa-3x"></i>
                   </div>
                   <h2 className="col-md-9">val</h2>
@@ -58,3 +57,5 @@ export default class Playlist extends Component {
     )
   }
 };
+
+export default connect(null, { loadSong })(Playlist);
