@@ -32,22 +32,23 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <p>
-            Headddd
-          </p>
-        </header>
-        
-        <div className="row">
-          <div className="col-2">
-            <p> this should be the sidebar </p> 
+          <header className="App-header">
+            <p>
+              Headddd
+            </p>
+          </header>
+          <div className="container">
+          <div className="row">
+            <div className="col-2">
+              <p> this should be the sidebar </p> 
+            </div>
+            <div className="col">
+              <Playlist setSong={this.setSong} playlist={this.state.playlist}/>
+            </div>
           </div>
-          <div className="col">
-            <Playlist setSong={this.setSong} playlist={this.state.playlist}/>
-          </div>
-        </div>
 
-        <Waveform song={this.state.song}/>
+          <Waveform song={this.state.song}/>
+        </div>
       </div>
     );
   }

@@ -55,7 +55,7 @@ class Waveform extends Component {
       progressColor: '#DD2121',
       responsive: true,
       waveColor: '#AAAAAA',
-      cursorColor: 'transparent',
+      cursorColor: '#DD2121',
     });
     console.log(this.props.currSong.src);
     // this.waveform.load(this.props.currSong.src);
@@ -63,45 +63,44 @@ class Waveform extends Component {
 
 // this is broken - need to figure out something to do with state and lifecycle and async - race condition with user pressing play before song is loaded?
   componentDidUpdate(prevProps) {
-    if (prevProps.currSong.src !== this.props.currSong.src) {
-      console.log(prevProps.currSong.src)
-      console.log(this.props.currSong.src);
-      // this.waveform.stop();
-      // this.setState({ playing: !this.state.playing }); 
-      // this.waveform.load(this.props.song);
-      // this.handlePlay();
-      this.waveform.load(this.props.currSong.src);
-      const self = this;
+    const self = this;
+    this.waveform.on('ready', () => {
+      self.props.playSong();      
+      self.waveform.play();
+    })
+
+    const currSong = this.props.currSong.src;
+    if (prevProps.currSong.src !== currSong) {
+      console.log('new song!')
+      this.waveform.load(currSong);
+
+
+      this.handlePlay();
 
       // todo: race condition: when you press play on the playlist, the song should automatically play like in spotify
       // need to figure out how to get it functional - maybe promises?
       // sometimes it works sometimes it doesn't
 
-      this.waveform.on('ready', () => {
-        // this.props.playSong();
-        self.handlePlay()
-      })
+    } else {
+      console.log('same!')
     }
+
+
   }
 
   // todo: refactor for redux state to be handled
-  handlePlay = (e) => {
-    // e.preventDefault();
-    // this.setState ({playing: !this.state.playing});
-
-    if (this.props.currSong && this.props.isPlaying) {
-      this.props.pauseSong();
-      this.waveform.pause();
-    } else {
-      this.props.playSong();
-      this.waveform.play();
+  handlePlay = () => {
+    // keeps 'this' to outside scope
+    const self = this;
+    if (self.waveform.isReady) {
+      if (self.props.currSong && self.props.isPlaying) {
+        self.props.pauseSong();
+        self.waveform.pause();
+      } else {
+        self.props.playSong();
+        self.waveform.play();
+      }
     }
-    
-    this.setState ({
-      playing: !this.state.playing,
-      reduxPlayTest: true
-    }); 
-
   };
 
   render() {
@@ -124,8 +123,7 @@ class Waveform extends Component {
       <div className="fixed-bottom">
         <div className="row">
           <div className="col-3" onClick={this.handlePlay}>
-            {!this.props.isPlaying ? <i className="far fa-play-circle fa-5x"></i> : <i className="far fa-stop-circle fa-5x"></i>}
-            <h1>From Redux Playing</h1>
+            {!this.props.isPlaying ? <i className="far fa-play-circle fa-5x"></i> : <i className="far fa-pause-circle fa-5x"></i>}
             {this.props.currSong.src}
           </div>
           <div className="col" id="waveform" />
