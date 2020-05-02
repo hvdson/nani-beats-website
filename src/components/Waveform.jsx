@@ -80,11 +80,11 @@ class Waveform extends Component {
       // todo: race condition: when you press play on the playlist, the song should automatically play like in spotify
       // need to figure out how to get it functional - maybe promises?
       // sometimes it works sometimes it doesn't
-
+    
+      // TODO: this is where the pause button in <Playlist /> needs functionality
     } else {
       console.log('same!')
     }
-
 
   }
 
