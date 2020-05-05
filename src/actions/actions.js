@@ -31,3 +31,11 @@ export const getSong = content => ({
     content
   }
 })
+
+export const togglePlay = content => ({
+  type: 'TOGGLE_PLAY',
+  payload: {
+    id: ++playSongId,
+    content,
+  }
+})

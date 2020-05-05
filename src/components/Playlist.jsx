@@ -37,8 +37,13 @@ class Playlist extends Component {
     return (songs);
   }
 
+  // todo: refactor
   handlePlaylistPlay(val) {
-    this.props.loadSong(val)
+    // check if the current song is loaded0
+    if (this.props.isPlaying) {
+      this.props.pauseSong();
+    }
+    this.props.loadSong(val);
   }
 
   render() {
@@ -73,8 +78,6 @@ function renderPlayPause(self, val) {
     // <i className="far fa-pause-circle fa-3x" onClick={() => this.handlePlaylistPlay(val)} />
     // <i className="far fa-play-circle fa-3x" onClick={() => this.handlePlaylistPlay(val)} />
     console.log('inside');
-    console.log(self);
-    console.log(val);
 
     if (self.props.isPlaying && self.props.currSong.src === val) {
       return (<i className="far fa-pause-circle fa-3x" onClick={() => self.handlePlaylistPlay(val)} />)

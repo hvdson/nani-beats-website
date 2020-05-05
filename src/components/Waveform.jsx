@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import WaveSurfer from 'wavesurfer.js';
 import { connect } from 'react-redux';
 // import { WaveformContainer, Wave, PlayButton } from '../assets/Waveform.styled';
-import { playSong, pauseSong, getSong } from '../actions/actions'
+import { playSong, pauseSong, togglePlay } from '../actions/actions'
 
 import styled from 'styled-components';
 
 
-const WaveformContainer = styled.div`
+const WaveformContainer = styled.div` 
 //
 `
 
@@ -63,29 +63,31 @@ class Waveform extends Component {
 
 // this is broken - need to figure out something to do with state and lifecycle and async - race condition with user pressing play before song is loaded?
   componentDidUpdate(prevProps) {
+    // assumptions:
+    // props changed either isPlaying or currSong
+    // maybe both changed
+
     const self = this;
-    this.waveform.on('ready', () => {
-      self.props.playSong();      
-      self.waveform.play();
-    })
 
+    // compare newProps to old props
     const currSong = this.props.currSong.src;
-    if (prevProps.currSong.src !== currSong) {
-      console.log('new song!')
-      this.waveform.load(currSong);
-
-
-      this.handlePlay();
-
-      // todo: race condition: when you press play on the playlist, the song should automatically play like in spotify
-      // need to figure out how to get it functional - maybe promises?
-      // sometimes it works sometimes it doesn't
+    const currPlay = this.props.isPlaying;
+    const prevSong = prevProps.currSong.src;
+    const prevPlay = prevProps.isPlaying;
     
-      // TODO: this is where the pause button in <Playlist /> needs functionality
-    } else {
-      console.log('same!')
-    }
 
+    // if different song selected
+    if (currSong !== prevSong) {
+      // load then play it
+      this.waveform.load(currSong);
+      this.waveform.on('ready', () => {
+        self.waveform.play();
+      })
+    } else if (prevPlay !== currPlay) {
+      this.waveform.on('ready', () => {
+        self.waveform.playPause()
+      })
+    }
   }
 
   // todo: refactor for redux state to be handled
@@ -133,4 +135,4 @@ class Waveform extends Component {
   }
 };
 
-export default connect(mapStateToProps, { playSong, pauseSong })(Waveform);
+export default connect(mapStateToProps, { playSong, pauseSong, togglePlay, })(Waveform);

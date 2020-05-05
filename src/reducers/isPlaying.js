@@ -4,6 +4,8 @@ const playReducer = (state = false, action) => {
       return true;
     case 'PAUSE':
       return false;
+    case 'TOGGLE_PLAY':
+      return !state;
     default:
       return state;
       // do nothing
