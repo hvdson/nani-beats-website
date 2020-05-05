@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import WaveSurfer from 'wavesurfer.js';
 import { connect } from 'react-redux';
 
-import { playSong, pauseSong, loadSong } from '../actions/actions'
+import { playSong, pauseSong, loadSong, togglePlay } from '../actions/actions'
 
 function mapStateToProps(state) {
   const { isPlaying, currSong } = state;
@@ -38,12 +38,16 @@ class Playlist extends Component {
   }
 
   // todo: refactor
+  // todo: it's setting state but no update to the waveplayer
   handlePlaylistPlay(val) {
     // check if the current song is loaded0
-    if (this.props.isPlaying) {
-      this.props.pauseSong();
+    if (this.props.currSong.src === val) {
+      this.props.togglePlay();
+    } else {
+      this.props.loadSong(val);
+      this.props.playSong();
     }
-    this.props.loadSong(val);
+
   }
 
   render() {
@@ -62,7 +66,7 @@ class Playlist extends Component {
                   <div className="col-md-3">
                     {renderPlayPause(this, val)}
                   </div>
-                  <h2 className="col-md-9">val</h2>
+                  <h2 className="col-md-9">{val}</h2>
                 </div>
               </li>
             )
@@ -86,4 +90,4 @@ function renderPlayPause(self, val) {
     
 }
 
-export default connect(mapStateToProps, { playSong, pauseSong, loadSong })(Playlist);
+export default connect(mapStateToProps, { playSong, pauseSong, loadSong, togglePlay })(Playlist);

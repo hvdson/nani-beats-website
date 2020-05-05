@@ -83,10 +83,33 @@ class Waveform extends Component {
       this.waveform.on('ready', () => {
         self.waveform.play();
       })
-    } else if (prevPlay !== currPlay) {
-      this.waveform.on('ready', () => {
-        self.waveform.playPause()
-      })
+    } if (prevPlay !== currPlay) {
+        console.log(prevPlay)
+        console.log(currPlay)
+
+        // this.waveform.on('ready', () => {
+        //   self.waveform.playPause();
+        // })
+        if (self.waveform.isReady) {      
+          self.waveform.playPause();
+        }
+
+          // self.waveform.playPause();
+
+      // const promise = new Promise(function (resolve, reject) {
+      //   // do a thing, possibly async, then…
+      //   const set = self.waveform.on('ready', () => {
+      //     self.waveform.playPause();
+      //   })
+
+      //   if (set) {
+      //     resolve("Stuff worked!");
+      //   }
+      //   else {
+      //     reject(Error("It broke"));
+      //   }
+      // });
+        
     }
   }
 
@@ -94,14 +117,18 @@ class Waveform extends Component {
   handlePlay = () => {
     // keeps 'this' to outside scope
     const self = this;
+    // if (self.waveform.isReady) {
+    //   if (self.props.currSong && self.props.isPlaying) {
+    //     self.props.pauseSong();
+    //     self.waveform.pause();
+    //   } else {
+    //     self.props.playSong();
+    //     self.waveform.play();
+    //   }
+    // }
     if (self.waveform.isReady) {
-      if (self.props.currSong && self.props.isPlaying) {
-        self.props.pauseSong();
-        self.waveform.pause();
-      } else {
-        self.props.playSong();
-        self.waveform.play();
-      }
+      self.props.togglePlay();
+      self.waveform.playPause();
     }
   };
 
@@ -125,8 +152,7 @@ class Waveform extends Component {
       <div className="fixed-bottom">
         <div className="row">
           <div className="col-3" onClick={this.handlePlay}>
-            {!this.props.isPlaying ? <i className="far fa-play-circle fa-5x"></i> : <i className="far fa-pause-circle fa-5x"></i>}
-            {this.props.currSong.src}
+            {this.props.isPlaying ? <i className="far fa-pause-circle fa-5x"></i> : <i className="far fa-play-circle fa-5x"></i>}
           </div>
           <div className="col" id="waveform" />
         </div>
