@@ -13,6 +13,23 @@ function mapStateToProps(state) {
 }
 
 class TrackControls extends Component {
+  constructor(props) {
+    super(props);
+    this.handlePlay = this.handlePlay.bind(this);
+    this.detectSpacebar = this.detectSpacebar.bind(this);
+  }
+
+  componentDidMount() {
+    document.addEventListener('keydown', this.detectSpacebar);
+  }
+
+  detectSpacebar = (e) => {
+    console.log(e);
+    if (e.keyCode === 32) {
+      this.handlePlay();
+    }
+  }
+
   handlePlay = () => {
     if (this.props.isLoaded) {
       this.props.togglePlay();
@@ -21,11 +38,19 @@ class TrackControls extends Component {
 
   render() {
     return (
-      <div className="col-3" onClick={this.handlePlay}>
-        {this.props.isPlaying ? <i className="far fa-pause-circle fa-5x"></i> : <i className="far fa-play-circle fa-5x"></i>}
+      <div className="col-3" onKeyDown={(e) => this.detectSpacebar(e)}>
+        {renderPlayButton(this)}
       </div>
     )
   }
+}
+
+function renderPlayButton(self) {
+  return (
+    self.props.isPlaying ? 
+      <div className="far fa-pause-circle fa-5x" onClick={self.handlePlay}/> : 
+      <div className="far fa-play-circle fa-5x" onClick={self.handlePlay}/>
+  )
 }
 
 export default connect(mapStateToProps, { playSong, pauseSong, togglePlay, })(TrackControls);
