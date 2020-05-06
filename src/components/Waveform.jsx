@@ -2,45 +2,20 @@ import React, { Component } from 'react';
 import WaveSurfer from 'wavesurfer.js';
 import { connect } from 'react-redux';
 // import { WaveformContainer, Wave, PlayButton } from '../assets/Waveform.styled';
-import { playSong, pauseSong, togglePlay } from '../actions/actions'
-
-import styled from 'styled-components';
-
-
-const WaveformContainer = styled.div` 
-//
-`
-
-const PlayButton = styled.button`
-  color: #DD2121;
-`
-
-const Wave = styled.div`
-//
-`
+import { loaded, notLoaded } from '../actions/actions'
 
 function mapStateToProps(state) {
-  const { currSong, isPlaying } = state;
+  const { currSong, isPlaying, isLoaded } = state;
   return {
     currSong,
-    isPlaying
+    isPlaying,
+    isLoaded
   }
 }
 
 // apparently this is a container component
 // Subscribes to the 'playing' state
 class Waveform extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      playing: this.props.isPlaying,
-      currSong: this.props.currSong.src,
-      reduxPlayTest: false,
-    };
-    // this.newSong = this.newSong.bind(this);
-    // const song = this.props.getSong();
-  };
-
 
   componentDidMount() {
     // const track = document.querySelector('#track');
@@ -63,102 +38,38 @@ class Waveform extends Component {
 
 // this is broken - need to figure out something to do with state and lifecycle and async - race condition with user pressing play before song is loaded?
   componentDidUpdate(prevProps) {
-    // assumptions:
-    // props changed either isPlaying or currSong
-    // maybe both changed
-
     const self = this;
-
     // compare newProps to old props
     const currSong = this.props.currSong.src;
-    const currPlay = this.props.isPlaying;
     const prevSong = prevProps.currSong.src;
-    const prevPlay = prevProps.isPlaying;
-    
-
-    // if different song selected
-    if (currSong !== prevSong) {
-      // load then play it
-      this.waveform.load(currSong);
+    const isLoaded = this.props.isLoaded;
+    // check if same song
+    if (currSong === prevSong && isLoaded) {
+      this.waveform.playPause();
+    } else {
+      // load - this needs to be sync
+      // might need to use promise chain.
+      this.props.notLoaded();
+      this.waveform.load(currSong)
       this.waveform.on('ready', () => {
-        self.waveform.play();
+        // play
+        this.props.loaded();
+        self.waveform.play()
+        // pause
+        // next track
+        // previous track
       })
-    } if (prevPlay !== currPlay) {
-        console.log(prevPlay)
-        console.log(currPlay)
-
-        // this.waveform.on('ready', () => {
-        //   self.waveform.playPause();
-        // })
-        if (self.waveform.isReady) {      
-          self.waveform.playPause();
-        }
-
-          // self.waveform.playPause();
-
-      // const promise = new Promise(function (resolve, reject) {
-      //   // do a thing, possibly async, then…
-      //   const set = self.waveform.on('ready', () => {
-      //     self.waveform.playPause();
-      //   })
-
-      //   if (set) {
-      //     resolve("Stuff worked!");
-      //   }
-      //   else {
-      //     reject(Error("It broke"));
-      //   }
-      // });
-        
-    }
+    }   
   }
 
-  // todo: refactor for redux state to be handled
-  handlePlay = () => {
-    // keeps 'this' to outside scope
-    const self = this;
-    // if (self.waveform.isReady) {
-    //   if (self.props.currSong && self.props.isPlaying) {
-    //     self.props.pauseSong();
-    //     self.waveform.pause();
-    //   } else {
-    //     self.props.playSong();
-    //     self.waveform.play();
-    //   }
-    // }
-    if (self.waveform.isReady) {
-      self.props.togglePlay();
-      self.waveform.playPause();
-    }
-  };
-
   render() {
-  
-    // return (
-    //   // todo: decide if using styled components or nah
-    //   <div>
-    //     <WaveformContainer>
-    //       <PlayButton onClick={this.handlePlay}>
-    //         {!this.state.playing ? 'Play' : 'Pause'}
-    //       </PlayButton>
-    //       <Wave id="waveform"/>
-    //       {/* <audio id="track" src={url} controls/> */}
-    //     </WaveformContainer>
-    //   </div>
-    // );
-  
     return (
-      // todo: decide if using styled components or nah
-      <div className="fixed-bottom">
-        <div className="row">
-          <div className="col-3" onClick={this.handlePlay}>
-            {this.props.isPlaying ? <i className="far fa-pause-circle fa-5x"></i> : <i className="far fa-play-circle fa-5x"></i>}
-          </div>
-          <div className="col" id="waveform" />
-        </div>
+      <div className="col" id="waveform">
+        {this.props.isLoaded ? null : <h1>Loading!</h1> }
       </div>
+
     );
   }
 };
 
-export default connect(mapStateToProps, { playSong, pauseSong, togglePlay, })(Waveform);
+export default connect(mapStateToProps, { loaded, notLoaded } )(Waveform);

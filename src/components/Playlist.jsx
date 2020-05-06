@@ -5,10 +5,11 @@ import { connect } from 'react-redux';
 import { playSong, pauseSong, loadSong, togglePlay } from '../actions/actions'
 
 function mapStateToProps(state) {
-  const { isPlaying, currSong } = state;
+  const { isPlaying, currSong, isLoaded } = state;
   return {
     isPlaying,
-    currSong
+    currSong,
+    isLoaded
   }
 }
 
@@ -41,13 +42,12 @@ class Playlist extends Component {
   // todo: it's setting state but no update to the waveplayer
   handlePlaylistPlay(val) {
     // check if the current song is loaded0
-    if (this.props.currSong.src === val) {
+    if (this.props.currSong.src === val && this.props.isLoaded) {
       this.props.togglePlay();
     } else {
       this.props.loadSong(val);
       this.props.playSong();
     }
-
   }
 
   render() {
@@ -83,7 +83,7 @@ function renderPlayPause(self, val) {
     // <i className="far fa-play-circle fa-3x" onClick={() => this.handlePlaylistPlay(val)} />
     console.log('inside');
 
-    if (self.props.isPlaying && self.props.currSong.src === val) {
+    if (self.props.isPlaying && self.props.currSong.src === val ) {
       return (<i className="far fa-pause-circle fa-3x" onClick={() => self.handlePlaylistPlay(val)} />)
     }
     return (<i className="far fa-play-circle fa-3x" onClick={() => self.handlePlaylistPlay(val)} />)

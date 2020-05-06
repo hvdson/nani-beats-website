@@ -24,16 +24,24 @@ export const loadSong = (content) => ({
   }
 })
 
-export const getSong = content => ({
-  type: 'GET_SONG',
+export const togglePlay = content => ({
+  type: 'TOGGLE_PLAY',
   payload: {
     id: ++playSongId,
-    content
+    content,
   }
 })
 
-export const togglePlay = content => ({
-  type: 'TOGGLE_PLAY',
+export const loaded = content => ({
+  type: 'LOADED',
+  payload: {
+    id: ++playSongId,
+    content,
+  }
+})
+
+export const notLoaded = content => ({
+  type: 'NOT_LOADED',
   payload: {
     id: ++playSongId,
     content,

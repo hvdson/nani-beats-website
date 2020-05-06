@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import Waveform from './components/Waveform.jsx';
 import Playlist from './components/Playlist.jsx';
+import Player from './components/Player.jsx';
 
 import url2 from './assets/test.mp3';
 const url = 'https://nanibeats.com/wp-content/uploads/2020/04/monahhh.mp3';
@@ -47,7 +47,9 @@ class App extends Component {
             </div>
           </div>
 
-          <Waveform song={this.state.song}/>
+          <Player/>
+
+          {/* <Waveform song={this.state.song}/> */}
         </div>
       </div>
     );

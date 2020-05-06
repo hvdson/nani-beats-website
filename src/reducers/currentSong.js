@@ -15,8 +15,6 @@ const songReducer = (state = initialState, action) => {
         // action obj has payload obj which is the data!!
         src: action.payload.content,
       })
-    case 'GET_SONG':
-      return state;
     default:
       return state;
       // do nothing
