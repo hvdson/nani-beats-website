@@ -56,26 +56,48 @@ class Playlist extends Component {
 
     return (
       <div id="playlist-container" className="container">
-        <h1>Tracklist</h1>
+        <div>
+          <h1>Playlist</h1>  
+        </div>
 
         <ul>
-          {this.props.playlist.map((val, idx) => {
-            return (
-              <li key={idx}>
-                <div className="row">
-                  <div className="col-md-3">
-                    {renderPlayPause(this, val)}
-                  </div>
-                  <h2 className="col-md-9">{val}</h2>
-                </div>
-              </li>
-            )
-          })}
+          {renderPlaylistHeaders()}
+          {renderPlaylistItems(this, this.props.playlist)}
         </ul>
       </div>
     )
   }
 };
+
+function renderPlaylistHeaders() {
+  return (
+    <div className="row">
+      <lh className="col-md-3" />
+      <lh className="col">Artists</lh>
+      <lh className="col">Title</lh>
+      <lh className="col">BPM</lh>
+      <lh className="col">Key</lh>
+      <lh className="col">Length</lh>
+      <lh className="col">Date Added</lh>
+      <lh className="col">Download</lh>
+    </div>
+  )
+}
+
+function renderPlaylistItems(self, playlist) {
+  return playlist.map((val, idx) => {
+    return (
+      <li key={idx}>
+        <div className="row">
+          <div className="col-md-3">
+            {renderPlayPause(self, val)}
+          </div>
+          <h2 className="col-md-9">{val}</h2>
+        </div>
+      </li>
+    )
+  })
+}
 
 function renderPlayPause(self, val) {
     // this.props.isPlaying 
