@@ -38,7 +38,7 @@ class TrackControls extends Component {
 
   render() {
     return (
-      <div className="col-3" onKeyDown={(e) => this.detectSpacebar(e)}>
+      <div className="col-2" onKeyDown={(e) => this.detectSpacebar(e)}>
         {renderPlayButton(this)}
       </div>
     )

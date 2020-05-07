@@ -20,17 +20,17 @@ class Waveform extends Component {
   componentDidMount() {
     // const track = document.querySelector('#track');
     this.waveform = WaveSurfer.create({
-      barWidth: 3,
-      cursorWidth: 1,
-      barRadius: 3,
-      barGap: 3,
+      barWidth: 2,
+      cursorWidth: 2,
+      barRadius: 2,
+      barGap: 1,
       container: '#waveform',
       backend: 'WebAudio',
       height: 80,
       progressColor: '#DD2121',
       responsive: true,
       waveColor: '#AAAAAA',
-      cursorColor: '#DD2121',
+      cursorColor: '#FF3333',
     });
     console.log(this.props.currSong.src);
     // this.waveform.load(this.props.currSong.src);

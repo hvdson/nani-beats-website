@@ -18,7 +18,7 @@ function mapStateToProps(state) {
 class Player extends Component {
   render() {
     return (
-      <div className="fixed-bottom">
+      <div className="fixed-bottom container">
         <div className="row">
           <TrackControls/>
           <Waveform/>
