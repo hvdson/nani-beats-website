@@ -13,7 +13,7 @@ const url = 'https://nanibeats.com/wp-content/uploads/2020/04/monahhh.mp3';
 
 const monahSongObj = {
   id: "hashnum69",
-  src: "url",
+  src: url,
   imgThumbSrc: cloutKirby,
   artistsType: ["Lance The Wrapper", "Drake", "Post Malone"],
   title: "Monahh",
@@ -28,17 +28,17 @@ class App extends Component {
   constructor(props) {
     super(props);
     // TODO: refactor code to use this
-    // this.state = {
-    //   // playlist: {
-    //   //   id: "hashedplaylistid69",
-    //   //   name: "Nani Picks",
-    //   //   songs: [monahSongObj]
-    //   // }
-    // }
-    
     this.state = {
-      playlist: [url, url2]
+      playlist: {
+        id: "hashedplaylistid69",
+        name: "Nani Picks",
+        songs: [monahSongObj]
+      }
     }
+    
+    // this.state = {
+    //   playlist: [url, url2]
+    // }
   }
   render() {
     return (
@@ -54,7 +54,7 @@ class App extends Component {
               <p> this should be the sidebar </p> 
             </div>
             <div className="col">
-              <Playlist setSong={this.setSong} playlist={this.state.playlist}/>
+              <Playlist playlist={this.state.playlist}/>
             </div>
           </div>
 

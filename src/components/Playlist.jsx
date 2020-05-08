@@ -60,10 +60,10 @@ class Playlist extends Component {
           <h1>Playlist</h1>  
         </div>
 
-        <ul>
+        <table className="table-dark container">
           {renderPlaylistHeaders()}
           {renderPlaylistItems(this, this.props.playlist)}
-        </ul>
+        </table>
       </div>
     )
   }
@@ -71,32 +71,75 @@ class Playlist extends Component {
 
 function renderPlaylistHeaders() {
   return (
-    <div className="row">
-      <lh className="col-md-3" />
-      <lh className="col">Artists</lh>
-      <lh className="col">Title</lh>
-      <lh className="col">BPM</lh>
-      <lh className="col">Key</lh>
-      <lh className="col">Length</lh>
-      <lh className="col">Date Added</lh>
-      <lh className="col">Download</lh>
-    </div>
+    <thead>
+      <tr>
+        <th scope="col" />
+        <th scope="col" />
+        <th scope="col">Artists</th>
+        <th scope="col">Title</th>
+        <th scope="col">BPM</th>
+        <th scope="col">Key</th>
+        <th scope="col">Length</th>
+        <th scope="col">Date Added</th>
+        <th scope="col">Tags</th> 
+        <th scope="col">Download</th>
+      </tr>
+    </thead>
   )
 }
 
 function renderPlaylistItems(self, playlist) {
-  return playlist.map((val, idx) => {
-    return (
-      <li key={idx}>
-        <div className="row">
-          <div className="col-md-3">
-            {renderPlayPause(self, val)}
-          </div>
-          <h2 className="col-md-9">{val}</h2>
-        </div>
-      </li>
-    )
-  })
+  return ( 
+    <tbody>
+      {playlist.songs.map((song, idx) => {
+      return (
+        <tr key={idx}>
+          <th className="play-button ">
+              {renderPlayPause(self, song.src)}
+          </th>
+          <td>
+            <img src={song.imgThumbSrc} alt="cloutkirby" className="img-thumbnail"/>
+          </td>
+          <td className="song-artistsType">
+            {song.artistsType.map((artist) => {
+              return (
+                <li>{artist}</li>
+              )
+            })}
+          </td>
+          <td className="song-title">
+            {song.title}
+          </td>
+          <td className="song-bpm">
+            {song.bpm}
+          </td>
+
+          <td className="song-key">
+            {song.key}
+          </td>
+
+          <td className="song-length">
+            {song.length}
+          </td>
+
+          <td className="song-dateAdded">
+            {song.dateAdded}
+          </td>
+
+          <td className="song-tags">
+            {song.tags.map((tag) => {
+              return (
+                <li>{tag}</li>
+              )
+            })}
+          </td>
+          <td className="song-download">
+            <i className="far fa-download fa-2x" onClick={() => self.handlePlaylistPlay()} />
+          </td>
+        </tr>
+      )})}
+    </tbody>
+  )
 }
 
 function renderPlayPause(self, val) {

@@ -60,3 +60,12 @@ ul {
 #waveform {
   padding: 0;
 }
+
+.img-thumbnail {
+  width: 69px;
+}
+
+.song-artistsType, .song-tags {
+  text-align: left;
+}
+
