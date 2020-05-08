@@ -4,6 +4,15 @@ import { connect } from 'react-redux';
 // import { WaveformContainer, Wave, PlayButton } from '../assets/Waveform.styled';
 import { loaded, notLoaded } from '../actions/actions'
 
+const xhr = { 
+  cache: 'default', 
+  mode: 'no-cors', 
+  method: 'GET', 
+  credentials: 'same-origin', 
+  redirect: 'follow', 
+  referrer: 'client'
+};
+
 function mapStateToProps(state) {
   const { currSong, isPlaying, isLoaded } = state;
   return {
@@ -31,6 +40,7 @@ class Waveform extends Component {
       responsive: true,
       waveColor: '#AAAAAA',
       cursorColor: '#FF3333',
+      xhr: xhr
     });
     console.log(this.props.currSong.src);
     // this.waveform.load(this.props.currSong.src);
