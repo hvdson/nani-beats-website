@@ -5,11 +5,10 @@ import { connect } from 'react-redux';
 import { loaded, notLoaded } from '../actions/actions'
 
 const xhr = { 
-  cache: 'default', 
-  mode: 'no-cors', 
+  cache: 'default',
   method: 'GET', 
   credentials: 'same-origin', 
-  redirect: 'follow', 
+  redirect: 'follow',
   referrer: 'client'
 };
 

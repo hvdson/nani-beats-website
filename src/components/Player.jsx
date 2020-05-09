@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import WaveSurfer from 'wavesurfer.js';
 import { connect } from 'react-redux';
 // import { WaveformContainer, Wave, PlayButton } from '../assets/Waveform.styled';
 import { playSong, pauseSong, togglePlay } from '../actions/actions'

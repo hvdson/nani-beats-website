@@ -4,8 +4,6 @@ import './App.css';
 
 import Playlist from './components/Playlist.jsx';
 import Player from './components/Player.jsx';
-
-import url2 from './assets/test.mp3';
 import nanibeats from './assets/nanibeatslogo.png'
 import cloutKirby from './assets/cloutkirby.jpg'
 
@@ -13,7 +11,7 @@ const url = 'https://nanibeats.com/wp-content/uploads/2020/04/monahhh.mp3';
 
 const monahSongObj = {
   id: "hashnum69",
-  src: url,
+  src: 'http://s000.tinyupload.com/?file_id=47163309312844766501',
   imgThumbSrc: cloutKirby,
   artistsType: ["Lance The Wrapper", "Drake", "Post Malone"],
   title: "Monahh",
@@ -33,13 +31,27 @@ class App extends Component {
         id: "hashedplaylistid69",
         name: "Nani Picks",
         songs: [monahSongObj]
-      }
+      }, 
+      data: null,
     }
-    
-    // this.state = {
-    //   playlist: [url, url2]
-    // }
   }
+
+  callAPI = async () => {
+    const res = await fetch('/api/s3');
+    const body = await res.json();
+
+    if (res.status !== 200) {
+      throw Error(body.message);
+    }
+    return (body);
+  }
+
+  componentDidMount() {
+    this.callAPI()
+    .then(res => this.setState({data: res.data}))
+    .catch(err => console.log(err));
+  }
+
   render() {
     return (
       <div className="App">
@@ -57,6 +69,8 @@ class App extends Component {
               <Playlist playlist={this.state.playlist}/>
             </div>
           </div>
+
+          <p>o shit some api {JSON.stringify(this.state.data)}</p>
 
           <Player/>
 
