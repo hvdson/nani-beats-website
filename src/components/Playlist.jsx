@@ -38,8 +38,6 @@ class Playlist extends Component {
     return (songs);
   }
 
-  // todo: refactor
-  // todo: it's setting state but no update to the waveplayer
   handlePlaylistPlay(val) {
     // check if the current song is loaded0
     if (this.props.currSong.src === val && this.props.isLoaded) {
@@ -57,7 +55,7 @@ class Playlist extends Component {
     return (
       <div id="playlist-container" className="container">
         <div>
-          <h1>Playlist</h1>  
+          <h1>{this.props.playlist.name}</h1>  
         </div>
 
         <table className="table-dark container">

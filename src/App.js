@@ -7,20 +7,6 @@ import Player from './components/Player.jsx';
 import nanibeats from './assets/nanibeatslogo.png'
 import cloutKirby from './assets/cloutkirby.jpg'
 
-const url = 'https://nanibeats.com/wp-content/uploads/2020/04/monahhh.mp3';
-
-// const monahSongObj = {
-//   id: "hashnum69",
-//   src: 'http://s000.tinyupload.com/?file_id=47163309312844766501',
-//   imgThumbSrc: cloutKirby,
-//   artistsType: ["Lance The Wrapper", "Drake", "Post Malone"],
-//   title: "Monahh",
-//   bpm: 69,
-//   key: "A#",
-//   length: "2:50",
-//   dateAdded: Date.now(),
-//   tags: ["dank beat", "neat", "heat", "🔥"]
-// }
 
 class App extends Component {
   constructor(props) {
@@ -49,11 +35,12 @@ class App extends Component {
 
   componentDidMount() {
     this.callAPI()
-    .then(res => this.setState({
+    .then(res => this.setState((prevState) => ({
       playlist: {
-        songs: [...this.state.playlist.songs, res]
+        ...prevState.playlist,
+        songs: [...prevState.playlist.songs, res]
       }
-    }))
+    })))
     .catch(err => console.log(err))
   }
 
@@ -74,12 +61,7 @@ class App extends Component {
               <Playlist playlist={this.state.playlist}/>
             </div>
           </div>
-
-          <p>{JSON.stringify(this.state.data)}</p>
-
           <Player/>
-
-          {/* <Waveform song={this.state.song}/> */}
         </div>
       </div>
     );
