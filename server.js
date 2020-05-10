@@ -11,6 +11,14 @@ const AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID
 const AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY
 console.log(typeof AWS_ACCESS_KEY_ID)
 
+aws.config.setPromisesDependency();
+aws.config.update({
+  accessKeyId: AWS_ACCESS_KEY_ID,
+  secretAccessKey: AWS_SECRET_ACCESS_KEY,
+  region: 'us-west-2'
+})
+const s3 = new aws.S3();
+
 const app = express();
 const port = process.env.PORT || 8080;
 
@@ -19,7 +27,7 @@ const cloutKirby = "https://i.redd.it/fx8fagknp1k21.jpg"
 
 const monahSongObj = {
   id: "hashnum69",
-  src: songUrl,
+  src: "",
   imgThumbSrc: cloutKirby,
   artistsType: ["Lance The Wrapper", "Drake", "Post Malone"],
   title: "Monahh",
@@ -60,13 +68,6 @@ app.get('/api/hello', (req, res) => {
 app.get('/api/s3', (req, res) => {
   (async () => {
     try {
-        aws.config.setPromisesDependency();
-        aws.config.update({
-          accessKeyId: AWS_ACCESS_KEY_ID,
-          secretAccessKey: AWS_SECRET_ACCESS_KEY,
-          region: 'us-west-2'
-        })
-        const s3 = new aws.S3();
         const response = await s3.listObjectsV2({
           Bucket: 'nanibeatswebsite',
           Prefix: 'NANI BEATS VOL. 4'
@@ -89,29 +90,42 @@ app.get('/api/s3', (req, res) => {
 
 });
 
+app.get('/api/monah', (req, res) => {
+  const songKey = 'NANI BEATS VOL. 4/monahhh.mp3'
+   const params = {
+     Bucket: 'nanibeatswebsite',
+     Key: songKey
+   };
+
+  async function getSignedUrl() {
+    return new Promise((resolve, reject) => {
+      s3.getSignedUrl('getObject', params, (err, url) => {
+        if (err) reject(err);
+        resolve(url);
+      });
+    });
+  }
+
+  async function process(song) {
+    // for (const video of videos) {
+    const signedUrl = await getSignedUrl();
+    monahSongObj.src = signedUrl;
+    return song;
+  }
+
+  process(monahSongObj).then((processed) => {
+    console.log(processed);
+    res.json(processed);
+    res.end();
+  });
+})
+
 app.post('/api/world', (req, res) => {
   console.log(req.body );
   res.send(
     `I received your POST request. This is what you sent me: ${req.body.post}`,
   );
 });
-
-app.get('/api/monah', (req, res) => {
-  request({
-      url: url
-    },
-    (err, res, body) => {
-      if (err || res.statusCode !== 200) {
-        return res.status(500).json({
-          type: 'error',
-          message: err.message
-        });
-      }
-      res.download(url);
-    }
-  )
-});
-
 
 // Proxy to media server
 app.use('/media', proxy(songUrl, {

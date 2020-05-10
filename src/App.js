@@ -9,18 +9,18 @@ import cloutKirby from './assets/cloutkirby.jpg'
 
 const url = 'https://nanibeats.com/wp-content/uploads/2020/04/monahhh.mp3';
 
-const monahSongObj = {
-  id: "hashnum69",
-  src: 'http://s000.tinyupload.com/?file_id=47163309312844766501',
-  imgThumbSrc: cloutKirby,
-  artistsType: ["Lance The Wrapper", "Drake", "Post Malone"],
-  title: "Monahh",
-  bpm: 69,
-  key: "A#",
-  length: "2:50",
-  dateAdded: Date.now(),
-  tags: ["dank beat", "neat", "heat", "🔥"]
-}
+// const monahSongObj = {
+//   id: "hashnum69",
+//   src: 'http://s000.tinyupload.com/?file_id=47163309312844766501',
+//   imgThumbSrc: cloutKirby,
+//   artistsType: ["Lance The Wrapper", "Drake", "Post Malone"],
+//   title: "Monahh",
+//   bpm: 69,
+//   key: "A#",
+//   length: "2:50",
+//   dateAdded: Date.now(),
+//   tags: ["dank beat", "neat", "heat", "🔥"]
+// }
 
 class App extends Component {
   constructor(props) {
@@ -30,26 +30,31 @@ class App extends Component {
       playlist: {
         id: "hashedplaylistid69",
         name: "Nani Picks",
-        songs: [monahSongObj]
+        songs: []
       }, 
       data: null,
     }
   }
 
   callAPI = async () => {
-    const res = await fetch('/api/s3');
+    const res = await fetch('/api/monah');
     const body = await res.json();
 
     if (res.status !== 200) {
       throw Error(body.message);
     }
+    console.log(body);
     return (body);
   }
 
   componentDidMount() {
     this.callAPI()
-    .then(res => this.setState({data: res.data}))
-    .catch(err => console.log(err));
+    .then(res => this.setState({
+      playlist: {
+        songs: [...this.state.playlist.songs, res]
+      }
+    }))
+    .catch(err => console.log(err))
   }
 
   render() {
@@ -70,7 +75,7 @@ class App extends Component {
             </div>
           </div>
 
-          <p>o shit some api {JSON.stringify(this.state.data)}</p>
+          <p>{JSON.stringify(this.state.data)}</p>
 
           <Player/>
 
