@@ -1,15 +1,15 @@
+require('dotenv').config()
 const express = require('express');
 const request = require('request');
 const bodyParser = require('body-parser');
 const cors = require('cors')
 const proxy = require('express-http-proxy');
 const url = require('url');
-const aws = require('aws-sdk');
-require('dotenv').config()
+const mongoose = require('mongoose');
 
-const AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID
-const AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY
-console.log(typeof AWS_ACCESS_KEY_ID)
+const aws = require('aws-sdk');
+const AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID;
+const AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY;
 
 aws.config.setPromisesDependency();
 aws.config.update({
@@ -19,12 +19,23 @@ aws.config.update({
 })
 const s3 = new aws.S3();
 
+const db = require ('./config/keys').mongoURI;
+
+mongoose
+  .connect(db, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => console.log("MongoDB connected!"))
+  .catch((err) => console.log(err));
+
 const app = express();
 const port = process.env.PORT || 8080;
 
 const songUrl = 'http://s000.tinyupload.com/?file_id=47163309312844766501';
-const cloutKirby = "https://i.redd.it/fx8fagknp1k21.jpg"
+const cloutKirby = "https://i.redd.it/fx8fagknp1k21.jpg";
 
+//TODO: put this into mongodb database 
 const monahSongObj = {
   id: "hashnum69",
   src: "",
@@ -38,6 +49,8 @@ const monahSongObj = {
   tags: ["dank beat", "neat", "heat", "🔥"]
 }
 
+//TODO: refactor frontend to read this object
+//TODO: put this into mongodb database 
 const playlistObj = {      
   id: "hashedplaylistid69",
   name: "Nani Picks",
@@ -45,6 +58,11 @@ const playlistObj = {
 }
 
 app.use(bodyParser.json());
+
+// https: //stackoverflow.com/questions/29960764/what-does-extended-mean-in-express-4-0
+// When extended property is set to:
+// true: the URL-encoded data will be parsed with the qs library.
+// false: querystring library
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -52,9 +70,7 @@ app.use(bodyParser.urlencoded({
 app.use('/', express.static('public'));
 
 // Enable CORS
-app.use(cors({
-  exposedHeaders: ['Content-Length','Content-Type']
-}));
+app.use(cors());
 
 app.get('/api/hello', (req, res) => {
   res.send({
@@ -62,9 +78,6 @@ app.get('/api/hello', (req, res) => {
   });
 });
 
-// todo: this will be the base functionality of getting playlist
-// return the object as a response to client side for wavesurfer to use
-// something to do with proxy
 app.get('/api/s3', (req, res) => {
   (async () => {
     try {
