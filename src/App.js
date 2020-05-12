@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
+// components
 import Playlist from './components/Playlist.jsx';
 import Player from './components/Player.jsx';
+import Navbar from './components/Navbar.jsx';
+
 import nanibeats from './assets/nanibeatslogo.png'
 import cloutKirby from './assets/cloutkirby.jpg'
 
@@ -47,11 +49,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <div className="container-fluid">
-              <img id="logo-img" alt="nani-beats-logo" className="col" src={nanibeats}/>
-          </div>
-        </header>
+        <Navbar/>
+        <div className="spacer"> 
+          &nbsp;
+        </div>
         <div className="container-fluid">
           <div className="row">
             <div className="col-2" id="sidebar">
