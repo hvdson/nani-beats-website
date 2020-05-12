@@ -1,11 +1,14 @@
 require('dotenv').config()
 const express = require('express');
+const users = require('./routes/api/users'); 
 const request = require('request');
 const bodyParser = require('body-parser');
 const cors = require('cors')
 const proxy = require('express-http-proxy');
 const url = require('url');
 const mongoose = require('mongoose');
+const passport = require('passport');
+require('./config/passport')(passport);
 
 const aws = require('aws-sdk');
 const AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID;
@@ -22,10 +25,7 @@ const s3 = new aws.S3();
 const db = require ('./config/keys').mongoURI;
 
 mongoose
-  .connect(db, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
+  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("MongoDB connected!"))
   .catch((err) => console.log(err));
 
@@ -57,8 +57,8 @@ const playlistObj = {
   songs: [monahSongObj]
 }
 
+// middleware
 app.use(bodyParser.json());
-
 // https: //stackoverflow.com/questions/29960764/what-does-extended-mean-in-express-4-0
 // When extended property is set to:
 // true: the URL-encoded data will be parsed with the qs library.
@@ -66,11 +66,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-
+app.use(cors());
+app.use(passport.initialize());
 app.use('/', express.static('public'));
 
-// Enable CORS
-app.use(cors());
+app.use('/api/users', users);
 
 app.get('/api/hello', (req, res) => {
   res.send({
@@ -78,6 +78,8 @@ app.get('/api/hello', (req, res) => {
   });
 });
 
+
+// todo: modularize each endpoint & place in api for export - import into server.js
 app.get('/api/s3', (req, res) => {
   (async () => {
     try {
@@ -134,7 +136,7 @@ app.get('/api/monah', (req, res) => {
 })
 
 app.post('/api/world', (req, res) => {
-  console.log(req.body );
+  console.log(req.body);
   res.send(
     `I received your POST request. This is what you sent me: ${req.body.post}`,
   );
