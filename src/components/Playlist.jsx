@@ -50,18 +50,18 @@ class Playlist extends Component {
 
   render() {
     const playlist = this.createPlaylist(this.props.playlist);
-    console.log("in render")
 
     return (
-      <div id="playlist-container" className="col">
-        <div>
-          <h1>{this.props.playlist.name}</h1>  
+      <div className="row">
+        <div id="playlist-container" className="col">
+          <div>
+            <h1>{this.props.playlist.name}</h1>  
+          </div>
+          <table className="song-container container-fluid">
+            {renderPlaylistHeaders()}
+            {renderPlaylistItems(this, this.props.playlist)}
+          </table>
         </div>
-
-        <table className="song-container container-fluid">
-          {renderPlaylistHeaders()}
-          {renderPlaylistItems(this, this.props.playlist)}
-        </table>
       </div>
     )
   }

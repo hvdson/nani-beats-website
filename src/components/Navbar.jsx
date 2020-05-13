@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import nanibeats from '../assets/nanibeatslogo.png'
+import { Link } from 'react-router-dom';
 
 class Navbar extends Component {
   render() {
@@ -15,9 +16,12 @@ class Navbar extends Component {
         <a className="col-8" href="#">
           <img id="logo-img" alt="nani-beats-logo" src={nanibeats} />
         </a>
-        <div className="col">
-          <button className="btn btn-outline-danger" type="button">Login</button>
-        </div>
+
+        <Link>
+          <div className="col">
+            <button className="btn btn-outline-danger" type="button">Login</button>
+          </div>
+        </Link>
         
       </nav>
     );
