@@ -19,8 +19,10 @@ class Player extends Component {
     return (
       <div className="fixed-bottom container-fluid player-footer">
         <div className="row">
+          <div className="col-2"/>
           <TrackControls/>
           <Waveform/>
+          <div className="col-2"/>
         </div>
       </div>
     )

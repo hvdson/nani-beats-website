@@ -3,13 +3,10 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import './App.css';
 
 // components
-import Playlist from './components/Playlist.jsx';
-import Player from './components/Player.jsx';
-import Navbar from './components/Navbar.jsx';
 
-import nanibeats from './assets/nanibeatslogo.png'
-import cloutKirby from './assets/cloutkirby.jpg'
+import Navbar from './components/Navbar.jsx';
 import WebPlayer from './components/WebPlayer';
+import LandingPage from './components/LandingPage';
 
 
 class App extends Component {
@@ -17,7 +14,9 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <WebPlayer/>
+          <Navbar/>
+          <Route exact path="/" component={LandingPage}/>
+          <Route exact path="/web-player" component={WebPlayer}/>
         </div>
       </Router>
     );

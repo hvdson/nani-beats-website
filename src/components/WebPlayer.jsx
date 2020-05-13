@@ -6,6 +6,7 @@ import Playlist from './Playlist.jsx';
 import Player from './Player.jsx';
 import Navbar from './Navbar.jsx';
 
+
 class WebPlayer extends Component {
   constructor(props) {
     super(props);
@@ -50,7 +51,6 @@ class WebPlayer extends Component {
 
           <div className="wrapper">
             <div className="sidenav" id="sidebar">
-              <p> sidebar </p>
               <h1>Playlists</h1>
             </div>
             <div className="container-fluid">
