@@ -50,19 +50,23 @@ class App extends Component {
     return (
       <div className="App">
         <Navbar/>
-        <div className="spacer"> 
-          &nbsp;
-        </div>
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-2" id="sidebar">
-              <p> this should be the sidebar </p> 
-            </div>
-            <div className="col">
+
+        {/* todo: need to change this because it makes the container too big and scrolls */}
+
+        <div className="wrapper">
+
+          <div className="sidenav" id="sidebar">
+            <p> sidebar </p> 
+            <h1>Playlists</h1>
+
+          </div>
+
+          <div className="container-fluid">
+            <div className="row">
               <Playlist playlist={this.state.playlist}/>
             </div>
+            <Player/>
           </div>
-          <Player/>
         </div>
       </div>
     );

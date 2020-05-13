@@ -53,12 +53,12 @@ class Playlist extends Component {
     console.log("in render")
 
     return (
-      <div id="playlist-container" className="container">
+      <div id="playlist-container" className="col">
         <div>
           <h1>{this.props.playlist.name}</h1>  
         </div>
 
-        <table className="table-dark container">
+        <table className="song-container container-fluid">
           {renderPlaylistHeaders()}
           {renderPlaylistItems(this, this.props.playlist)}
         </table>

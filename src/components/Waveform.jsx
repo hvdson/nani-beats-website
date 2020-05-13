@@ -34,7 +34,7 @@ class Waveform extends Component {
       barGap: 1,
       container: '#waveform',
       backend: 'WebAudio',
-      height: 80,
+      height: 60,
       progressColor: '#DD2121',
       responsive: true,
       waveColor: '#AAAAAA',
@@ -74,7 +74,7 @@ class Waveform extends Component {
   render() {
     return (
       <div className="col" id="waveform">
-        {this.props.isLoaded ? null : <h1>Loading!</h1> }
+        {this.props.isLoaded ? null : <span>Loading!</span> }
       </div>
 
     );

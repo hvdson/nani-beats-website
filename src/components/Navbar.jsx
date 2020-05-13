@@ -11,8 +11,6 @@ class Navbar extends Component {
             <i className="fas fa-user fa-2x brand-color"></i>
             <a className="nav-link" href="#">My Account</a>
           </div>
-
-
         </div>
         <a className="col-8" href="#">
           <img id="logo-img" alt="nani-beats-logo" src={nanibeats} />

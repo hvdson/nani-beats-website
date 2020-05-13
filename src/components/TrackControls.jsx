@@ -50,8 +50,8 @@ function renderPlayButton(self) {
   return (
     self.props.isPlaying ? 
 
-      <div className="far fa-pause-circle fa-5x" onClick={self.handlePlay}/> : 
-      <div className="far fa-play-circle fa-5x" onClick={self.handlePlay}/>
+      <div className="far fa-pause-circle fa-3x" onClick={self.handlePlay}/> : 
+      <div className="far fa-play-circle fa-3x" onClick={self.handlePlay}/>
   )
   // bit
   // <Play size='50' color='green' onClick={self.handlePlay}/>
