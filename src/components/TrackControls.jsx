@@ -49,7 +49,6 @@ class TrackControls extends Component {
 function renderPlayButton(self) {
   return (
     self.props.isPlaying ? 
-
       <div className="far fa-pause-circle fa-3x" onClick={self.handlePlay}/> : 
       <div className="far fa-play-circle fa-3x" onClick={self.handlePlay}/>
   )

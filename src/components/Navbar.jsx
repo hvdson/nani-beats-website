@@ -22,8 +22,12 @@ class Navbar extends Component {
         </Link>
         
         <div className="col">
-          <Link to="/">
+          <Link to="/login">
             <button className="btn btn-outline-danger" type="button">Login</button>
+          </Link>
+
+          <Link to="/register" className="col-8" >
+            <button className="btn btn-outline-danger" type="button">Register</button>
           </Link>
 
 

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 class LandingPage extends Component {
   render() {
     return (
-      <div>
+      <div className="wrapper">
         <h1>{'it works!'}</h1>
       </div>
     )

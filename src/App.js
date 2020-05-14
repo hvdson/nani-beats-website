@@ -7,6 +7,8 @@ import './App.css';
 import Navbar from './components/Navbar.jsx';
 import WebPlayer from './components/WebPlayer';
 import LandingPage from './components/LandingPage';
+import Register from './components/Register';
+import Login from './components/Login';
 
 
 class App extends Component {
@@ -17,6 +19,8 @@ class App extends Component {
           <Navbar/>
           <Route exact path="/" component={LandingPage}/>
           <Route exact path="/web-player" component={WebPlayer}/>
+          <Route exact path="/register" component={Register}/>
+          <Route exact path="/login" component={Login}/>
         </div>
       </Router>
     );
