@@ -11,8 +11,8 @@ const allReducers = combineReducers({
   currSong: songReducer,
   isPlaying: playReducer,
   isLoaded: loadReducer,
-  authReducer,
-  errorReducer,
+  auth: authReducer,
+  errors: errorReducer,
 })
 
 export default allReducers;

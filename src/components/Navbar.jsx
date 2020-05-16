@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
 import nanibeats from '../assets/nanibeatslogo.png'
 import { Link } from 'react-router-dom';
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from '../actions/authActions';
 
 class Navbar extends Component {
+
+  onLogoutClick = e => {
+    e.preventDefault();
+    this.props.logoutUser();
+  };
+
   render() {
     return (
       // use <header> if not working
@@ -16,26 +25,39 @@ class Navbar extends Component {
           </div>
         </div>
         
-        
-        <Link to="/" className="col-8" >
+        <Link to="/web-player" className="col-8" >
           <img id="logo-img" alt="nani-beats-logo" src={nanibeats} />
         </Link>
         
         <div className="col">
-          <Link to="/login">
-            <button className="btn btn-outline-danger" type="button">Login</button>
-          </Link>
+          <div className="row">
+            <Link to="/login">
+              <button className="btn btn-outline-danger" type="button">Login</button>
+            </Link>
 
-          <Link to="/register" className="col-8" >
-            <button className="btn btn-outline-danger" type="button">Register</button>
-          </Link>
-
-
+            <Link to="/register" >
+              <button className="btn btn-outline-danger" type="button">Register</button>
+            </Link>
+            
+            <button onClick={this.onLogoutClick} className="btn btn-outline-danger">
+              Logout
+            </button>
+          </div>
         </div>
-        
       </nav>
     );
   }
 }
 
-export default Navbar;
+Navbar.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(Navbar);
