@@ -25,7 +25,7 @@ class Navbar extends Component {
           </div>
         </div>
         
-        <Link to="/web-player" className="col-8" >
+        <Link to="/" className="col-8" >
           <img id="logo-img" alt="nani-beats-logo" src={nanibeats} />
         </Link>
         

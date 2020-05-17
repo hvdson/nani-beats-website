@@ -13,28 +13,27 @@ class LandingPage extends Component {
   render() {
     const { user } = this.props.auth;
     return (
-      <div style={{ height: "75vh" }} className="container valign-wrapper">
-        <div className="row">
-          <div className="col s12 center-align">
-            <h4>
-              {renderUser()}
-              <p className="flow-text grey-text text-darken-1">
-                You are logged into a full-stack{" "}
-                <span style={{ fontFamily: "monospace" }}>MERN</span> app 👏
+      <div className="wrapper">
+        <div className="container">
+          <div className="row">
+            <div className="col">
+              <h1>
+                {/* {renderUser(user)} */}
+                  Your next hit is waiting.
+              </h1>
+
+              <h3>
+                UNLIMITED Beats for artists, all at your fingertips.
+                <br/>
+                Every month.
+              </h3>
+              <button className="btn btn-lg btn-danger">
+                Start Your FREE MONTH
+              </button>
+              <p>
+                Then monthly for less than the price of your phone bill.
               </p>
-            </h4>
-            <button
-              style={{
-                width: "150px",
-                borderRadius: "3px",
-                letterSpacing: "1.5px",
-                marginTop: "1rem"
-              }}
-              onClick={this.onLogoutClick}
-              className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-            >
-              Logout
-            </button>
+            </div>
           </div>
         </div>
       </div>
@@ -44,9 +43,9 @@ class LandingPage extends Component {
 
 function renderUser(user) {
   if (!isEmpty(user)) {
-    return (<b> 'Hey there,' {user.name.split(" ")[0]} </b>)
+    return (<b> Hey there, {user.name.split(" ")[0]} </b>)
   } else {
-    return (<div>blah</div>)
+    return (<div>No User</div>)
   }
 }
 
