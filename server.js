@@ -32,7 +32,6 @@ mongoose
 const app = express();
 const port = process.env.PORT || 8080;
 
-const songUrl = 'http://s000.tinyupload.com/?file_id=47163309312844766501';
 const cloutKirby = "https://i.redd.it/fx8fagknp1k21.jpg";
 
 //TODO: put this into mongodb database 
@@ -141,12 +140,5 @@ app.post('/api/world', (req, res) => {
     `I received your POST request. This is what you sent me: ${req.body.post}`,
   );
 });
-
-// Proxy to media server
-app.use('/media', proxy(songUrl, {
-  proxyReqPathResolver: function (req, res) {
-    return res;
-  }
-}));
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
