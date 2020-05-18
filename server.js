@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express');
-const users = require('./routes/api/users'); 
+const users = require('./routes/api/users');
+const playlists = require('./routes/api/playlists');
 const request = require('request');
 const bodyParser = require('body-parser');
 const cors = require('cors')
@@ -70,6 +71,7 @@ app.use(passport.initialize());
 app.use('/', express.static('public'));
 
 app.use('/api/users', users);
+app.use('/api/playlists', playlists);
 
 app.get('/api/hello', (req, res) => {
   res.send({

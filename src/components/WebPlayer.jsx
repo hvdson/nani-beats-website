@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route } from "react-router-dom";
+import axios from "axios";
 
 // components
 import Playlist from './Playlist.jsx';
@@ -21,15 +22,27 @@ class WebPlayer extends Component {
     }
   }
 
+
   callAPI = async () => {
-    const res = await fetch('/api/monah');
-    const body = await res.json();
+    const res = await axios.get('/api/monah');
+    const body = await res.data;
 
     if (res.status !== 200) {
       throw Error(body.message);
     }
     console.log(body);
     return (body);
+  }
+
+  // todo:
+  callPlaylists = async () => {
+    const res = await axios.get('/api/playlists/all');
+    const body = await res.data;
+
+    if (res.status !== 200) {
+      throw Error(body.message);
+    }
+    return(body);
   }
 
   componentDidMount() {
@@ -41,6 +54,11 @@ class WebPlayer extends Component {
         }
       })))
       .catch(err => console.log(err))
+
+    // todo:
+    this.callPlaylists()
+    .then(res => console.log(res))
+    .catch(err => console.log(err));
   }
 
   render() {
