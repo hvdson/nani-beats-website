@@ -3,9 +3,10 @@ import { Route } from "react-router-dom";
 import axios from "axios";
 
 // components
-import Playlist from './Playlist.jsx';
-import Player from './Player.jsx';
-import Navbar from './Navbar.jsx';
+import Playlist from './Playlist';
+import Player from './Player';
+import Navbar from './Navbar';
+import Sidenav from './Sidenav';
 
 
 class WebPlayer extends Component {
@@ -34,17 +35,6 @@ class WebPlayer extends Component {
     return (body);
   }
 
-  // todo:
-  callPlaylists = async () => {
-    const res = await axios.get('/api/playlists/all');
-    const body = await res.data;
-
-    if (res.status !== 200) {
-      throw Error(body.message);
-    }
-    return(body);
-  }
-
   componentDidMount() {
     this.callAPI()
       .then(res => this.setState((prevState) => ({
@@ -54,11 +44,6 @@ class WebPlayer extends Component {
         }
       })))
       .catch(err => console.log(err))
-
-    // todo:
-    this.callPlaylists()
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
   }
 
   render() {
@@ -68,9 +53,7 @@ class WebPlayer extends Component {
           {/* todo: need to change this because it makes the container too big and scrolls */}
 
           <div className="wrapper">
-            <div className="sidenav" id="sidebar">
-              <h1>Playlists</h1>
-            </div>
+            <Sidenav/>
             <div className="container-fluid">
               <Playlist playlist={this.state.playlist} />
               <Player />

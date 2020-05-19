@@ -7,8 +7,10 @@ const PlaylistSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  imgThumbUrl: String,
   description: String,
   songs: Array,
+
 });
 
 const Playlist = mongoose.model('playlists', PlaylistSchema);
