@@ -3,10 +3,15 @@ import { Route } from "react-router-dom";
 import axios from "axios";
 
 // components
-import Playlist from './Playlist';
 import Player from './Player';
 import Navbar from './Navbar';
 import Sidenav from './Sidenav';
+
+import SelectPlaylist from './SelectPlaylist';
+import ViewPlaylist from './ViewPlaylist';
+
+const SELECT_PLAYLIST = 1;
+const VIEW_PLAYLIST = 2;
 
 
 class WebPlayer extends Component {
@@ -20,9 +25,9 @@ class WebPlayer extends Component {
         songs: []
       },
       data: null,
+      currScreen: VIEW_PLAYLIST,
     }
   }
-
 
   callAPI = async () => {
     const res = await axios.get('/api/monah');
@@ -33,6 +38,14 @@ class WebPlayer extends Component {
     }
     console.log(body);
     return (body);
+  }
+
+  setScreen() {
+    if (this.state.currScreen === SELECT_PLAYLIST) {
+      return (<SelectPlaylist/>);
+    } else if (this.state.currScreen === VIEW_PLAYLIST) {
+      return (<ViewPlaylist playlist={this.state.playlist}/>);
+    }
   }
 
   componentDidMount() {
@@ -50,13 +63,12 @@ class WebPlayer extends Component {
     return (
         <div className="web-player">
           <Navbar />
-          {/* todo: need to change this because it makes the container too big and scrolls */}
-
           <div className="wrapper">
             <Sidenav/>
             <div className="container-fluid">
-              <Playlist playlist={this.state.playlist} />
-              <Player />
+              {/* <Playlist playlist={this.state.playlist} /> */}
+              {this.setScreen()}
+              <Player/>
             </div>
           </div>
         </div>

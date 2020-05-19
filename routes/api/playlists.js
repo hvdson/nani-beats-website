@@ -13,7 +13,6 @@ router.get('/all', passport.authenticate('jwt', {session: false}), (req, res) =>
   // get mongoDB playlist json data
   Playlist.find(function (err, playlists) {
     if (err) return console.error(err);
-    
     return res.json(playlists);
   })
   // return data object
