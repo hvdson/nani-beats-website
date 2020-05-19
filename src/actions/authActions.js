@@ -38,6 +38,13 @@ export const setCurrentUser = decoded => {
   }
 };
 
+// User loading
+export const setUserLoading = () => {
+  return {
+    type: USER_LOADING
+  };
+};
+
 export const logoutUser = () => dispatch => {
   // Remove token from localStorage
   localStorage.removeItem("jwtToken");
