@@ -7,8 +7,17 @@ const SongSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  description: String,
-  songs: Array,
+  songBucketKey: String,
+  artistsType: Array,
+  bpm: Number,
+  key: String,
+  tags: Array,
+  imgThumbUrl: String,
+  songUrl: String,
+  playCount: Number,
+  downloadCount: Number,
+  likeCount: Number,
+  songId: String,
 });
 
 const Song = mongoose.model('songs', SongSchema);
