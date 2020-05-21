@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Route } from "react-router-dom";
 import axios from "axios";
+import { connect } from 'react-redux';
+import { getPlaylists } from '../actions/playlistActions';
 
 // components
 import Player from './Player';
@@ -25,7 +26,7 @@ class WebPlayer extends Component {
         songs: []
       },
       data: null,
-      currScreen: VIEW_PLAYLIST,
+      currScreen: SELECT_PLAYLIST,
     }
   }
 
@@ -48,15 +49,19 @@ class WebPlayer extends Component {
     }
   }
 
+  // componentDidMount() {
+  //   this.callAPI()
+  //     .then(res => this.setState((prevState) => ({
+  //       playlist: {
+  //         ...prevState.playlist,
+  //         songs: [...prevState.playlist.songs, res]
+  //       }
+  //     })))
+  //     .catch(err => console.log(err))
+  // }
+
   componentDidMount() {
-    this.callAPI()
-      .then(res => this.setState((prevState) => ({
-        playlist: {
-          ...prevState.playlist,
-          songs: [...prevState.playlist.songs, res]
-        }
-      })))
-      .catch(err => console.log(err))
+    this.props.getPlaylists();
   }
 
   render() {
@@ -64,7 +69,7 @@ class WebPlayer extends Component {
         <div className="web-player">
           <Navbar />
           <div className="wrapper">
-            <Sidenav/>
+            {/* <Sidenav/> */}
             <div className="container-fluid">
               {/* <Playlist playlist={this.state.playlist} /> */}
               {this.setScreen()}
@@ -76,4 +81,4 @@ class WebPlayer extends Component {
   }
 }
 
-export default WebPlayer;
+export default connect(null, { getPlaylists })(WebPlayer);

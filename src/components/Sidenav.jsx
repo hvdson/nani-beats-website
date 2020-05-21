@@ -21,16 +21,16 @@ class Sidenav extends PureComponent {
     return (body);
   }
 
-  componentDidMount() {
-    this.callPlaylistAPI()
-      .then(res => this.setState((prevState) => ({
-        playlist: {
-          ...prevState.playlist,
-          songs: [...prevState.playlist.songs, res]
-        }
-      })))
-      .catch(err => console.log(err))
-  }
+  // componentDidMount() {
+  //   this.callPlaylistAPI()
+  //     .then(res => this.setState((prevState) => ({
+  //       playlist: {
+  //         ...prevState.playlist,
+  //         songs: [...prevState.playlist.songs, res]
+  //       }
+  //     })))
+  //     .catch(err => console.log(err))
+  // }
 
   render() {
     return (

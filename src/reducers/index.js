@@ -8,7 +8,7 @@ import { combineReducers } from 'redux';
 
 const allReducers = combineReducers({
   currSong: songReducer,
-  currPlaylist: playlistReducer,
+  playlists: playlistReducer,
   isPlaying: playReducer,
   isLoaded: loadReducer,
   auth: authReducer,
