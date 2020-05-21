@@ -36,7 +36,7 @@ class SelectPlaylist extends PureComponent {
 
   renderCard() {
     return (
-      <div className="card playlist-card col-3">
+      <div className="card playlist-card col-2">
         <h4 class="card-header">{this.state.playlist.name}</h4>
         <img className="card-img-top" src={this.state.playlist.imgThumbUrl || null} alt="card-cap" />
         <div className="card-body">
@@ -59,17 +59,19 @@ class SelectPlaylist extends PureComponent {
       <div className="select-playlist">
         <h1>Playlists</h1>
         <div className="container">
-          <div className="row">
+          <div className="row p-3 justify-content-between">
+            {this.renderCard()}
             {this.renderCard()}
             {this.renderCard()}
             {this.renderCard()}
             {this.renderCard()}
           </div>
-          <div className="row">
+          <div className="row p-3 justify-content-between">
             {this.renderCard()}
             {this.renderCard()}
             {this.renderCard()}
-            {this.renderCard()}
+            <div className="col-2"></div>
+            <div className="col-2"></div>
           </div>
         </div>
       </div>
