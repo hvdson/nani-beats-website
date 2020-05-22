@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from "axios";
 import { connect } from 'react-redux';
 import { getPlaylists } from '../actions/playlistActions';
+import { Route, Switch, Link } from 'react-router-dom';
 
 // components
 import Player from './Player';
@@ -65,14 +66,24 @@ class WebPlayer extends Component {
   }
 
   render() {
+    console.log(this.props.match)
     return (
         <div className="web-player">
           <Navbar />
           <div className="wrapper">
             {/* <Sidenav/> */}
             <div className="container-fluid">
-              {/* <Playlist playlist={this.state.playlist} /> */}
-              {this.setScreen()}
+              {/* {this.setScreen()} */}
+              <Link to={`${this.props.match.path}/playlists`}>Select Playlist</Link>
+              <Link to="/web-player/playlists/view">View Playlist</Link>
+              <Switch>
+                <Route path={`${this.props.match.path}/playlists`}>
+                  <SelectPlaylist />
+                </Route>
+                <Route path={`${this.props.match.path}/playlists/view`} 
+                  render={(props) => <ViewPlaylist {...props} playlist={this.state.playlist} />} 
+                />
+              </Switch>
               <Player/>
             </div>
           </div>

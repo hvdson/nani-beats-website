@@ -34,14 +34,19 @@ class SelectPlaylist extends PureComponent {
   //     .catch(err => console.log(err))
   // }
 
+
+  // TODO: every playlist card should have play-pause functionality as well
   renderCard() {
     return (
       <div className="card playlist-card col-2">
-        <h4 class="card-header">{this.state.playlist.name}</h4>
-        <img className="card-img-top" src={this.state.playlist.imgThumbUrl || null} alt="card-cap" />
-        <div className="card-body">
-          <p className="card-text">{this.state.playlist.description}</p>
+        <h4 class="card-title">{this.state.playlist.name}</h4>
+        <div className="playlist-img-overlay">
+          <img className="card-img-top" src={this.state.playlist.imgThumbUrl || null} alt="card-cap" />
+          <div className="playlist-play-layer">
+            <i className="far fa-play-circle fa-3x playlist-play" /> 
+          </div>
         </div>
+        <p className="card-text">{this.state.playlist.description}</p>
       </div>
     )
   }
@@ -69,7 +74,7 @@ class SelectPlaylist extends PureComponent {
           <div className="row p-3 justify-content-between">
             {this.renderCard()}
             {this.renderCard()}
-            {this.renderCard()}
+            {this.renderCard()} 
             <div className="col-2"></div>
             <div className="col-2"></div>
           </div>
