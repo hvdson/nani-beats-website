@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import axios from "axios";
 
 import { connect } from 'react-redux';
-import { setCurrPlaylist } from '../actions/playlistActions';
+import { setCurrPlaylist, getPlaylists } from '../actions/playlistActions';
 import PropTypes from 'prop-types';
 
 class SelectPlaylist extends PureComponent {
@@ -23,16 +23,9 @@ class SelectPlaylist extends PureComponent {
   //   return (body);
   // }
 
-  // componentDidMount() {
-  //   this.callPlaylistAPI()
-  //     .then(res => this.setState((prevState) => ({
-  //       playlist: {
-  //         ...prevState.playlist,
-  //         songs: [...prevState.playlist.songs, res]
-  //       }
-  //     })))
-  //     .catch(err => console.log(err))
-  // }
+  componentDidMount() {
+    this.props.getPlaylists();
+  }
 
 
   // TODO: every playlist card should have play-pause functionality as well
@@ -88,4 +81,4 @@ const mapStateToProps = state => ({
   playlists: state.playlists
 })
 
-export default connect(mapStateToProps, { setCurrPlaylist })(SelectPlaylist);
+export default connect(mapStateToProps, { setCurrPlaylist, getPlaylists })(SelectPlaylist);

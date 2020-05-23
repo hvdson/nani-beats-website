@@ -61,10 +61,6 @@ class WebPlayer extends Component {
   //     .catch(err => console.log(err))
   // }
 
-  componentDidMount() {
-    this.props.getPlaylists();
-  }
-
   render() {
     console.log(this.props.match)
     return (
@@ -77,12 +73,12 @@ class WebPlayer extends Component {
               <Link to={`${this.props.match.path}/playlists`}>Select Playlist</Link>
               <Link to="/web-player/playlists/view">View Playlist</Link>
               <Switch>
-                <Route path={`${this.props.match.path}/playlists`}>
+                <Route exact path={`${this.props.match.path}`}>
                   <SelectPlaylist />
                 </Route>
-                <Route path={`${this.props.match.path}/playlists/view`} 
-                  render={(props) => <ViewPlaylist {...props} playlist={this.state.playlist} />} 
-                />
+                <Route exact path={`${this.props.match.path}/playlists/view`}>
+                  <ViewPlaylist/>
+                </Route>
               </Switch>
               <Player/>
             </div>
