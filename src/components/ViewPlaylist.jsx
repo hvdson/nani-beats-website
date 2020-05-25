@@ -2,16 +2,8 @@ import React, { Component } from 'react';
 import WaveSurfer from 'wavesurfer.js';
 import { connect } from 'react-redux';
 
-import { playSong, pauseSong, loadSong, togglePlay } from '../actions/actions'
-
-function mapStateToProps(state) {
-  const { isPlaying, currSong, isLoaded } = state;
-  return {
-    isPlaying,
-    currSong,
-    isLoaded
-  }
-}
+import { playSong, pauseSong, loadSong, togglePlay } from '../actions/actions';
+import { currPlaylist } from '../actions/playlistActions';
 
 //TODO: update playlist to create forEACH song in playlist received
 
@@ -48,18 +40,20 @@ class Playlist extends Component {
     }
   }
 
-  render() {
-    const playlist = this.createPlaylist(this.props.playlist);
+  componentDidMount() {
+    console.log(this.props)
+  }
 
+  render() {
     return (
       <div className="row">
         <div id="playlist-container" className="col">
           <div>
-            <h1>{this.props.playlist.name}</h1>  
+            <h1>{null}</h1>  
           </div>
           <table className="song-container container-fluid">
             {renderPlaylistHeaders()}
-            {renderPlaylistItems(this, this.props.playlist)}
+            {/* {renderPlaylistItems(this, this.props.playlist)} */}
           </table>
         </div>
       </div>
@@ -151,6 +145,16 @@ function renderPlayPause(self, val) {
     }
     return (<i className="far fa-play-circle fa-3x" onClick={() => self.handlePlaylistPlay(val)} />)
     
+}
+
+function mapStateToProps(state) {
+  const { isPlaying, currSong, isLoaded, currPlaylist } = state;
+  return {
+    isPlaying,
+    currSong,
+    isLoaded,
+    currPlaylist,
+  }
 }
 
 export default connect(mapStateToProps, { playSong, pauseSong, loadSong, togglePlay })(Playlist);

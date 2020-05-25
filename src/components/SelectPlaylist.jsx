@@ -1,30 +1,29 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import axios from "axios";
-
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setCurrPlaylist, getPlaylists } from '../actions/playlistActions';
 import PropTypes from 'prop-types';
 
-class SelectPlaylist extends PureComponent {
+
+class SelectPlaylist extends Component {
   constructor() {
     super();
     this.state = {
       playlist: {},
     }
+    this.selectCurrPlaylist = this.selectCurrPlaylist.bind(this);
   }
-
-  // callPlaylistAPI = async () => {
-  //   const res = await axios.get('/api/playlists/all');
-  //   const body = await res.data;
-  //   if (res.status !== 200) {
-  //     throw Error(body.message);
-  //   }
-  //   console.log(body);
-  //   return (body);
-  // }
 
   componentDidMount() {
     this.props.getPlaylists();
+  }
+
+  selectCurrPlaylist(e) {
+    const elemId = e.target.parentElement.parentElement.id;
+    console.log(typeof this.props.setCurrPlaylist);
+    this.props.setCurrPlaylist(elemId);
+    this.props.history.push('/web-player/playlists/view');
   }
 
 
@@ -32,10 +31,10 @@ class SelectPlaylist extends PureComponent {
   renderCard(key, playlist) {
     return (
       <div className="card playlist-card col-2" id={key}>
-        <h4 class="card-title">{playlist.name}</h4>
+        <h4 className="card-title">{playlist.name}</h4>
         <div className="playlist-img-overlay">
           <img className="card-img-top" src={playlist.imgThumbUrl || null} alt="card-cap" />
-          <div className="playlist-play-layer">
+          <div className="playlist-play-layer" onClick={this.selectCurrPlaylist}>
             {/* <i className="far fa-play-circle fa-3x playlist-play" />  */}
           </div>
         </div>
@@ -78,4 +77,4 @@ const mapStateToProps = state => ({
   playlists: state.playlists
 })
 
-export default connect(mapStateToProps, { setCurrPlaylist, getPlaylists })(SelectPlaylist);
+export default connect(mapStateToProps, { setCurrPlaylist, getPlaylists })(withRouter(SelectPlaylist));
