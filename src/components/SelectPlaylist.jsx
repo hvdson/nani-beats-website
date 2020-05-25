@@ -29,53 +29,50 @@ class SelectPlaylist extends PureComponent {
 
 
   // TODO: every playlist card should have play-pause functionality as well
-  renderCard() {
+  renderCard(key, playlist) {
     return (
-      <div className="card playlist-card col-2">
-        <h4 class="card-title">{this.state.playlist.name}</h4>
+      <div className="card playlist-card col-2" id={key}>
+        <h4 class="card-title">{playlist.name}</h4>
         <div className="playlist-img-overlay">
-          <img className="card-img-top" src={this.state.playlist.imgThumbUrl || null} alt="card-cap" />
+          <img className="card-img-top" src={playlist.imgThumbUrl || null} alt="card-cap" />
           <div className="playlist-play-layer">
-            <i className="far fa-play-circle fa-3x playlist-play" /> 
+            {/* <i className="far fa-play-circle fa-3x playlist-play" />  */}
           </div>
         </div>
-        <p className="card-text">{this.state.playlist.description}</p>
+        <p className="card-text">{playlist.description}</p>
       </div>
     )
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.playlists !== this.props.playlists) {
-      const newPlaylists = this.props.playlists.allPlaylists;
-      const keys = Object.keys(newPlaylists);
-      this.setState({playlist: newPlaylists[keys[0]]});
-    }
-  }
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevProps.playlists !== this.props.playlists) {
+  //     const newPlaylists = this.props.playlists.allPlaylists;
+  //     const keys = Object.keys(newPlaylists);
+  //     this.setState({playlist: newPlaylists[keys[0]]});
+  //   }
+  // }
 
   render() {
+    const allPlaylists = this.props.playlists.allPlaylists;
+    const keys = Object.keys(allPlaylists);
+    console.log(keys);
     return (
       <div className="select-playlist">
         <h1>Playlists</h1>
         <div className="container">
-          <div className="row p-3 justify-content-between">
-            {this.renderCard()}
-            {this.renderCard()}
-            {this.renderCard()}
-            {this.renderCard()}
-            {this.renderCard()}
-          </div>
-          <div className="row p-3 justify-content-between">
-            {this.renderCard()}
-            {this.renderCard()}
-            {this.renderCard()} 
-            <div className="col-2"></div>
-            <div className="col-2"></div>
+          <div className="row p-3">
+            {keys.map((key => {
+              return (this.renderCard(key, allPlaylists[key]));
+            }))}
           </div>
         </div>
       </div>
     );
   }
 }
+
+
 
 const mapStateToProps = state => ({
   playlists: state.playlists

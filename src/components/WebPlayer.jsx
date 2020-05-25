@@ -42,25 +42,6 @@ class WebPlayer extends Component {
     return (body);
   }
 
-  setScreen() {
-    if (this.state.currScreen === SELECT_PLAYLIST) {
-      return (<SelectPlaylist/>);
-    } else if (this.state.currScreen === VIEW_PLAYLIST) {
-      return (<ViewPlaylist playlist={this.state.playlist}/>);
-    }
-  }
-
-  // componentDidMount() {
-  //   this.callAPI()
-  //     .then(res => this.setState((prevState) => ({
-  //       playlist: {
-  //         ...prevState.playlist,
-  //         songs: [...prevState.playlist.songs, res]
-  //       }
-  //     })))
-  //     .catch(err => console.log(err))
-  // }
-
   render() {
     console.log(this.props.match)
     return (
@@ -70,8 +51,8 @@ class WebPlayer extends Component {
             {/* <Sidenav/> */}
             <div className="container-fluid">
               {/* {this.setScreen()} */}
-              <Link to={`${this.props.match.path}/playlists`}>Select Playlist</Link>
-              <Link to="/web-player/playlists/view">View Playlist</Link>
+              {/* <Link to={`${this.props.match.path}/playlists`}>Select Playlist</Link>
+              <Link to="/web-player/playlists/view">View Playlist</Link> */}
               <Switch>
                 <Route exact path={`${this.props.match.path}`}>
                   <SelectPlaylist />
