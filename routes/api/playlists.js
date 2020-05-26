@@ -9,14 +9,20 @@ require('../../config/passport')(passport);
 const Playlist = require('../../models/Playlist');
 
 router.get('/all', passport.authenticate('jwt', {session: false}), (req, res) => {
-
   // get mongoDB playlist json data
   Playlist.find(function (err, playlists) {
-    console.log('inside')
     if (err) return console.error(err);
     return res.json(playlists);
   })
-  // return data object
+})
+
+router.get('/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
+  // get mongoDB playlist json data
+  Playlist.findById(req.params.id, function (err, playlist) {
+    if (err) return console.error(err);
+    console.log(playlist.songs)
+    return res.json(playlist.songs);
+  })
 })
 
 module.exports = router;

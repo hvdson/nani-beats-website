@@ -54,12 +54,8 @@ class WebPlayer extends Component {
               {/* <Link to={`${this.props.match.path}/playlists`}>Select Playlist</Link>
               <Link to="/web-player/playlists/view">View Playlist</Link> */}
               <Switch>
-                <Route exact path={`${this.props.match.path}`}>
-                  <SelectPlaylist />
-                </Route>
-                <Route exact path={`${this.props.match.path}/playlists/view`}>
-                  <ViewPlaylist/>
-                </Route>
+                <Route exact path={`${this.props.match.path}`} component={SelectPlaylist}/>
+                <Route path={`${this.props.match.path}/playlists/:id`} component={ViewPlaylist}/>
               </Switch>
               <Player/>
             </div>

@@ -16,7 +16,7 @@ const playlistReducer = (state = initialState, action) => {
     case GET_PLAYLISTS:
       const playlists = {};
       for (const item of action.payload) {
-        const id = randId();
+        const id = item._id;
         playlists[id] = item;
       }
       return Object.assign({}, state, { allPlaylists: playlists })

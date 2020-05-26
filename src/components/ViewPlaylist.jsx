@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import WaveSurfer from 'wavesurfer.js';
 import { connect } from 'react-redux';
-
+import axios from "axios";
 import { playSong, pauseSong, loadSong, togglePlay } from '../actions/actions';
 import { currPlaylist } from '../actions/playlistActions';
 
@@ -40,8 +40,11 @@ class Playlist extends Component {
     }
   }
 
+  // TODO: return list of song objects through route
   componentDidMount() {
-    console.log(this.props)
+    const playlistId = this.props.match.params.id;
+      axios.get(`/api/playlists/${playlistId}`)
+        .then(res => console.log(res.data))
   }
 
   render() {
@@ -49,7 +52,7 @@ class Playlist extends Component {
       <div className="row">
         <div id="playlist-container" className="col">
           <div>
-            <h1>{null}</h1>  
+            <h1>replace this with playlist name</h1>  
           </div>
           <table className="song-container container-fluid">
             {renderPlaylistHeaders()}
