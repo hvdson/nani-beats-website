@@ -29,12 +29,18 @@ export const getPlaylists = () => dispatch => {
 // };
 
 // User loading
-export const setCurrPlaylist = (playlistKey) => {
-  return {
-    type: SET_CURRENT_PLAYLIST,
-    payload: playlistKey,
-  };
+export const setCurrPlaylist = playlistKey => dispatch => {
+  axios.get(`/api/playlists/${playlistKey}`)
+    .then(res => dispatch({
+      type: SET_CURRENT_PLAYLIST,
+      payload: res.data
+    }))
+    .catch(err => dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    }))
 };
+
 
 // User loading
 export const currPlaylist = () => {

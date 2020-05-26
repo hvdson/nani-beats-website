@@ -22,7 +22,7 @@ const playlistReducer = (state = initialState, action) => {
       return Object.assign({}, state, { allPlaylists: playlists })
     case SET_CURRENT_PLAYLIST:
       // return state;
-      return Object.assign({}, state, { currPlaylist: state.allPlaylists[action.payload] })
+      return Object.assign({}, state, { currPlaylist: action.payload })
     case GET_CURRENT_PLAYLIST:
       return state.currPlaylist;
     default:
