@@ -37,11 +37,14 @@ class Playlist extends Component {
     return (songs);
   }
 
+  // this needs to dispatch action to get the signedUrl from s3
+  // THEN press play.
   handlePlaylistPlay(val) {
-    // check if the current song is loaded0
+    // check if the current song is loaded
     if (this.props.currSong.src === val && this.props.isLoaded) {
       this.props.togglePlay();
     } else {
+      // 
       this.props.loadSong(val);
       this.props.playSong();
     }
@@ -49,7 +52,6 @@ class Playlist extends Component {
 
   componentDidMount() {
     const { id } = this.props.match.params
-    console.log(id);
     this.props.setCurrPlaylist(id);
   }
 
@@ -95,6 +97,7 @@ function renderPlaylistHeaders() {
   )
 }
 
+// TODO: song.src should be song.s3Key
 function renderPlaylistItems(self, playlist) {
   return ( 
     <tbody>
@@ -150,16 +153,10 @@ function renderPlaylistItems(self, playlist) {
 }
 
 function renderPlayPause(self, val) {
-    // this.props.isPlaying 
-    // <i className="far fa-pause-circle fa-3x" onClick={() => this.handlePlaylistPlay(val)} />
-    // <i className="far fa-play-circle fa-3x" onClick={() => this.handlePlaylistPlay(val)} />
-    console.log('inside');
-
     if (self.props.isPlaying && self.props.currSong.src === val ) {
       return (<i className="far fa-pause-circle fa-3x" onClick={() => self.handlePlaylistPlay(val)} />)
     }
     return (<i className="far fa-play-circle fa-3x" onClick={() => self.handlePlaylistPlay(val)} />)
-    
 }
 
 function mapStateToProps(state) {

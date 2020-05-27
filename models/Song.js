@@ -7,7 +7,7 @@ const SongSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  songBucketKey: String,
+  s3Key: String,
   artistsType: Array,
   bpm: Number,
   key: String,
