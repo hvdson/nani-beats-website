@@ -7,10 +7,11 @@ require('../../config/passport')(passport);
 
 // load User Model
 const Playlist = require('../../models/Playlist');
+const Song = require('../../models/Song');
 
 router.get('/all', passport.authenticate('jwt', {session: false}), (req, res) => {
   // get mongoDB playlist json data
-  Playlist.find(function (err, playlists) {
+  Playlist.find((err, playlists) => {
     if (err) return console.error(err);
     return res.json(playlists);
   })
@@ -18,10 +19,11 @@ router.get('/all', passport.authenticate('jwt', {session: false}), (req, res) =>
 
 router.get('/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
   // get mongoDB playlist json data
-  Playlist.findById(req.params.id, function (err, playlist) {
-    if (err) return console.error(err);
-    console.log(playlist.songs)
-    return res.json(playlist.songs);
+  Playlist.findById(req.params.id)
+    .populate('songs')
+    .exec((err, playlist) => {
+      console.log(playlist)
+      return res.json(playlist);
   })
 })
 

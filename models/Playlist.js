@@ -9,8 +9,12 @@ const PlaylistSchema = mongoose.Schema({
   },
   imgThumbUrl: String,
   description: String,
-  songs: Array,
-
+  songs: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'songs'
+    }
+  ]
 });
 
 const Playlist = mongoose.model('playlists', PlaylistSchema);

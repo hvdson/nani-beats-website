@@ -43,8 +43,8 @@ class Playlist extends Component {
   // TODO: return list of song objects through route
   componentDidMount() {
     const playlistId = this.props.match.params.id;
-      axios.get(`/api/playlists/${playlistId}`)
-        .then(res => console.log(res.data))
+    axios.get(`/api/playlists/${playlistId}`)
+      .then(res => console.log(res.data))
   }
 
   render() {
