@@ -22,7 +22,6 @@ aws.config.update({
   region: 'us-west-2'
 })
 const s3 = new aws.S3();
-
 const db = require ('./config/keys').mongoURI;
 
 mongoose

@@ -45,7 +45,8 @@ class Waveform extends Component {
     // this.waveform.load(this.props.currSong.src);
   };
 
-// this is broken - need to figure out something to do with state and lifecycle and async - race condition with user pressing play before song is loaded?
+  //TODO: get the data flow right then enable this
+  /*
   componentDidUpdate(prevProps) {
     const self = this;
     // compare newProps to old props
@@ -70,7 +71,7 @@ class Waveform extends Component {
       })
     }   
   }
-
+*/
   render() {
     return (
       <div className="col" id="waveform">

@@ -16,13 +16,6 @@ export const pauseSong = content => ({
   }
 })
 
-export const loadSong = (content) => ({
-  type: 'LOAD_SONG',
-  payload: {
-    id: ++playSongId,
-    content
-  }
-})
 
 export const togglePlay = content => ({
   type: 'TOGGLE_PLAY',
@@ -47,6 +40,12 @@ export const notLoaded = content => ({
     content,
   }
 })
+
+export const LOAD_SONG = 'LOAD_SONG'
+
+export const GET_SONG_URL_REQUEST = 'GET_SONG_URL_REQUEST';
+export const GET_SONG_URL_SUCCESS = 'GET_SONG_URL_SUCCESS';
+export const GET_SONG_URL_FAILURE = 'GET_SONG_URL_FAILURE';
 
 export const GET_ERRORS = "GET_ERRORS";
 export const USER_LOADING = "USER_LOADING";

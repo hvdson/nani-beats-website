@@ -3,21 +3,35 @@
 // const initialState = {
 //   currSong: 'https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_1MG.mp3'
 // }
+import {
+  GET_SONG_URL_REQUEST,
+  GET_SONG_URL_SUCCESS,
+  GET_SONG_URL_FAILURE,
+  LOAD_SONG,
+} from "../actions/actions";
 
-const initialState = {
-}
+const initialState = {};
 
 const songReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'LOAD_SONG':
-      return Object.assign({}, state, {
-        // THIS WAS THE PROBLEM -> currSong: action.currSong
-        // action obj has payload obj which is the data!!
-        src: action.payload.content,
-      })
+    case GET_SONG_URL_REQUEST:
+      return { 
+        ...state, isFetching: true 
+      }
+    case GET_SONG_URL_SUCCESS:
+      return { 
+        ...state, isFetching: false, url: action.payload
+      }
+    case GET_SONG_URL_FAILURE:
+      return {
+        ...state, isFetching: false, errorMessage: action.payload.message
+      };
+    case LOAD_SONG:
+      return (Object.assign({}, state, {
+        url: action.payload
+      }))
     default:
       return state;
-      // do nothing
   }
 };
 

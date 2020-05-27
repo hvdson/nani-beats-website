@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import WaveSurfer from 'wavesurfer.js';
 import { connect } from 'react-redux';
 import axios from "axios";
-import { playSong, pauseSong, loadSong, togglePlay } from '../actions/actions';
+import { playSong, pauseSong, togglePlay } from '../actions/actions';
+import { loadSong, getSongUrl } from '../actions/songActions'
 import { setCurrPlaylist } from '../actions/playlistActions';
 
 //TODO: update playlist to create forEACH song in playlist received
@@ -41,12 +42,14 @@ class Playlist extends Component {
   // THEN press play.
   handlePlaylistPlay(val) {
     // check if the current song is loaded
+    console.log(val);
     if (this.props.currSong.src === val && this.props.isLoaded) {
       this.props.togglePlay();
     } else {
-      // 
-      this.props.loadSong(val);
-      this.props.playSong();
+      // dispatch an action to *LOAD_SONG*
+      this.props.getSongUrl(val);
+      // this.props.loadSong(val);
+      // this.props.playSong();
     }
   }
 
@@ -104,8 +107,8 @@ function renderPlaylistItems(self, playlist) {
       {playlist.songs.map((song, idx) => {
       return (
         <tr key={idx}>
-          <th className="play-button ">
-            {renderPlayPause(self, song.src)}
+          <th className="play-button">
+            {renderPlayPause(self, song.s3Key)}
           </th>
           <td>
             <img src={song.imgThumbUrl} alt="cloutkirby" className="img-thumbnail"/>
@@ -169,4 +172,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { playSong, pauseSong, loadSong, togglePlay, setCurrPlaylist })(Playlist);
+export default connect(mapStateToProps, { playSong, pauseSong, loadSong, togglePlay, setCurrPlaylist, getSongUrl })(Playlist);
