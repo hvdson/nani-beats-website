@@ -3,7 +3,6 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const isValid = require('is-empty');
-
 const keys = require('../../config/keys');
 
 // load input validation

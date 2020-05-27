@@ -9,7 +9,7 @@ import {
 
 export const getSongUrl = (s3Key) => (dispatch) => {
   dispatch({ type: GET_SONG_URL_REQUEST });
-  return axios.get(`/api/${s3Key}`)
+  return axios.get(`/api/songs/${s3Key}`)
     .then((signedUrl) => dispatch({ type: GET_SONG_URL_SUCCESS, payload: signedUrl }))
     .catch((error) => dispatch({ type: GET_SONG_URL_FAILURE, payload: error, error: true }))
 }

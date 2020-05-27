@@ -22,7 +22,6 @@ router.get('/:id', passport.authenticate('jwt', {session: false}), (req, res) =>
   Playlist.findById(req.params.id)
     .populate('songs')
     .exec((err, playlist) => {
-      console.log(playlist)
       return res.json(playlist);
   })
 })

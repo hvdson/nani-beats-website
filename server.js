@@ -1,7 +1,10 @@
 require('dotenv').config()
 const express = require('express');
+// routes
 const users = require('./routes/api/users');
 const playlists = require('./routes/api/playlists');
+const songs = require('./routes/api/songs');
+
 const request = require('request');
 const bodyParser = require('body-parser');
 const cors = require('cors')
@@ -71,6 +74,7 @@ app.use('/', express.static('public'));
 
 app.use('/api/users', users);
 app.use('/api/playlists', playlists);
+app.use('/api/songs', songs);
 
 app.get('/api/hello', (req, res) => {
   res.send({
