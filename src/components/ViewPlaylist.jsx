@@ -48,23 +48,31 @@ class Playlist extends Component {
   }
 
   componentDidMount() {
-    this.props.setCurrPlaylist()
+    const { id } = this.props.match.params
+    console.log(id);
+    this.props.setCurrPlaylist(id);
   }
 
   render() {
-    return (
-      <div className="row">
-        <div id="playlist-container" className="col">
-          <div>
-            <h1>{this.props.playlists.currPlaylist.name}</h1>  
+    if (this.props.playlists.currPlaylist.songs) {
+      return (
+        <div className="row">
+          <div id="playlist-container" className="col">
+            <div>
+              <h1>{this.props.playlists.currPlaylist.name}</h1>
+            </div>
+            <table className="song-container container-fluid">
+              {renderPlaylistHeaders()}
+              {this.props.playlists.currPlaylist
+                ? renderPlaylistItems(this, this.props.playlists.currPlaylist)
+                : null
+              }
+            </table>
           </div>
-          <table className="song-container container-fluid">
-            {renderPlaylistHeaders()}
-            {/* {renderPlaylistItems(this, this.props.playlist)} */}
-          </table>
         </div>
-      </div>
-    )
+      )
+    }
+    return <div/>
   }
 };
 
@@ -94,10 +102,10 @@ function renderPlaylistItems(self, playlist) {
       return (
         <tr key={idx}>
           <th className="play-button ">
-              {renderPlayPause(self, song.src)}
+            {renderPlayPause(self, song.src)}
           </th>
           <td>
-            <img src={song.imgThumbSrc} alt="cloutkirby" className="img-thumbnail"/>
+            <img src={song.imgThumbUrl} alt="cloutkirby" className="img-thumbnail"/>
           </td>
           <td className="song-artistsType">
             {song.artistsType.map((artist) => {

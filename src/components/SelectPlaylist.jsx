@@ -21,8 +21,7 @@ class SelectPlaylist extends Component {
 
   selectCurrPlaylist(e) {
     const elemId = e.target.parentElement.parentElement.id;
-    console.log(typeof this.props.setCurrPlaylist);
-    this.props.setCurrPlaylist(elemId);
+    // this.props.setCurrPlaylist(elemId);
     this.props.history.push(`/web-player/playlists/${elemId}`);
   }
 
