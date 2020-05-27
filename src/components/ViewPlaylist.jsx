@@ -3,11 +3,18 @@ import WaveSurfer from 'wavesurfer.js';
 import { connect } from 'react-redux';
 import axios from "axios";
 import { playSong, pauseSong, loadSong, togglePlay } from '../actions/actions';
-import { currPlaylist } from '../actions/playlistActions';
+import { setCurrPlaylist } from '../actions/playlistActions';
 
 //TODO: update playlist to create forEACH song in playlist received
 
 class Playlist extends Component {
+  constructor() {
+    super();
+    this.state = {
+      playlist: {}
+    }
+  }
+
   /**
     @function createTrack returns a song component to be rendered in React
     @param {track} String url of song.mp3
@@ -40,11 +47,8 @@ class Playlist extends Component {
     }
   }
 
-  // TODO: return list of song objects through route
   componentDidMount() {
-    const playlistId = this.props.match.params.id;
-    axios.get(`/api/playlists/${playlistId}`)
-      .then(res => console.log(res.data))
+    this.props.setCurrPlaylist()
   }
 
   render() {
@@ -52,7 +56,7 @@ class Playlist extends Component {
       <div className="row">
         <div id="playlist-container" className="col">
           <div>
-            <h1>replace this with playlist name</h1>  
+            <h1>{this.props.playlists.currPlaylist.name}</h1>  
           </div>
           <table className="song-container container-fluid">
             {renderPlaylistHeaders()}
@@ -151,13 +155,13 @@ function renderPlayPause(self, val) {
 }
 
 function mapStateToProps(state) {
-  const { isPlaying, currSong, isLoaded, currPlaylist } = state;
+  const { isPlaying, currSong, isLoaded, playlists } = state;
   return {
     isPlaying,
     currSong,
     isLoaded,
-    currPlaylist,
+    playlists
   }
 }
 
-export default connect(mapStateToProps, { playSong, pauseSong, loadSong, togglePlay })(Playlist);
+export default connect(mapStateToProps, { playSong, pauseSong, loadSong, togglePlay, setCurrPlaylist })(Playlist);

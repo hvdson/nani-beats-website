@@ -20,14 +20,6 @@ export const getPlaylists = () => dispatch => {
     }))
 }
 
-// export const setCurrPlaylist = playlist => dispatch => {
-//   axios.get("/api/monah")
-//     .then(res => dispatch({
-//       type: SET_CURRENT_PLAYLIST,
-//       payload: res.data
-//     }))
-// };
-
 // User loading
 export const setCurrPlaylist = playlistKey => dispatch => {
   axios.get(`/api/playlists/${playlistKey}`)

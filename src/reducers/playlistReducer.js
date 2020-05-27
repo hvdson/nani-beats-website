@@ -4,8 +4,6 @@ import {
   GET_CURRENT_PLAYLIST
 } from "../actions/actions";
 
-const randId = () => Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 5);
-
 const initialState = {
   allPlaylists: {},
   currPlaylist: {}
