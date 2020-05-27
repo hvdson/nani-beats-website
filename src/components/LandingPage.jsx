@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Link } from 'react-router-dom'
 import { logoutUser } from "../actions/authActions";
 const isEmpty = require('is-empty');
 
@@ -27,9 +28,9 @@ class LandingPage extends Component {
                 <br/>
                 Every month.
               </h3>
-              <button className="btn btn-lg btn-danger">
+              <Link className="btn btn-lg btn-danger" to='/register'>
                 Start Your FREE MONTH
-              </button>
+              </Link>
               <p>
                 Then monthly for less than the price of your phone bill.
               </p>
