@@ -40,14 +40,15 @@ class Playlist extends Component {
 
   // this needs to dispatch action to get the signedUrl from s3
   // THEN press play.
-  handlePlaylistPlay(val) {
+  handlePlaylistPlay(songObj) {
     // check if the current song is loaded
-    console.log(val);
-    if (this.props.currSong.src === val && this.props.isLoaded) {
+    console.log(songObj);
+    if (this.props.currSong.src === songObj && this.props.isLoaded) {
       this.props.togglePlay();
     } else {
       // dispatch an action to *LOAD_SONG*
-      this.props.getSongUrl(val);
+      console.log(songObj.s3Key);
+      this.props.getSongUrl(songObj);
       // this.props.loadSong(val);
       // this.props.playSong();
     }
@@ -108,7 +109,7 @@ function renderPlaylistItems(self, playlist) {
       return (
         <tr key={idx}>
           <th className="play-button">
-            {renderPlayPause(self, song.s3Key)}
+            {renderPlayPause(self, song)}
           </th>
           <td>
             <img src={song.imgThumbUrl} alt="cloutkirby" className="img-thumbnail"/>
@@ -155,11 +156,11 @@ function renderPlaylistItems(self, playlist) {
   )
 }
 
-function renderPlayPause(self, val) {
-    if (self.props.isPlaying && self.props.currSong.src === val ) {
-      return (<i className="far fa-pause-circle fa-3x" onClick={() => self.handlePlaylistPlay(val)} />)
+function renderPlayPause(self, songObj) {
+    if (self.props.isPlaying && self.props.currSong === songObj ) {
+      return (<i className="far fa-pause-circle fa-3x" onClick={() => self.handlePlaylistPlay(songObj)} />)
     }
-    return (<i className="far fa-play-circle fa-3x" onClick={() => self.handlePlaylistPlay(val)} />)
+    return (<i className="far fa-play-circle fa-3x" onClick={() => self.handlePlaylistPlay(songObj)} />)
 }
 
 function mapStateToProps(state) {

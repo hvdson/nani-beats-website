@@ -20,7 +20,7 @@ const songReducer = (state = initialState, action) => {
       }
     case GET_SONG_URL_SUCCESS:
       return { 
-        ...state, isFetching: false, url: action.payload
+        ...state, isFetching: false, song: action.payload
       }
     case GET_SONG_URL_FAILURE:
       return {

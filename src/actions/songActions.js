@@ -7,10 +7,14 @@ import {
   LOAD_SONG,
 } from "./actions";
 
-export const getSongUrl = (s3Key) => (dispatch) => {
+export const getSongUrl = (songObj) => (dispatch) => {
+  const key = songObj.s3Key;
   dispatch({ type: GET_SONG_URL_REQUEST });
-  return axios.get(`/api/songs/${s3Key}`)
-    .then((signedUrl) => dispatch({ type: GET_SONG_URL_SUCCESS, payload: signedUrl }))
+  return axios.get(`/api/songs/${key}`)
+    .then((res) => {
+      const songWithSignedUrl = Object.assign({}, songObj, { signedUrl: res.data })
+      dispatch({ type: GET_SONG_URL_SUCCESS, payload: songWithSignedUrl })
+    })
     .catch((error) => dispatch({ type: GET_SONG_URL_FAILURE, payload: error, error: true }))
 }
 

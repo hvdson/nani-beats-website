@@ -12,15 +12,6 @@ const xhr = {
   referrer: 'client'
 };
 
-function mapStateToProps(state) {
-  const { currSong, isPlaying, isLoaded } = state;
-  return {
-    currSong,
-    isPlaying,
-    isLoaded
-  }
-}
-
 // apparently this is a container component
 // Subscribes to the 'playing' state
 class Waveform extends Component {
@@ -46,40 +37,94 @@ class Waveform extends Component {
   };
 
   //TODO: get the data flow right then enable this
-  /*
+
   componentDidUpdate(prevProps) {
     const self = this;
-    // compare newProps to old props
-    const currSong = this.props.currSong.src;
-    const prevSong = prevProps.currSong.src;
-    const isLoaded = this.props.isLoaded;
-    // check if same song
-    if (currSong === prevSong && isLoaded) {
-      this.waveform.playPause();
-    } else {
-      // load - this needs to be sync
-      // might need to use promise chain.
-      this.props.notLoaded();
-      this.waveform.load(currSong)
-      this.waveform.on('ready', () => {
-        // play
-        this.props.loaded();
-        self.waveform.play()
-        // pause
-        // next track
-        // previous track
-      })
-    }   
+
+    if (this.props.currSong.song && this.props.currSong.song.signedUrl) {
+      console.log(this.props.currSong.song.signedUrl);
+
+      const currSong = this.props.currSong.song.signedUrl;
+      // const prevSong = prevProps.currSong.song.signedUrl;
+      const isLoaded = this.props.isLoaded;
+
+      console.log(currSong);
+      // check if same song
+      if (currSong && isLoaded) {
+        this.waveform.playPause();
+      } else {
+        // load - this needs to be sync
+        // might need to use promise chain.
+        this.props.notLoaded();
+        this.waveform.load(currSong);
+        this.waveform.on('ready', () => {
+          // play
+          this.props.loaded();
+          self.waveform.play();
+          // pause
+          // next track
+          // previous track
+        })
+      }   
+    }
   }
-*/
+
+
+  // TODO: old code doesn't work b/c currSong.signedUrl doesn't exist - maybe add to schema?
+  // componentDidUpdate(prevProps) {
+  //   const self = this;
+
+  //   if (this.props.currSong.song && this.props.currSong.song.signedUrl) {
+  //     console.log(this.props.currSong.song.signedUrl);
+  //   }
+
+  //   const currSong = this.props.currSong.song.signedUrl;
+  //   const prevSong = prevProps.currSong.song.signedUrl;
+  //   const isLoaded = this.props.isLoaded;
+
+  //   console.log(currSong);
+  //   // check if same song
+  //   if (currSong === prevSong && isLoaded) {
+  //     this.waveform.playPause();
+  //   } else {
+  //     // load - this needs to be sync
+  //     // might need to use promise chain.
+  //     this.props.notLoaded();
+  //     this.waveform.load(currSong);
+  //     this.waveform.on('ready', () => {
+  //       // play
+  //       this.props.loaded();
+  //       self.waveform.play();
+  //       // pause
+  //       // next track
+  //       // previous track
+  //     })
+  //   }   
+  // }
+
+  // componentDidUpdate() {
+  //   if (this.props.currSong.song && this.props.currSong.song.signedUrl) {
+  //     console.log(this.props.currSong.song.signedUrl);
+  //   }
+  // }
+
   render() {
     return (
       <div className="col" id="waveform">
         {this.props.isLoaded ? null : <span>Loading!</span> }
       </div>
-
     );
   }
 };
+
+function mapStateToProps(state) {
+  const { currSong, isPlaying, isLoaded, isFetching } = state;
+  return {
+    currSong,
+    isPlaying,
+    isLoaded,
+    isFetching
+  }
+}
 
 export default connect(mapStateToProps, { loaded, notLoaded } )(Waveform);
