@@ -54,6 +54,12 @@ class Playlist extends Component {
     }
   }
 
+  getDate(dateAdded){
+    console.log(dateAdded);
+    const time = (new Date(dateAdded * 1)).toLocaleDateString();
+    return time
+  }
+
   componentDidMount() {
     const { id } = this.props.match.params
     this.props.setCurrPlaylist(id);
@@ -137,7 +143,7 @@ function renderPlaylistItems(self, playlist) {
           </td>
 
           <td className="song-dateAdded">
-            {song.dateAdded}
+            {self.getDate(song.dateAdded)}
           </td>
 
           <td className="song-tags">
