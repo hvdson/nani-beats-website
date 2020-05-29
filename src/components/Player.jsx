@@ -5,6 +5,7 @@ import { playSong, pauseSong, togglePlay } from '../actions/actions'
 
 import Waveform from './Waveform';
 import TrackControls from './TrackControls';
+import AudioPlayer from './AudioPlayer';
 
 function mapStateToProps(state) {
   const { currSong, isPlaying } = state;
@@ -21,7 +22,8 @@ class Player extends Component {
         <div className="row">
           <div className="col-2"/>
           <TrackControls/>
-          <Waveform/>
+          {/* <Waveform/> */}
+          <AudioPlayer/>
           <div className="col-2"/>
         </div>
       </div>
