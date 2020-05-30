@@ -65,7 +65,7 @@ class Waveform extends Component {
           // next track
           // previous track
         })
-      }   
+      }
     }
   }
 

@@ -42,8 +42,7 @@ class Playlist extends Component {
   // THEN press play.
   handlePlaylistPlay(songObj) {
     // check if the current song is loaded
-    console.log(songObj);
-    if (this.props.currSong.src === songObj && this.props.isLoaded) {
+    if (this.props.isLoaded) {
       this.props.togglePlay();
     } else {
       // dispatch an action to *LOAD_SONG*
@@ -163,7 +162,8 @@ function renderPlaylistItems(self, playlist) {
 }
 
 function renderPlayPause(self, songObj) {
-    if (self.props.isPlaying && self.props.currSong === songObj ) {
+    if (self.props.isPlaying && self.props.currSong.song._id === songObj._id ) {
+      console.log('inside')
       return (<i className="far fa-pause-circle fa-3x" onClick={() => self.handlePlaylistPlay(songObj)} />)
     }
     return (<i className="far fa-play-circle fa-3x" onClick={() => self.handlePlaylistPlay(songObj)} />)
