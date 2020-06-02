@@ -8,12 +8,9 @@ import {
   GET_SONG_URL_SUCCESS,
   GET_SONG_URL_FAILURE,
   LOAD_SONG,
-  GET_CURR_SONG_POSITION,
-  SET_CURR_SONG_POSITION
 } from "../actions/actions";
 
 const initialState = {
-  position: null,
   isFetching: false,
   song: {}
 };
@@ -23,11 +20,11 @@ const songReducer = (state = initialState, action) => {
     case GET_SONG_URL_REQUEST:
       return { 
         ...state, isFetching: true 
-      }
+      };
     case GET_SONG_URL_SUCCESS:
       return { 
         ...state, isFetching: false, song: action.payload
-      }
+      };
     case GET_SONG_URL_FAILURE:
       return {
         ...state, isFetching: false, errorMessage: action.payload.message
@@ -35,11 +32,7 @@ const songReducer = (state = initialState, action) => {
     case LOAD_SONG:
       return (Object.assign({}, state, {
         url: action.payload
-      }))
-    case SET_CURR_SONG_POSITION:
-      return (Object.assign({}, state, {
-        position: action.payload
-      }))
+      }));
     default:
       return state;
   }
