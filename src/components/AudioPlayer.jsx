@@ -38,31 +38,48 @@ class AudioPlayer extends Component {
         whileloading: function () { console.log(this.id + ' is loading'); },
         whileplaying: function () {
           // 1 second
+          // console.log(this.position)
           self.props.setSongPosition(this.position);
         }
       });
-      soundManager.play()
-
+      soundManager.play(id)
     })
-    this.props.loaded();
-    this.props.playSong();
   }
 
+  // this will watch for any new songs loaded, any changes in the trackControl state?
   componentDidUpdate(prevProps) {
+    // NEW CODE
+    // const currSong = this.props.currSong.song;
+    // console.log('currsong');
+    // console.log(currSong)
+    // const prevSongObjKeys = Object.keys(prevProps.currSong.song).length;
+    // const currSongObjKeys = Object.keys(currSong).length;
+    // // 1. check if it's a new song with a url
+    // if (prevSongObjKeys > 0 && currSongObjKeys > 0) {
+    //   if (currSong._id !== prevProps.currSong.song._id && currSong.signedUrl) {
+    //     console.log(currSong.signedUrl)
+    //     console.log('inside')
+    //     // load song into api
+    //     this.handleSongLoad(currSong.songId, currSong.songUrl);
+    //     // this.props.loaded();
+    //     // it's the same song - check ifPLaying or paused
+    //   } else if (this.props.trackControls.isPlaying) {
+    //     soundManager.play(currSong.songId);
+    //   } else if (!this.props.trackControls.isPlaying) {
+    //     // soundManager.pause();
+    //   }
+    // }
+
+    // OLD CODE
     if (this.props.currSong.song && this.props.currSong.song.signedUrl) {
       const { _id } = this.props.currSong.song;
       console.log(_id);
       const songUrl = this.props.currSong.song.signedUrl;
-      // const prevSong = prevProps.currSong.song.signedUrl;
-      // const isLoaded = this.props.isLoaded;
-      // const prevSong = prevProps.currSong.song;
-      // const isPlaying = this.props.isPlaying;
-      // const prevPlaying = prevProps.props.isPlaying;
-
+      // TODO: THIS WILL ALWAYS RUN FIXIT
       if (prevProps.currSong.song && prevProps.currSong.song._id === _id) {
-        soundManager.togglePause(_id);
+        // soundManager.pause(_id);
+        // console.log('blah')
       } else {
-        this.props.notLoaded();
         this.handleSongLoad(_id, songUrl);
       }
     }
@@ -84,11 +101,10 @@ class AudioPlayer extends Component {
 };
 
 function mapStateToProps(state) {
-  const { currSong, trackControls, isLoaded } = state;
+  const { currSong, trackControls } = state;
   return {
     currSong,
     trackControls,
-    isLoaded,
   }
 }
 

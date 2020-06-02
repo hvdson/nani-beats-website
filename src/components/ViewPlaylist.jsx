@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import WaveSurfer from 'wavesurfer.js';
 import { connect } from 'react-redux';
 import axios from "axios";
-import { playSong, pauseSong, togglePlay } from '../actions/actions';
+import { playSong, pauseSong, togglePlay, loaded } from '../actions/actions';
 import { loadSong, getSongUrl } from '../actions/songActions'
 import { setCurrPlaylist } from '../actions/playlistActions';
 
@@ -178,4 +178,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { playSong, pauseSong, loadSong, togglePlay, setCurrPlaylist, getSongUrl })(Playlist);
+export default connect(mapStateToProps, { loaded, playSong, pauseSong, loadSong, togglePlay, setCurrPlaylist, getSongUrl })(Playlist);
