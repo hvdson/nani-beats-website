@@ -1,19 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { WaveformContainer, Wave, PlayButton } from '../assets/Waveform.styled';
-import { playSong, pauseSong, togglePlay } from '../actions/actions'
+import { playSong, pauseSong } from '../actions/actions'
 
 import Waveform from './Waveform';
 import TrackControls from './TrackControls';
 import AudioPlayer from './AudioPlayer';
-
-function mapStateToProps(state) {
-  const { currSong, isPlaying } = state;
-  return {
-    currSong,
-    isPlaying
-  }
-}
 
 class Player extends Component {
   render() {
@@ -31,4 +23,12 @@ class Player extends Component {
   }
 }
 
-export default connect(mapStateToProps, { playSong, pauseSong, togglePlay, })(Player);
+function mapStateToProps(state) {
+  const { currSong, trackControls } = state;
+  return {
+    currSong,
+    trackControls
+  }
+}
+
+export default connect(mapStateToProps, { playSong, pauseSong })(Player);

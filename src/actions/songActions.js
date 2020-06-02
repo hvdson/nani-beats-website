@@ -5,6 +5,8 @@ import {
   GET_SONG_URL_SUCCESS,
   GET_SONG_URL_FAILURE,
   LOAD_SONG,
+  GET_CURR_SONG_POSITION,
+  SET_CURR_SONG_POSITION
 } from "./actions";
 
 export const getSongUrl = (songObj) => (dispatch) => {

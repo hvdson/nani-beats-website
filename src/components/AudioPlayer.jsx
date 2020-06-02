@@ -2,7 +2,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { WaveformContainer, Wave, PlayButton } from '../assets/Waveform.styled';
-import { loaded, notLoaded, togglePlay } from '../actions/actions'
+import { loaded, notLoaded, togglePlay, playSong } from '../actions/actions';
+import  { setSongPosition } from '../actions/scrubBarActions';
 import { soundManager } from 'soundmanager2'
 soundManager['progress'] = 0;
 
@@ -37,14 +38,14 @@ class AudioPlayer extends Component {
         whileloading: function () { console.log(this.id + ' is loading'); },
         whileplaying: function () {
           // 1 second
-          soundManager.progress = this.position/this.duration*100;
+          self.props.setSongPosition(this.position);
         }
       });
       soundManager.play()
 
     })
     this.props.loaded();
-    this.props.togglePlay();
+    this.props.playSong();
   }
 
   componentDidUpdate(prevProps) {
@@ -53,8 +54,10 @@ class AudioPlayer extends Component {
       console.log(_id);
       const songUrl = this.props.currSong.song.signedUrl;
       // const prevSong = prevProps.currSong.song.signedUrl;
-      const isLoaded = this.props.isLoaded;
-      const prevSong = prevProps.currSong.song;
+      // const isLoaded = this.props.isLoaded;
+      // const prevSong = prevProps.currSong.song;
+      // const isPlaying = this.props.isPlaying;
+      // const prevPlaying = prevProps.props.isPlaying;
 
       if (prevProps.currSong.song && prevProps.currSong.song._id === _id) {
         soundManager.togglePause(_id);
@@ -81,13 +84,12 @@ class AudioPlayer extends Component {
 };
 
 function mapStateToProps(state) {
-  const { currSong, isPlaying, isLoaded, isFetching } = state;
+  const { currSong, trackControls, isLoaded } = state;
   return {
     currSong,
-    isPlaying,
+    trackControls,
     isLoaded,
-    isFetching
   }
 }
 
-export default connect(mapStateToProps, { loaded, notLoaded, togglePlay })(AudioPlayer);
+export default connect(mapStateToProps, { loaded, notLoaded, togglePlay, playSong, setSongPosition })(AudioPlayer);

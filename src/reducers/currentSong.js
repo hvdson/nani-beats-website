@@ -8,9 +8,15 @@ import {
   GET_SONG_URL_SUCCESS,
   GET_SONG_URL_FAILURE,
   LOAD_SONG,
+  GET_CURR_SONG_POSITION,
+  SET_CURR_SONG_POSITION
 } from "../actions/actions";
 
-const initialState = {};
+const initialState = {
+  position: null,
+  isFetching: false,
+  song: {}
+};
 
 const songReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -29,6 +35,10 @@ const songReducer = (state = initialState, action) => {
     case LOAD_SONG:
       return (Object.assign({}, state, {
         url: action.payload
+      }))
+    case SET_CURR_SONG_POSITION:
+      return (Object.assign({}, state, {
+        position: action.payload
       }))
     default:
       return state;

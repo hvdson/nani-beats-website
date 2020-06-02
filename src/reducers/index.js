@@ -1,16 +1,15 @@
 import songReducer from './currentSong';
-import playReducer from './isPlaying';
-import loadReducer from './isLoaded';
 import authReducer from './authReducer';
 import errorReducer from './errorReducer';
 import playlistReducer from './playlistReducer';
+import trackControlReducers from './trackControlReducer';
 import { combineReducers } from 'redux';
+
 
 const allReducers = combineReducers({
   currSong: songReducer,
   playlists: playlistReducer,
-  isPlaying: playReducer,
-  isLoaded: loadReducer,
+  trackControls: trackControlReducers,
   auth: authReducer,
   errors: errorReducer,
 })

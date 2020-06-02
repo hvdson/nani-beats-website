@@ -33,7 +33,7 @@ class TrackControls extends Component {
 
   handlePlay = () => {
     if (this.props.isLoaded) {
-      this.props.togglePlay();
+      this.props.playSong();
     }
   }
 
