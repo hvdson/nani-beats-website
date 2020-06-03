@@ -43,13 +43,13 @@ class Playlist extends Component {
   handlePlaylistPlay(songObj) {
     // check if the current song is loaded
     if (this.props.trackControls.isLoaded) {
-      this.props.playSong();
+      this.props.togglePlay();
     } else {
       // dispatch an action to *LOAD_SONG*
       console.log(songObj.s3Key);
       this.props.getSongUrl(songObj);
       // this.props.loadSong(val);
-      // this.props.playSong();
+      this.props.playSong();
     }
   }
 

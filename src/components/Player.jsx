@@ -11,12 +11,13 @@ class Player extends Component {
   render() {
     return (
       <div className="fixed-bottom container-fluid player-footer">
+        <AudioPlayer />
         <div className="row">
           <div className="col-2"/>
+
           <TrackControls/>
           {/* <Waveform/> */}
-          <AudioPlayer/>
-          <div className="col-2"/>
+          {/* <div className="col-2"/> */}
         </div>
       </div>
     )

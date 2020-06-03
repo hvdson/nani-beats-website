@@ -3,6 +3,7 @@ import authReducer from './authReducer';
 import errorReducer from './errorReducer';
 import playlistReducer from './playlistReducer';
 import trackControlReducers from './trackControlReducer';
+import scrubBarReducer from './scrubBarReducer'
 import { combineReducers } from 'redux';
 
 
@@ -12,6 +13,7 @@ const allReducers = combineReducers({
   trackControls: trackControlReducers,
   auth: authReducer,
   errors: errorReducer,
+  position: scrubBarReducer,
 })
 
 export default allReducers;

@@ -4,14 +4,6 @@ import { connect } from 'react-redux';
 import { playSong, pauseSong, togglePlay } from '../actions/actions'
 import Play from '@bit/feathericons.react-feather.play';
 
-function mapStateToProps(state) {
-  const { currSong, isPlaying, isLoaded } = state;
-  return {
-    currSong,
-    isPlaying,
-    isLoaded
-  }
-}
 
 class TrackControls extends Component {
   constructor(props) {
@@ -32,8 +24,8 @@ class TrackControls extends Component {
   }
 
   handlePlay = () => {
-    if (this.props.isLoaded) {
-      this.props.playSong();
+    if (this.props.trackControls.isLoaded) {
+      this.props.togglePlay();
     }
   }
 
@@ -48,7 +40,7 @@ class TrackControls extends Component {
 
 function renderPlayButton(self) {
   return (
-    self.props.isPlaying ? 
+    self.props.trackControls.isPlaying ? 
       <div className="far fa-pause-circle fa-3x" onClick={self.handlePlay}/> : 
       <div className="far fa-play-circle fa-3x" onClick={self.handlePlay}/>
   )
@@ -56,6 +48,13 @@ function renderPlayButton(self) {
   // <Play size='50' color='green' onClick={self.handlePlay}/>
 }
 
+function mapStateToProps(state) {
+  const { currSong, trackControls } = state;
+  return {
+    currSong,
+    trackControls
+  }
+}
 
 
 export default connect(mapStateToProps, { playSong, pauseSong, togglePlay, })(TrackControls);
