@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { WaveformContainer, Wave, PlayButton } from '../assets/Waveform.styled';
 import { loaded, notLoaded, togglePlay, playSong } from '../actions/actions';
-import  { setSongPosition } from '../actions/scrubBarActions';
+import  { setSongPosition, songLength } from '../actions/scrubBarActions';
 import { soundManager } from 'soundmanager2'
 soundManager['progress'] = 0;
 
@@ -67,12 +67,14 @@ class AudioPlayer extends Component {
   // this will watch for any new songs loaded, any changes in the trackControl state?
   componentDidUpdate(prevProps) {
     if (this.props.currSong.song && this.props.currSong.song.signedUrl) {
-      const { _id } = this.props.currSong.song;
+      const { _id, length } = this.props.currSong.song;
+      console.log(length);
       console.log(_id);
       const songUrl = this.props.currSong.song.signedUrl;
       if (prevProps.currSong.song._id === _id) {
         this.props.trackControls.isPlaying ? soundManager.play(_id) : soundManager.pause(_id);
       } else {
+        this.props.songLength(length);
         this.handleSongLoad(_id, songUrl);
       }
     }
@@ -93,4 +95,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { loaded, notLoaded, togglePlay, playSong, setSongPosition })(AudioPlayer);
+export default connect(mapStateToProps, { loaded, notLoaded, togglePlay, playSong, setSongPosition, songLength })(AudioPlayer);

@@ -1,11 +1,12 @@
 import {
-  GET_CURR_SONG_POSITION,
+  SONG_LENGTH,
   SET_CURR_SONG_POSITION
 } from './actions'
 
-export const getSongPosition = () => {
+export const songLength = length => {
   return {
-    type: GET_CURR_SONG_POSITION
+    type: SONG_LENGTH,
+    payload: length
   }
 }
 

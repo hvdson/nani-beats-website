@@ -6,18 +6,20 @@ import { playSong, pauseSong } from '../actions/actions'
 import Waveform from './Waveform';
 import TrackControls from './TrackControls';
 import AudioPlayer from './AudioPlayer';
+import ScrubBar from './ScrubBar';
 
 class Player extends Component {
   render() {
     return (
       <div className="fixed-bottom container-fluid player-footer">
-        <AudioPlayer />
         <div className="row">
           <div className="col-2"/>
+            <AudioPlayer />
+            <TrackControls/>
+            <ScrubBar/>
 
-          <TrackControls/>
-          {/* <Waveform/> */}
-          {/* <div className="col-2"/> */}
+            {/* <Waveform/> */}
+            {/* <div className="col-2"/> */}
         </div>
       </div>
     )

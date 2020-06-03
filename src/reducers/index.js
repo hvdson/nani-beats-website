@@ -13,7 +13,7 @@ const allReducers = combineReducers({
   trackControls: trackControlReducers,
   auth: authReducer,
   errors: errorReducer,
-  position: scrubBarReducer,
+  scrubBar: scrubBarReducer,
 })
 
 export default allReducers;

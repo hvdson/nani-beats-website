@@ -1,12 +1,19 @@
-
 import {
-  SET_CURR_SONG_POSITION
+  SET_CURR_SONG_POSITION,
+  SONG_LENGTH
 } from '../actions/actions'
 
-const scrubBarReducer = (state = 0, action) => {
+const initialState = {
+  position: null,
+  length: null
+}
+
+const scrubBarReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_CURR_SONG_POSITION:
-      return action.payload
+      return { ...state, position: action.payload };
+    case SONG_LENGTH:
+      return { ...state, length: action.payload };
     default:
       return state
   }
