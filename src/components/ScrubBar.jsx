@@ -50,8 +50,14 @@ class ScrubBar extends Component {
   render() {
     return (
       <div className="col" id="scrub-bar">
-        {this.currTime(this.props.scrubBar.position)}
-        {this.timeLeft(this.props.scrubBar.length, this.props.scrubBar.position)}
+        <div className="col">
+          current time
+          {this.currTime(this.props.scrubBar.position)}
+        </div>
+        <div className="col">
+          time left
+          {this.timeLeft(this.props.scrubBar.length, this.props.scrubBar.position)}
+        </div>
         {/* <div className="progress"> */}
           {/* <div className="progress-bar bg-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div> */}
         {/* </div> */}
