@@ -43,7 +43,7 @@ class ScrubBar extends Component {
 
   render() {
     return (
-      <div className="col-8 d-flex align-items-center"> 
+      <div className="col-8 d-flex align-items-center" id="scrub-bar-component"> 
         <div className="col-1">
           {this.currTime(this.props.scrubBar.position)}
         </div>

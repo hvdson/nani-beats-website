@@ -104,7 +104,7 @@ ul {
 }
 
 .player-footer {
-  background-color: black;
+  background-color: rgb(25, 29, 23);
 }
 
 .playlist-card {
@@ -149,20 +149,22 @@ ul {
 
 .scrub-bar {
   position: relative;
-  height: 4px;
+  height: 5px;
   border-radius: 10px;
-}
-
-.scrub-bar:hover {
-  transform: scaleY(1.3);
+  padding: 0;
+  background-color: rgb(80,85,88);
 }
 
 .filler {
-  background: #DD2121;
+  background-color: #DD2121;
   height: 100%;
   border-radius: inherit;
 }
 
+#scrub-bar-component:hover > .scrub-bar > .filler {
+  background-color: rgb(255, 190, 190);
+}
+
 .fixed-bottom {
-  height: 4vw;
+  height: 7%;
 }

@@ -4,10 +4,15 @@ import { connect } from 'react-redux';
 // components
 class ScrubBarFiller extends Component {
   constructor(){
-    super();
+    super();    
     this.state = {
       percentage: 0
     }
+    this.handleScrub = this.handleScrub.bind(this)
+  }
+
+  handleScrub(e) {
+    console.log('click')
   }
 
   songPositionPercentage() {
@@ -17,13 +22,12 @@ class ScrubBarFiller extends Component {
       return (position / lengthMs * 100);
     }
     return 0;
-    
   }
 
   render() {
     const currPos = this.songPositionPercentage();
     return (
-      <div className="filler" style={{ width: `${currPos}%` }}/>
+      <div className="filler" id="progress-bar-filler" style={{ width: `${currPos}%` }} onClick={this.handleScrub}/>
     );
   }
 }

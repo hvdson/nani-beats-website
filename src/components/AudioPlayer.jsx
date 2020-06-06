@@ -15,7 +15,7 @@ class AudioPlayer extends Component {
   componentDidMount() {
     const self = this;
     soundManager.setup({
-      debugMode: false,
+      debugMode: true,
       useHTML5Audio: true,
       preferFlash: false,
       url: '/path/to/swf-directory/',
@@ -24,26 +24,6 @@ class AudioPlayer extends Component {
         console.log('error!');
       }
     })
-
-    // gist from https://gist.github.com/jrue/9925392
-    if (typeof soundManager !== 'undefined')
-      soundManager.fadeTo = function (id, dur, toVol, callback) {
-        dur = dur || 1000;
-        toVol = toVol || 0;
-        callback = typeof callback === 'function' ? callback : function () { };
-        var s = soundManager.getSoundById(id),
-          k = s.volume,
-          t = dur / Math.abs(k - toVol),
-          i = setInterval(function () {
-            k = k > toVol ? k - 1 : k + 1;
-            s.setVolume(k);
-            if (k === toVol) {
-              callback.call(this);
-              clearInterval(i);
-              i = null;
-            }
-          }, t);
-      }
   }
 
 
