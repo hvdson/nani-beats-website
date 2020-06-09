@@ -8,12 +8,9 @@ class ScrubBarFiller extends Component {
     this.state = {
       percentage: 0
     }
-    this.handleScrub = this.handleScrub.bind(this)
+    // this.handleScrub = this.handleScrub.bind(this)
   }
 
-  handleScrub(e) {
-    console.log('click')
-  }
 
   songPositionPercentage() {
     if (this.props.scrubBar.length && this.props.scrubBar.position) {
@@ -27,7 +24,7 @@ class ScrubBarFiller extends Component {
   render() {
     const currPos = this.songPositionPercentage();
     return (
-      <div className="filler" id="progress-bar-filler" style={{ width: `${currPos}%` }} onClick={this.handleScrub}/>
+      <div className="filler" id="progress-bar-filler" style={{ width: `${currPos}%` }} />
     );
   }
 }

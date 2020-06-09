@@ -41,13 +41,18 @@ class ScrubBar extends Component {
     return minutes + ':' + seconds;
   }
 
+
+  handleScrub(e) {
+    console.log(e.target)
+  }
+
   render() {
     return (
-      <div className="col-8 d-flex align-items-center" id="scrub-bar-component"> 
+      <div className="col-6 d-flex align-items-center" id="scrub-bar-component"> 
         <div className="col-1">
           {this.currTime(this.props.scrubBar.position)}
         </div>
-        <div className="col-8 scrub-bar">
+        <div className="col-10 scrub-bar" onClick={this.handleScrub}>
           <ScrubBarFiller minSecToMs={this.minSecToMs} songMsToMinSec={this.songMsToMinSec}/>
         </div>
         <div className="col-1">
