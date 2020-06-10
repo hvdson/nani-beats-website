@@ -1,4 +1,4 @@
-import { SET_CURR_SONG_POSITION } from '../actions/actions'
+import { PLAY_FROM_POSITION } from '../actions/actions'
 
 import {
   combineReducers
@@ -29,9 +29,19 @@ const loadReducer = (state = false, action) => {
   }
 };
 
+const positionReducer = (state = 0, action) => {
+  switch (action.type) {
+    case PLAY_FROM_POSITION:
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 const trackControlReducers = combineReducers({
   isPlaying: playReducer,
   isLoaded: loadReducer,
+  playFromPosition: positionReducer,
 })
 
 export default trackControlReducers;

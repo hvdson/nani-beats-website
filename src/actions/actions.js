@@ -57,3 +57,12 @@ export const GET_CURRENT_PLAYLIST = "GET_CURRENT_PLAYLIST";
 
 export const SET_CURR_SONG_POSITION = "SET_CURR_SONG_POSITION";
 export const SONG_LENGTH = "SONG_LENGTH";
+export const PLAY_FROM_POSITION = "PLAY_FROM_POSITION";
+
+// TODO: move this to own module
+export const playFromPosition = newPosition => {
+  return ({
+    type: PLAY_FROM_POSITION,
+    payload: newPosition
+  })
+}

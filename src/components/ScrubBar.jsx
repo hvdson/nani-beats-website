@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ScrubBarFiller from './ScrubBarFiller';
+import {playFromPosition} from '../actions/actions';
 
 // components
 class ScrubBar extends Component {
+  constructor(props) {
+    super(props);
+    this.handleScrub = this.handleScrub.bind(this);
+  }
+
   timeLeft(length, currPos) {
     // todo: fix bug where timeLeft shows negative value - prob todo with lengthMs - currPos < 0 when it reaches end of song
     if (length && currPos) {
@@ -43,20 +49,25 @@ class ScrubBar extends Component {
 
 
   handleScrub(e) {
-    console.log(e.target)
+    const clickedSpot = e.nativeEvent.offsetX;
+    const totalWidth = e.nativeEvent.target.clientWidth;
+    const rawPosition = Math.floor((clickedSpot/totalWidth) * this.minSecToMs(this.props.scrubBar.length));
+    this.props.playFromPosition(rawPosition);
   }
 
   render() {
     return (
       <div className="col-6 d-flex align-items-center" id="scrub-bar-component"> 
-        <div className="col-1">
-          {this.currTime(this.props.scrubBar.position)}
+        <div className="col justify-content-center">
+          <span>{this.currTime(this.props.scrubBar.position)}</span>
         </div>
-        <div className="col-10 scrub-bar" onClick={this.handleScrub}>
-          <ScrubBarFiller minSecToMs={this.minSecToMs} songMsToMinSec={this.songMsToMinSec}/>
+        <div className="col-10 scrub-bar-click-wrapper" onMouseUp={this.handleScrub}>
+          <div className="scrub-bar">
+            <ScrubBarFiller minSecToMs={this.minSecToMs} songMsToMinSec={this.songMsToMinSec}/>
+          </div>
         </div>
-        <div className="col-1">
-          {this.timeLeft(this.props.scrubBar.length, this.props.scrubBar.position)}
+        <div className="col justify-content-center">
+          <span>{this.timeLeft(this.props.scrubBar.length, this.props.scrubBar.position)}</span>
         </div>
       </div>
     );
@@ -71,4 +82,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, null)(ScrubBar);
+export default connect(mapStateToProps, { playFromPosition })(ScrubBar);

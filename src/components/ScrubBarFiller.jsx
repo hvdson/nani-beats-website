@@ -24,7 +24,8 @@ class ScrubBarFiller extends Component {
   render() {
     const currPos = this.songPositionPercentage();
     return (
-      <div className="filler" id="progress-bar-filler" style={{ width: `${currPos}%` }} />
+      <div className="filler" id="progress-bar-filler" style={{ width: `${currPos}%` }} >
+      </div>
     );
   }
 }

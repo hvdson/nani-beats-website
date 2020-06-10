@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { loaded, notLoaded, togglePlay, playSong } from '../actions/actions';
 import  { setSongPosition, songLength } from '../actions/scrubBarActions';
 import { soundManager } from 'soundmanager2'
-soundManager['progress'] = 0;
 
 // apparently this is a container component
 // Subscribes to the 'playing' state
@@ -53,6 +52,9 @@ class AudioPlayer extends Component {
       const songUrl = this.props.currSong.song.signedUrl;
       if (prevProps.currSong.song._id === _id) {
         this.props.trackControls.isPlaying ? soundManager.play(_id) : soundManager.pause(_id);
+        if (prevProps.trackControls.playFromPosition !== this.props.trackControls.playFromPosition) {
+          soundManager.setPosition(_id, this.props.trackControls.playFromPosition)
+        }
       } else {
         this.props.songLength(length);
         this.handleSongLoad(_id, songUrl);

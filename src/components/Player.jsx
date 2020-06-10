@@ -11,12 +11,12 @@ import ScrubBar from './ScrubBar';
 class Player extends Component {
   render() {
     return (
-      <div className="fixed-bottom d-flex align-items-center container-fluid player-footer">
-          <div className="col-2"/>
-            <AudioPlayer />
-            <TrackControls/>
-            <ScrubBar/>
-            <div className="col-2"/>
+      <div className="fixed-bottom d-flex flex-column align-items-center justify-content-center container-fluid player-footer">
+          {/* <div className="col-2"/> */}
+          <AudioPlayer />
+          <TrackControls/>
+          <ScrubBar/>
+          {/* <div className="col-2"/> */}
             {/* <Waveform/> */}
             {/* <div className="col-2"/> */}
       </div>
