@@ -70,7 +70,7 @@ class Playlist extends Component {
             <div>
               <h1>{this.props.playlists.currPlaylist.name}</h1>
             </div>
-            <table className="song-container container-fluid">
+            <table className="song-container table table-dark table-hover table-borderless">
               {renderPlaylistHeaders()}
               {this.props.playlists.currPlaylist
                 ? renderPlaylistItems(this, this.props.playlists.currPlaylist)
@@ -110,47 +110,47 @@ function renderPlaylistItems(self, playlist) {
     <tbody>
       {playlist.songs.map((song, idx) => {
       return (
-        <tr key={idx}>
-          <th className="play-button">
+        <tr id={idx}>
+          <th className="play-button align-middle">
             {renderPlayPause(self, song)}
           </th>
-          <td>
+          <td className="align-middle">
             <img src={song.imgThumbUrl} alt="cloutkirby" className="img-thumbnail"/>
           </td>
-          <td className="song-artistsType">
+          <td className="song-artistsType align-middle">
             {song.artistsType.map((artist) => {
               return (
                 <li>{artist}</li>
               )
             })}
           </td>
-          <td className="song-title">
+          <td className="song-title align-middle">
             {song.title}
           </td>
-          <td className="song-bpm">
+          <td className="song-bpm align-middle">
             {song.bpm}
           </td>
 
-          <td className="song-key">
+          <td className="song-key align-middle">
             {song.key}
           </td>
 
-          <td className="song-length">
+          <td className="song-length align-middle">
             {song.length}
           </td>
 
-          <td className="song-dateAdded">
+          <td className="song-dateAdded align-middle">
             {self.getDate(song.dateAdded)}
           </td>
 
-          <td className="song-tags">
+          <td className="song-tags align-middle">
             {song.tags.map((tag) => {
               return (
                 <li>{tag}</li>
               )
             })}
           </td>
-          <td className="song-download">
+          <td className="song-download align-middle">
             <i className="far fa-download fa-2x" onClick={() => self.handlePlaylistPlay()} />
           </td>
         </tr>
