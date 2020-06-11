@@ -17,6 +17,7 @@ class AudioPlayer extends Component {
       debugMode: true,
       useHTML5Audio: true,
       preferFlash: false,
+      stream: true,
       url: '/path/to/swf-directory/',
       ontimeout: function () {
         // Uh-oh. No HTML5 support, SWF missing, Flash blocked or other issue
@@ -35,9 +36,13 @@ class AudioPlayer extends Component {
         // optional id, for getSoundById() look-ups etc. If omitted, an id will be generated.
         id: id,
         url: songUrl,
-        whileloading: function () { console.log(this.id + ' is loading'); },
-        whileplaying: function () {
+        autoPlay: true,
+        whileloading: function() { console.log(this.id + ' is loading'); },
+        whileplaying: function() {
           self.props.setSongPosition(this.position);
+        },
+        onfinish: function() {
+          soundManager.stopAll();
         }
       });
     })
@@ -49,8 +54,7 @@ class AudioPlayer extends Component {
       const { _id, length } = this.props.currSong.song;
       const songUrl = this.props.currSong.song.signedUrl;
       if (prevProps.currSong.song._id === _id) {
-        debugger;
-        this.props.trackControls.isPlaying ? soundManager.play(_id) : soundManager.pause(_id);
+        this.props.trackControls.isPlaying ? soundManager.resume(_id) : soundManager.pause(_id);
         if (prevProps.trackControls.playFromPosition !== this.props.trackControls.playFromPosition) {
           soundManager.setPosition(_id, this.props.trackControls.playFromPosition)
         }

@@ -47,6 +47,7 @@ class App extends Component {
             <Route exact path="/login" component={Login}/>
             <Switch>
               <PrivateRoute path="/web-player" component={WebPlayer}/>
+              {/* <UploadRoute exact path="admin/upload" component={WebPlayer}/> */}
             </Switch>
           </div>
         </Router>
