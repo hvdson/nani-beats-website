@@ -42,13 +42,9 @@ class Waveform extends Component {
     const self = this;
 
     if (this.props.currSong.song && this.props.currSong.song.signedUrl) {
-      console.log(this.props.currSong.song.signedUrl);
-
       const currSong = this.props.currSong.song.signedUrl;
       // const prevSong = prevProps.currSong.song.signedUrl;
       const isLoaded = this.props.isLoaded;
-
-      console.log(currSong);
       // check if same song
       if (currSong && isLoaded) {
         this.waveform.playPause();

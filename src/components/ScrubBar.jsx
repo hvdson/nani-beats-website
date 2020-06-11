@@ -39,7 +39,6 @@ class ScrubBar extends Component {
     seconds_int = Math.floor(length - minutes * 60),
     seconds_str = seconds_int.toString(),
     seconds = seconds_str.substr(0, 2)
-    console.log(seconds_int)
 
     if (seconds_int < 10) {
       return minutes + ':' + '0' + seconds;

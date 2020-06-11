@@ -46,7 +46,6 @@ class Playlist extends Component {
       this.props.togglePlay();
     } else {
       // dispatch an action to *LOAD_SONG*
-      console.log(songObj.s3Key);
       this.props.getSongUrl(songObj);
       // this.props.loadSong(val);
       this.props.playSong();
@@ -54,7 +53,6 @@ class Playlist extends Component {
   }
 
   getDate(dateAdded){
-    console.log(dateAdded);
     const time = (new Date(dateAdded * 1)).toLocaleDateString();
     return time
   }
@@ -163,7 +161,6 @@ function renderPlaylistItems(self, playlist) {
 
 function renderPlayPause(self, songObj) {
     if (self.props.trackControls.isPlaying && self.props.currSong.song._id === songObj._id ) {
-      console.log('inside')
       return (<i className="far fa-pause-circle fa-3x" onClick={() => self.handlePlaylistPlay(songObj)} />)
     }
     return (<i className="far fa-play-circle fa-3x" onClick={() => self.handlePlaylistPlay(songObj)} />)

@@ -17,7 +17,6 @@ class TrackControls extends Component {
   }
 
   detectSpacebar = (e) => {
-    console.log(e);
     if (e.keyCode === 32) {
       this.handlePlay();
     }

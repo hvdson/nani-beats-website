@@ -47,10 +47,9 @@ class AudioPlayer extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.currSong.song && this.props.currSong.song.signedUrl) {
       const { _id, length } = this.props.currSong.song;
-      console.log(length);
-      console.log(_id);
       const songUrl = this.props.currSong.song.signedUrl;
       if (prevProps.currSong.song._id === _id) {
+        debugger;
         this.props.trackControls.isPlaying ? soundManager.play(_id) : soundManager.pause(_id);
         if (prevProps.trackControls.playFromPosition !== this.props.trackControls.playFromPosition) {
           soundManager.setPosition(_id, this.props.trackControls.playFromPosition)

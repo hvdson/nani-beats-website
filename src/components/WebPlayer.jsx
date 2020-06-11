@@ -31,19 +31,7 @@ class WebPlayer extends Component {
     }
   }
 
-  callAPI = async () => {
-    const res = await axios.get('/api/monah');
-    const body = await res.data;
-
-    if (res.status !== 200) {
-      throw Error(body.message);
-    }
-    console.log(body);
-    return (body);
-  }
-
   render() {
-    console.log(this.props.match)
     return (
         <div className="web-player">
           <Navbar />
