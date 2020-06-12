@@ -16,4 +16,13 @@ describe('actions', () => {
     expect(actions.pauseSong()).toEqual(expectedAction)
   })
 
+  it('should create a playFromPosition action', () => {
+    const newPosition = 333331;
+    const expectedAction = {
+      type: constants.PLAY_FROM_POSITION,
+      payload: newPosition
+    }
+    expect(actions.playFromPosition(newPosition)).toEqual(expectedAction)
+  })
+
 })

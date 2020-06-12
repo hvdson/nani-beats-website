@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import WaveSurfer from 'wavesurfer.js';
 import { connect } from 'react-redux';
-import axios from "axios";
 import { playSong, pauseSong, togglePlay, loaded } from '../actions/trackControlsActions';
 import { loadSong, getSongUrl } from '../actions/songActions'
 import { setCurrPlaylist } from '../actions/playlistActions';

@@ -28,24 +28,31 @@ class AudioPlayer extends Component {
     const self = this;
     soundManager.onready(() => {
       this.props.loaded();
-      soundManager.createSound({
-        // optional id, for getSoundById() look-ups etc. If omitted, an id will be generated.
-        id: id,
-        url: songUrl,
-        autoPlay: true,
-        whileloading: function() { console.log(this.id + ' is loading'); },
-        whileplaying: function() {
-          self.props.setSongPosition(this.position);
-        },
-        onfinish: function() {
-          soundManager.stopAll();
-        }
-      });
+      const existingSong = soundManager.getSoundById(id);
+      if (existingSong) {
+        soundManager.setPosition(id, 0)
+        soundManager.play(id);
+      } else {
+        soundManager.createSound({
+          // optional id, for getSoundById() look-ups etc. If omitted, an id will be generated.
+          id: id,
+          url: songUrl,
+          autoPlay: true,
+          whileloading: function () { console.log(this.id + ' is loading'); },
+          whileplaying: function () {
+            self.props.setSongPosition(this.position);
+          },
+        });
+      }
     })
   }
 
   // this will watch for any new songs loaded, any changes in the trackControl state?
   componentDidUpdate(prevProps) {
+    if (!this.props.auth.isAuthenticated) {
+      soundManager.stopAll();
+    }
+
     if (this.props.currSong.song && this.props.currSong.song.signedUrl) {
       const { _id, length } = this.props.currSong.song;
       const songUrl = this.props.currSong.song.signedUrl;
@@ -55,6 +62,7 @@ class AudioPlayer extends Component {
           soundManager.setPosition(_id, this.props.trackControls.playFromPosition)
         }
       } else {
+        soundManager.stopAll();
         this.props.songLength(length);
         this.handleSongLoad(_id, songUrl);
       }
@@ -69,10 +77,11 @@ class AudioPlayer extends Component {
 };
 
 function mapStateToProps(state) {
-  const { currSong, trackControls } = state;
+  const { currSong, trackControls, auth } = state;
   return {
     currSong,
     trackControls,
+    auth
   }
 }
 
