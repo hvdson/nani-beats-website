@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { WaveformContainer, Wave, PlayButton } from '../assets/Waveform.styled';
-import { playSong, pauseSong, togglePlay } from '../actions/actions'
-import Play from '@bit/feathericons.react-feather.play';
-
+import { playSong, pauseSong, togglePlay } from '../actions/trackControlsActions';
 
 class TrackControls extends Component {
   constructor(props) {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ScrubBarFiller from './ScrubBarFiller';
-import {playFromPosition} from '../actions/actions';
+import { playFromPosition } from '../actions/trackControlsActions';
 
 // components
 class ScrubBar extends Component {

@@ -58,5 +58,7 @@
     ]
   },
   "proxy": "http://localhost:8080",
-  "devDependencies": {}
+  "devDependencies": {
+    "react-test-renderer": "^16.13.1"
+  }
 }

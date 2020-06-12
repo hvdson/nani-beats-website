@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import WaveSurfer from 'wavesurfer.js';
 import { connect } from 'react-redux';
 import axios from "axios";
-import { playSong, pauseSong, togglePlay, loaded } from '../actions/actions';
+import { playSong, pauseSong, togglePlay, loaded } from '../actions/trackControlsActions';
 import { loadSong, getSongUrl } from '../actions/songActions'
 import { setCurrPlaylist } from '../actions/playlistActions';
 
@@ -41,8 +41,8 @@ class Playlist extends Component {
   // this needs to dispatch action to get the signedUrl from s3
   // THEN press play.
   handlePlaylistPlay(songObj) {
-    // check if the current song is loaded
-    if (this.props.trackControls.isLoaded) {
+    // check if the current song is loaded and if it's the same song
+    if (songObj._id === this.props.currSong.song._id && this.props.trackControls.isLoaded) {
       this.props.togglePlay();
     } else {
       // dispatch an action to *LOAD_SONG*

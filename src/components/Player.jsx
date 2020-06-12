@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { WaveformContainer, Wave, PlayButton } from '../assets/Waveform.styled';
-import { playSong, pauseSong } from '../actions/actions'
-
-import Waveform from './Waveform';
 import TrackControls from './TrackControls';
 import AudioPlayer from './AudioPlayer';
 import ScrubBar from './ScrubBar';
@@ -32,4 +28,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { playSong, pauseSong })(Player);
+export default connect(mapStateToProps, null )(Player);

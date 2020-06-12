@@ -1,8 +1,6 @@
-// import soundManager from 'soundmanager2';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { WaveformContainer, Wave, PlayButton } from '../assets/Waveform.styled';
-import { loaded, notLoaded, togglePlay, playSong } from '../actions/actions';
+import { loaded } from '../actions/trackControlsActions';
 import  { setSongPosition, songLength } from '../actions/scrubBarActions';
 import { soundManager } from 'soundmanager2'
 
@@ -25,8 +23,6 @@ class AudioPlayer extends Component {
       }
     })
   }
-
-
 
   handleSongLoad(id, songUrl) {
     const self = this;
@@ -80,4 +76,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { loaded, notLoaded, togglePlay, playSong, setSongPosition, songLength })(AudioPlayer);
+export default connect(mapStateToProps, { loaded, setSongPosition, songLength })(AudioPlayer);
