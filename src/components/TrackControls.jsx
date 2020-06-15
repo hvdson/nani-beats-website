@@ -28,8 +28,16 @@ class TrackControls extends Component {
 
   render() {
     return (
-      <div className="col-1" onKeyDown={(e) => this.detectSpacebar(e)}>
-        {renderPlayButton(this)}
+      <div className="row d-flex align-items-center">
+        <div className="col" >
+          <i className="far fa-step-backward fa-2x" />
+        </div>
+        <div className="col" onKeyDown={(e) => this.detectSpacebar(e)}>        
+          {renderPlayButton(this)}
+        </div>
+        <div className="col" >
+          <i className="far fa-step-forward fa-2x" />
+        </div>
       </div>
     )
   }
@@ -38,8 +46,9 @@ class TrackControls extends Component {
 function renderPlayButton(self) {
   return (
     self.props.trackControls.isPlaying ? 
-      <div className="far fa-pause-circle fa-2x" onClick={self.handlePlay}/> : 
-      <div className="far fa-play-circle fa-2x" onClick={self.handlePlay}/>
+      <i className="far fa-pause-circle fa-3x" onClick={self.handlePlay}/> : 
+      <i className="far fa-play-circle fa-3x" onClick={self.handlePlay}/>
+    
   )
   // bit
   // <Play size='50' color='green' onClick={self.handlePlay}/>
