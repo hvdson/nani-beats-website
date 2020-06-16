@@ -4,6 +4,8 @@ export const PAUSE = 'PAUSE';
 export const TOGGLE_PLAY = 'TOGGLE_PLAY';
 export const LOADED = 'LOADED';
 export const NOT_LOADED = 'NOT_LOADED';
+export const NEXT_SONG = 'NEXT_SONG';
+export const PREV_SONG = 'PREV_SONG';
 
 // song constants
 export const LOAD_SONG = 'LOAD_SONG';
@@ -24,3 +26,6 @@ export const GET_CURRENT_PLAYLIST = "GET_CURRENT_PLAYLIST";
 export const SET_CURR_SONG_POSITION = "SET_CURR_SONG_POSITION";
 export const SONG_LENGTH = "SONG_LENGTH";
 export const PLAY_FROM_POSITION = "PLAY_FROM_POSITION";
+
+// Queue constants
+export const LOAD_PLAYLIST_INTO_QUEUE = "LOAD_PLAYLIST_INTO_QUEUE";

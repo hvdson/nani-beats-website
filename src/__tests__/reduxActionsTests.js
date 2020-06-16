@@ -1,19 +1,21 @@
 import * as constants from '../actions/actions'
-import * as actions from '../actions/trackControlsActions';
+import * as trackControlActions from '../actions/trackControlsActions';
+import * as queueActions from '../actions/queueActions';
+
 
 describe('actions', () => {
   it('should create playSong action', () => {
     const expectedAction = {
       type: constants.PLAY,
     }
-    expect(actions.playSong()).toEqual(expectedAction)
+    expect(trackControlActions.playSong()).toEqual(expectedAction)
   })
 
   it('should create pauseSong action', () => {
     const expectedAction = {
       type: constants.PAUSE,
     }
-    expect(actions.pauseSong()).toEqual(expectedAction)
+    expect(trackControlActions.pauseSong()).toEqual(expectedAction)
   })
 
   it('should create a playFromPosition action', () => {
@@ -22,7 +24,29 @@ describe('actions', () => {
       type: constants.PLAY_FROM_POSITION,
       payload: newPosition
     }
-    expect(actions.playFromPosition(newPosition)).toEqual(expectedAction)
+    expect(trackControlActions.playFromPosition(newPosition)).toEqual(expectedAction)
   })
 
+  it('should create a set the current queue', () => {
+    const newQueue = [{
+      "_id": "5ec2f4b828ceb93e61b2ff39",
+      "songId": "hashnum69",
+      "s3Key": "NANI BEATS VOL. 4/ Charleston.mp3",
+      "imgThumbUrl": "https://i.redd.it/fx8fagknp1k21.jpg",
+      "artistsType": ["Lance The Wrapper", "Drake", "Post Malone"],
+      "title": "Charleston",
+      "bpm": {
+        "$numberInt": "69"
+      },
+      "key": "A#",
+      "length": "3:18",
+      "dateAdded": "1589828091349",
+      "tags": ["dank beat", "neat", "heat", "🔥"]
+    }]
+    const expectedAction = {
+      type: constants.LOAD_PLAYLIST_INTO_QUEUE,
+      payload: newQueue
+    }
+    expect(queueActions.loadPlaylistIntoQueue(newQueue)).toEqual(expectedAction);
+  })
 })

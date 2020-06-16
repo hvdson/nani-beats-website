@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import { registerUser } from '../actions/authActions';
+import { registerUser } from '../../actions/authActions';
 import PropTypes from 'prop-types';
 import classnames from 'classnames'
 

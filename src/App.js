@@ -12,8 +12,11 @@ import store from './store.js';
 import Navbar from './components/Navbar.jsx';
 import WebPlayer from './components/WebPlayer';
 import LandingPage from './components/LandingPage';
-import Register from './components/Register';
-import Login from './components/Login';
+
+// auth
+import Register from './components/auth/Register';
+import Login from './components/auth/Login';
+
 import PrivateRoute from "./components/private-routes/PrivateRoute";
 
 // Check for token to keep user logged in
