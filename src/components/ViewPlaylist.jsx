@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { playSong, pauseSong, togglePlay, loaded } from '../actions/trackControlsActions';
 import { loadSong, getSongUrl } from '../actions/songActions'
 import { setCurrPlaylist } from '../actions/playlistActions';
+import { loadPlaylistIntoQueue } from '../actions/queueActions';
 
 //TODO: update playlist to create forEACH song in playlist received
 
@@ -15,12 +16,13 @@ class Playlist extends Component {
   }
 
   /**
+   * TODO: refactor to use
     @function createTrack returns a song component to be rendered in React
     @param {track} String url of song.mp3
   */
   createTrack = (track) => {
     return (
-      <div className="row">
+      <div className="row" onDoubleClick={this.handlePlaylistPlay}>
         <div className="col-md-3" onClick={() => this.props.loadSong(track)}>
           <i className="far fa-play-circle fa-3x"></i>
         </div>
@@ -102,7 +104,9 @@ function renderPlaylistHeaders() {
   )
 }
 
-// TODO: song.src should be song.s3Key
+// TODO: refactor renderPlayPause to read from currPlaylist.songs idx
+// TODO: is it bad to save the whole object?
+
 function renderPlaylistItems(self, playlist) {
   return ( 
     <tbody>
@@ -110,10 +114,10 @@ function renderPlaylistItems(self, playlist) {
       return (
         <tr id={idx}>
           <th className="play-button align-middle">
-            {renderPlayPause(self, song)}
+            {renderPlayPause(self, song, idx)}
           </th>
           <td className="align-middle">
-            <img src={song.imgThumbUrl} alt="cloutkirby" className="img-thumbnail"/>
+            <img src={song.imgThumbUrl} alt="" className="img-thumbnail"/>
           </td>
           <td className="song-artistsType align-middle">
             {song.artistsType.map((artist) => {
@@ -149,7 +153,7 @@ function renderPlaylistItems(self, playlist) {
             })}
           </td>
           <td className="song-download align-middle">
-            <i className="far fa-download fa-2x" onClick={() => self.handlePlaylistPlay()} />
+            <i className="far fa-download fa-2x" onClick={(e) => {console.log("TODO: download")}} />
           </td>
         </tr>
       )})}
@@ -157,7 +161,7 @@ function renderPlaylistItems(self, playlist) {
   )
 }
 
-function renderPlayPause(self, songObj) {
+function renderPlayPause(self, songObj, idx) {
     if (self.props.trackControls.isPlaying && self.props.currSong.song._id === songObj._id ) {
       return (<i className="far fa-pause-circle fa-3x" onClick={() => self.handlePlaylistPlay(songObj)} />)
     }
@@ -173,4 +177,15 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { loaded, playSong, pauseSong, loadSong, togglePlay, setCurrPlaylist, getSongUrl })(Playlist);
+export default connect(mapStateToProps, 
+  { 
+    loaded, 
+    playSong, 
+    pauseSong, 
+    loadSong, 
+    togglePlay, 
+    setCurrPlaylist, 
+    getSongUrl,
+    loadPlaylistIntoQueue
+  }
+)(Playlist);
