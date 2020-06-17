@@ -12,6 +12,39 @@ class Navbar extends Component {
     this.props.logoutUser();
   };
 
+  renderAuthButtons() {
+    if (this.props.auth.isAuthenticated) {
+      return (
+        <div>
+          {this.buttonMaker(null, 'Logout', true)}
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          {this.buttonMaker('/login', 'Login')}
+          {this.buttonMaker('/register', 'Register')}
+        </div>
+      )
+    }
+  }
+
+  buttonMaker(link, text, isLogout = null) {
+    if (isLogout) {
+      return (
+        <button onClick={this.onLogoutClick} className="btn btn-outline-danger">
+          {text}
+        </button>        
+      )
+    } else {
+      return (
+        <Link to={link}>
+          <button className="btn btn-outline-danger" type="button">{text}</button>
+        </Link>
+      )
+    }
+  }
+
   render() {
     return (
       // use <header> if not working
@@ -30,19 +63,7 @@ class Navbar extends Component {
         </Link>
         
         <div className="col">
-          <div className="row">
-            <Link to="/login">
-              <button className="btn btn-outline-danger" type="button">Login</button>
-            </Link>
-
-            <Link to="/register" >
-              <button className="btn btn-outline-danger" type="button">Register</button>
-            </Link>
-            
-            <button onClick={this.onLogoutClick} className="btn btn-outline-danger">
-              Logout
-            </button>
-          </div>
+          {this.renderAuthButtons()}
         </div>
       </nav>
     );
