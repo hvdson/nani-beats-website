@@ -27,7 +27,7 @@ describe('actions', () => {
     expect(trackControlActions.playFromPosition(newPosition)).toEqual(expectedAction)
   })
 
-  it('should create a set the current queue', () => {
+  it('should load new songs into queue', () => {
     const newQueue = [{
       "_id": "5ec2f4b828ceb93e61b2ff39",
       "songId": "hashnum69",
@@ -44,9 +44,18 @@ describe('actions', () => {
       "tags": ["dank beat", "neat", "heat", "🔥"]
     }]
     const expectedAction = {
-      type: constants.LOAD_PLAYLIST_INTO_QUEUE,
+      type: constants.LOAD_SONGS_INTO_QUEUE,
       payload: newQueue
     }
-    expect(queueActions.loadPlaylistIntoQueue(newQueue)).toEqual(expectedAction);
+    expect(queueActions.loadSongsIntoQueue(newQueue)).toEqual(expectedAction);
+  })
+
+  it('should load new songs into queue', () => {
+    const newPlaylist = "5ec2f4b828ceb93e61b2ff39";
+    const expectedAction = {
+      type: constants.LOAD_PLAYLIST_INTO_QUEUE,
+      payload: newPlaylist
+    }
+    expect(queueActions.loadPlaylistIntoQueue(newPlaylist)).toEqual(expectedAction);
   })
 })

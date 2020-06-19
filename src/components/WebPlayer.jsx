@@ -17,19 +17,6 @@ const VIEW_PLAYLIST = 2;
 
 
 class WebPlayer extends Component {
-  constructor(props) {
-    super(props);
-    // TODO: refactor code to use this
-    this.state = {
-      playlist: {
-        id: "hashedplaylistid69",
-        name: "Nani Picks",
-        songs: []
-      },
-      data: null,
-      currScreen: SELECT_PLAYLIST,
-    }
-  }
 
   render() {
     return (
