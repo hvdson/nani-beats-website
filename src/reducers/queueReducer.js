@@ -5,15 +5,15 @@ import {
 const initialState = {
   songQueue: [],
   history: [],
-  currPlaylistQueue: ""
+  currPlaylistQueueId: ""
 }
 
 const queueReducer = (state = initialState, action) => {
   switch(action.type) {
     case LOAD_SONGS_INTO_QUEUE:
-      return Object.assign({}, ...state, { songQueue: action.payload })
+      return Object.assign({}, state, { songQueue: action.payload })
     case LOAD_PLAYLIST_INTO_QUEUE:
-      return Object.assign({}, ...state, { currPlaylist: action.payload })
+      return Object.assign({}, state, { currPlaylistQueueId: action.payload })
     default:
       return state;
   }

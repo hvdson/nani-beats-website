@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { playSong, pauseSong, togglePlay, loaded } from '../actions/trackControlsActions';
 import { loadSong, getSongUrl } from '../actions/songActions'
 import { setCurrPlaylist } from '../actions/playlistActions';
-import { loadPlaylistIntoQueue } from '../actions/queueActions';
+import { loadPlaylistIntoQueue, loadSongsIntoQueue } from '../actions/queueActions';
 
 //TODO: update playlist to create forEACH song in playlist received
 
@@ -44,7 +44,12 @@ class Playlist extends Component {
     // check if the current song is loaded and if it's the same song
     if (songObj._id === this.props.currSong.song._id && this.props.trackControls.isLoaded) {
       this.props.togglePlay();
+    //if the playlistId of currPlaylist && currPlaylistQueue don't match
     } else {
+      if (this.props.playlists.currPlaylist._id !== this.props.queue.currPlaylistQueueId) {
+        this.props.loadPlaylistIntoQueue(this.props.playlists.currPlaylist._id);
+        this.props.loadSongsIntoQueue(this.props.playlists.currPlaylist.songs);
+      }
       // dispatch an action to *LOAD_SONG*
       this.props.getSongUrl(songObj);
       // this.props.loadSong(val);
@@ -169,11 +174,12 @@ function renderPlayPause(self, songObj, idx) {
 }
 
 function mapStateToProps(state) {
-  const { trackControls, currSong, playlists } = state;
+  const { trackControls, currSong, playlists, queue } = state;
   return {
     trackControls,
     currSong,
-    playlists
+    playlists,
+    queue
   }
 }
 
@@ -186,6 +192,7 @@ export default connect(mapStateToProps,
     togglePlay, 
     setCurrPlaylist, 
     getSongUrl,
-    loadPlaylistIntoQueue
+    loadPlaylistIntoQueue,
+    loadSongsIntoQueue
   }
 )(Playlist);
