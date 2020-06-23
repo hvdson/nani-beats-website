@@ -18,6 +18,7 @@ const SongSchema = mongoose.Schema({
   downloadCount: Number,
   likeCount: Number,
   songId: String,
+  signedUrl: String,
 });
 
 const Song = mongoose.model('songs', SongSchema);
