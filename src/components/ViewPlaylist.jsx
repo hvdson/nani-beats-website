@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { playSong, pauseSong, togglePlay, loaded } from '../actions/trackControlsActions';
 import { loadSong, getSongUrl } from '../actions/songActions'
 import { setCurrPlaylist } from '../actions/playlistActions';
-import { loadPlaylistIntoQueue, loadSongsIntoQueue } from '../actions/queueActions';
+import { loadPlaylistIntoQueue, loadSongsIntoQueue, setCurrSongIdx, setQueueLength } from '../actions/queueActions';
 
 //TODO: update playlist to create forEACH song in playlist received
 
@@ -40,15 +40,17 @@ class Playlist extends Component {
 
   // this needs to dispatch action to get the signedUrl from s3
   // THEN press play.
-  handlePlaylistPlay(songObj) {
+  handlePlaylistPlay(songObj, idx) {
     // check if the current song is loaded and if it's the same song
     if (songObj._id === this.props.currSong.song._id && this.props.trackControls.isLoaded) {
       this.props.togglePlay();
     //if the playlistId of currPlaylist && currPlaylistQueue don't match
     } else {
       if (this.props.playlists.currPlaylist._id !== this.props.queue.currPlaylistQueueId) {
-        this.props.loadPlaylistIntoQueue(this.props.playlists.currPlaylist._id);
-        this.props.loadSongsIntoQueue(this.props.playlists.currPlaylist.songs);
+        // this.props.loadPlaylistIntoQueue(this.props.playlists.currPlaylist._id);
+        // this.props.loadSongsIntoQueue(this.props.playlists.currPlaylist.songs);
+        this.props.setCurrSongIdx(idx)
+        this.props.setQueueLength(this.props.playlists.currPlaylist.songs.length)
       }
       // dispatch an action to *LOAD_SONG*
       // this.props.getSongUrl(songObj);
@@ -168,9 +170,9 @@ function renderPlaylistItems(self, playlist) {
 
 function renderPlayPause(self, songObj, idx) {
     if (self.props.trackControls.isPlaying && self.props.currSong.song._id === songObj._id ) {
-      return (<i className="far fa-pause-circle fa-3x" onClick={() => self.handlePlaylistPlay(songObj)} />)
+      return (<i className="far fa-pause-circle fa-3x" onClick={() => self.handlePlaylistPlay(songObj, idx)} />)
     }
-    return (<i className="far fa-play-circle fa-3x" onClick={() => self.handlePlaylistPlay(songObj)} />)
+    return (<i className="far fa-play-circle fa-3x" onClick={() => self.handlePlaylistPlay(songObj, idx)} />)
 }
 
 function mapStateToProps(state) {
@@ -193,6 +195,8 @@ export default connect(mapStateToProps,
     setCurrPlaylist, 
     getSongUrl,
     loadPlaylistIntoQueue,
-    loadSongsIntoQueue
+    loadSongsIntoQueue,
+    setCurrSongIdx,
+    setQueueLength
   }
 )(Playlist);
