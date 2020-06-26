@@ -4,8 +4,13 @@ import { loaded } from '../actions/trackControlsActions';
 import  { setSongPosition, songLength } from '../actions/scrubBarActions';
 import { soundManager } from 'soundmanager2'
 
-// apparently this is a container component
-// Subscribes to the 'playing' state
+
+/*
+TODO:
+- Change track based on queueIdx
+- refactor componentDidUpdate
+*/
+
 
 class AudioPlayer extends Component {
 
@@ -49,22 +54,24 @@ class AudioPlayer extends Component {
 
   // this will watch for any new songs loaded, any changes in the trackControl state?
   componentDidUpdate(prevProps) {
+    // check if user is authenticated
     if (!this.props.auth.isAuthenticated) {
       soundManager.stopAll();
-    }
-
-    if (this.props.currSong.song && this.props.currSong.song.signedUrl) {
-      const { _id, length } = this.props.currSong.song;
-      const songUrl = this.props.currSong.song.signedUrl;
-      if (prevProps.currSong.song._id === _id) {
-        this.props.trackControls.isPlaying ? soundManager.resume(_id) : soundManager.pause(_id);
-        if (prevProps.trackControls.playFromPosition !== this.props.trackControls.playFromPosition) {
-          soundManager.setPosition(_id, this.props.trackControls.playFromPosition)
+    } else {
+      // todo: need to change song based on queueIdx
+      if (this.props.currSong.song && this.props.currSong.song.signedUrl) {
+        const { _id, length } = this.props.currSong.song;
+        const songUrl = this.props.currSong.song.signedUrl;
+        if (prevProps.currSong.song._id === _id) {
+          this.props.trackControls.isPlaying ? soundManager.resume(_id) : soundManager.pause(_id);
+          if (prevProps.trackControls.playFromPosition !== this.props.trackControls.playFromPosition) {
+            soundManager.setPosition(_id, this.props.trackControls.playFromPosition)
+          }
+        } else {
+          soundManager.stopAll();
+          this.props.songLength(length);
+          this.handleSongLoad(_id, songUrl);
         }
-      } else {
-        soundManager.stopAll();
-        this.props.songLength(length);
-        this.handleSongLoad(_id, songUrl);
       }
     }
   }

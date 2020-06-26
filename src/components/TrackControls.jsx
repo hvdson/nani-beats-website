@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { WaveformContainer, Wave, PlayButton } from '../assets/Waveform.styled';
 import { playSong, pauseSong, togglePlay } from '../actions/trackControlsActions';
+import { setCurrSongIdx } from '../actions/queueActions';
 
 class TrackControls extends Component {
   constructor(props) {
@@ -26,17 +27,26 @@ class TrackControls extends Component {
     }
   }
 
+  handleNext = (e) => {
+
+    console.log('yeet next');
+  }
+
+  handlePrev = (e) => {
+    console.log('yeet prev');
+  }
+
   render() {
     return (
       <div className="row d-flex align-items-center">
         <div className="col" >
-          <i className="far fa-step-backward fa-2x" />
+          <i className="far fa-step-backward fa-2x" onClick={this.handlePrev} />
         </div>
         <div className="col" onKeyDown={(e) => this.detectSpacebar(e)}>        
           {renderPlayButton(this)}
         </div>
         <div className="col" >
-          <i className="far fa-step-forward fa-2x" />
+          <i className="far fa-step-forward fa-2x" onClick={this.handleNext} />
         </div>
       </div>
     )
@@ -62,5 +72,4 @@ function mapStateToProps(state) {
   }
 }
 
-
-export default connect(mapStateToProps, { playSong, pauseSong, togglePlay, })(TrackControls);
+export default connect(mapStateToProps, { playSong, pauseSong, togglePlay, setCurrSongIdx })(TrackControls);
