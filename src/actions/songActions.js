@@ -18,8 +18,9 @@ export const getSongUrl = (songObj) => (dispatch) => {
     .catch((error) => dispatch({ type: GET_SONG_URL_FAILURE, payload: error, error: true }))
 }
 
-export const loadSong = url => {
+export const loadSong = songObj => {
   return {
-    type: LOAD_SONG
+    type: LOAD_SONG,
+    payload: songObj
   };
 };

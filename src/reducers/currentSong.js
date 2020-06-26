@@ -30,9 +30,9 @@ const songReducer = (state = initialState, action) => {
         ...state, isFetching: false, errorMessage: action.payload.message
       };
     case LOAD_SONG:
-      return (Object.assign({}, state, {
-        url: action.payload
-      }));
+      return {
+        ...state, isFetching: false, song: action.payload
+      };
     default:
       return state;
   }

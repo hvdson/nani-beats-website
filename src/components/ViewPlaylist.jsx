@@ -51,8 +51,8 @@ class Playlist extends Component {
         this.props.loadSongsIntoQueue(this.props.playlists.currPlaylist.songs);
       }
       // dispatch an action to *LOAD_SONG*
-      this.props.getSongUrl(songObj);
-      // this.props.loadSong(val);
+      // this.props.getSongUrl(songObj);
+      this.props.loadSong(songObj);
       this.props.playSong();
     }
   }
