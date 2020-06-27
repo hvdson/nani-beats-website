@@ -4,7 +4,9 @@ import {
   TOGGLE_PLAY,
   LOADED,
   NOT_LOADED,
-  PLAY_FROM_POSITION
+  PLAY_FROM_POSITION,
+  NEXT_SONG,
+  PREV_SONG
 } from "./actions";
 
 export const playSong = () => ({
@@ -25,6 +27,14 @@ export const loaded = () => ({
 
 export const notLoaded = () => ({
   type: NOT_LOADED,
+})
+
+export const nextSong = () => ({
+  type: NEXT_SONG,
+})
+
+export const prevSong = () => ({
+  type: PREV_SONG,
 })
 
 // TODO: move this to own module

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { WaveformContainer, Wave, PlayButton } from '../assets/Waveform.styled';
-import { playSong, pauseSong, togglePlay } from '../actions/trackControlsActions';
+import { playSong, pauseSong, togglePlay, nextSong, prevSong } from '../actions/trackControlsActions';
 import { setCurrSongIdx } from '../actions/queueActions';
 
 class TrackControls extends Component {
@@ -28,11 +28,12 @@ class TrackControls extends Component {
   }
 
   handleNext = (e) => {
-
+    this.props.nextSong();
     console.log('yeet next');
   }
 
   handlePrev = (e) => {
+    this.props.prevSong();
     console.log('yeet prev');
   }
 
@@ -72,4 +73,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { playSong, pauseSong, togglePlay, setCurrSongIdx })(TrackControls);
+export default connect(mapStateToProps, { playSong, pauseSong, togglePlay, nextSong, prevSong, setCurrSongIdx })(TrackControls);
