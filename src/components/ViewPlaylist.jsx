@@ -44,10 +44,11 @@ class Playlist extends Component {
     // check if the current song is loaded and if it's the same song
     if (songObj._id === this.props.currSong.song._id && this.props.trackControls.isLoaded) {
       this.props.togglePlay();
-    //if the playlistId of currPlaylist && currPlaylistQueue don't match
+    
+    // DEBUG: This needs to be refactored to be used with Queue
     } else {
       if (this.props.playlists.currPlaylist._id !== this.props.queue.currPlaylistQueueId) {
-        // this.props.loadPlaylistIntoQueue(this.props.playlists.currPlaylist._id);
+        this.props.loadPlaylistIntoQueue(this.props.playlists.currPlaylist._id);
         // this.props.loadSongsIntoQueue(this.props.playlists.currPlaylist.songs);
         this.props.setCurrSongIdx(idx)
         this.props.setQueueLength(this.props.playlists.currPlaylist.songs.length)

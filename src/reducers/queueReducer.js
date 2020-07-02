@@ -26,7 +26,7 @@ const queueReducer = (state = initialState, action) => {
     case SET_QUEUE_LENGTH:
       return { ...state, queueLength: action.payload }
     case NEXT_SONG:
-      if (state.currSongIdx + 1 >= state.queueLength - 1) {
+      if (state.currSongIdx + 1 > state.queueLength - 1) {
         return { ...state, currSongIdx: 0}
       } else {
         return { ...state, currSongIdx: state.currSongIdx + 1}
