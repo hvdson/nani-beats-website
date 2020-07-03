@@ -8,16 +8,17 @@ import { Provider } from 'react-redux';
 import store from './store.js';
 
 // components
-
 import Navbar from './components/Navbar.jsx';
 import WebPlayer from './components/WebPlayer';
 import LandingPage from './components/LandingPage';
+import AdminDashboard from './components/AdminDashboard'
 
 // auth
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 
 import PrivateRoute from "./components/private-routes/PrivateRoute";
+import AdminRoute from "./components/private-routes/AdminRoute";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -50,7 +51,7 @@ class App extends Component {
             <Route exact path="/login" component={Login}/>
             <Switch>
               <PrivateRoute path="/web-player" component={WebPlayer}/>
-              {/* <UploadRoute exact path="admin/upload" component={WebPlayer}/> */}
+              <AdminRoute exact path="/admin" component={AdminDashboard}/>
             </Switch>
           </div>
         </Router>

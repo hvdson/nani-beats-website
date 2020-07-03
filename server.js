@@ -35,30 +35,6 @@ mongoose
 const app = express();
 const port = process.env.PORT || 8080;
 
-const cloutKirby = "https://i.redd.it/fx8fagknp1k21.jpg";
-
-//TODO: put this into mongodb database 
-const monahSongObj = {
-  id: "hashnum69",
-  src: "",
-  imgThumbSrc: cloutKirby,
-  artistsType: ["Lance The Wrapper", "Drake", "Post Malone"],
-  title: "Monahh",
-  bpm: 69,
-  key: "A#",
-  length: "2:50",
-  dateAdded: Date.now(),
-  tags: ["dank beat", "neat", "heat", "🔥"]
-}
-
-//TODO: refactor frontend to read this object
-//TODO: put this into mongodb database 
-const playlistObj = {      
-  id: "hashedplaylistid69",
-  name: "Nani Picks",
-  songs: [monahSongObj]
-}
-
 // middleware
 app.use(bodyParser.json());
 // https: //stackoverflow.com/questions/29960764/what-does-extended-mean-in-express-4-0
@@ -102,48 +78,6 @@ app.get('/api/s3', (req, res) => {
       }
       debugger;
   })();
-
-  // res.send({
-  //   data: 'Hello From Express'
-  // });
-
-});
-
-app.get('/api/monah', (req, res) => {
-  const songKey = 'NANI BEATS VOL. 4/ Charleston.mp3'
-   const params = {
-     Bucket: 'nanibeatswebsite',
-     Key: songKey
-   };
-
-  async function getSignedUrl() {
-    return new Promise((resolve, reject) => {
-      s3.getSignedUrl('getObject', params, (err, url) => {
-        if (err) reject(err);
-        resolve(url);
-      });
-    });
-  }
-
-  async function process(song) {
-    // for (const video of videos) {
-    const signedUrl = await getSignedUrl();
-    monahSongObj.src = signedUrl;
-    return song;
-  }
-
-  process(monahSongObj).then((processed) => {
-    console.log(processed);
-    res.json(processed);
-    res.end();
-  });
-})
-
-app.post('/api/world', (req, res) => {
-  console.log(req.body);
-  res.send(
-    `I received your POST request. This is what you sent me: ${req.body.post}`,
-  );
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
