@@ -4,6 +4,8 @@ import { playSong, pauseSong, togglePlay, loaded } from '../actions/trackControl
 import { loadSong, getSongUrl } from '../actions/songActions'
 import { setCurrPlaylist } from '../actions/playlistActions';
 import { loadPlaylistIntoQueue, loadSongsIntoQueue, setCurrSongIdx, setQueueLength } from '../actions/queueActions';
+import downloadjs from 'downloadjs';
+import axios from 'axios';
 
 //TODO: update playlist to create forEACH song in playlist received
 
@@ -161,12 +163,17 @@ function renderPlaylistItems(self, playlist) {
             })}
           </td>
           <td className="song-download align-middle">
-            <i className="far fa-download fa-2x" onClick={(e) => {console.log("TODO: download")}} />
+            <i className="far fa-download fa-2x" onClick={() => downloadLink(song.signedUrl, song.title)}/>
           </td>
         </tr>
       )})}
     </tbody>
   )
+}
+
+function downloadLink(url, songName) {
+  console.log('here');
+  downloadjs(url)
 }
 
 function renderPlayPause(self, songObj, idx) {
