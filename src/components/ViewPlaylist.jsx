@@ -3,20 +3,13 @@ import { connect } from 'react-redux';
 import { playSong, pauseSong, togglePlay, loaded } from '../actions/trackControlsActions';
 import { loadSong, getSongUrl } from '../actions/songActions'
 import { setCurrPlaylist } from '../actions/playlistActions';
+import DownloadButton from './DownloadButton';
 import { loadPlaylistIntoQueue, loadSongsIntoQueue, setCurrSongIdx, setQueueLength } from '../actions/queueActions';
-import downloadjs from 'downloadjs';
-import axios from 'axios';
+
 
 //TODO: update playlist to create forEACH song in playlist received
 
 class Playlist extends Component {
-  constructor() {
-    super();
-    this.state = {
-      playlist: {}
-    }
-  }
-
   /**
    * TODO: refactor to use
     @function createTrack returns a song component to be rendered in React
@@ -163,7 +156,7 @@ function renderPlaylistItems(self, playlist) {
             })}
           </td>
           <td className="song-download align-middle">
-            <i className="far fa-download fa-2x" onClick={() => downloadLink(song.signedUrl, song.title)}/>
+            <DownloadButton song={song}/>
           </td>
         </tr>
       )})}
@@ -171,14 +164,9 @@ function renderPlaylistItems(self, playlist) {
   )
 }
 
-function downloadLink(url, songName) {
-  console.log('here');
-  downloadjs(url)
-}
-
 function renderPlayPause(self, songObj, idx) {
     if (self.props.trackControls.isPlaying && self.props.currSong.song._id === songObj._id ) {
-      return (<i className="far fa-pause-circle fa-3x" onClick={() => self.handlePlaylistPlay(songObj, idx)} />)
+      return (<i className="far fa-pause-circle fa-3x text-warning" onClick={() => self.handlePlaylistPlay(songObj, idx)} />)
     }
     return (<i className="far fa-play-circle fa-3x" onClick={() => self.handlePlaylistPlay(songObj, idx)} />)
 }
