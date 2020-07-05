@@ -51,7 +51,7 @@ class App extends Component {
             <Route exact path="/login" component={Login}/>
             <Switch>
               <PrivateRoute path="/web-player" component={WebPlayer}/>
-              <AdminRoute exact path="/admin" component={AdminDashboard}/>
+              <AdminRoute path="/admin" component={AdminDashboard}/>
             </Switch>
           </div>
         </Router>

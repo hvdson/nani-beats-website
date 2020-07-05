@@ -49,12 +49,13 @@ class Navbar extends Component {
     return (
       // use <header> if not working
       <nav className="navbar navbar-light bg-light fixed-top">
-        <div className="col align-middle">
+        <div className="col-2 align-middle">
           <div className="justify-content-center row">
             <i className="fas fa-user fa-2x brand-color"></i>
             <Link to="/web-player">
               <span className="nav-link">My Account</span>
             </Link>
+            { this.props.auth.user.role === "admin" ? this.buttonMaker('/admin', 'Admin') : null }
           </div>
         </div>
         
@@ -62,7 +63,7 @@ class Navbar extends Component {
           <img id="logo-img" alt="nani-beats-logo" src={nanibeats} />
         </Link>
         
-        <div className="col">
+        <div className="col-2">
           {this.renderAuthButtons()}
         </div>
       </nav>

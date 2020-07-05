@@ -28,3 +28,5 @@ notes.md
 /config/keys.js
 
 *.code-workspace
+.VSCodeCounter
+.vscode

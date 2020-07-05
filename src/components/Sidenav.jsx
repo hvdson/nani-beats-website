@@ -1,41 +1,18 @@
 import React, { PureComponent } from 'react';
-import axios from "axios";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 class Sidenav extends PureComponent {
-  constructor() {
-    super();
-    this.state = {
-      playlist: {
-        songs: []
-      },
-    }
-  }
-
-  callPlaylistAPI = async () => {
-    const res = await axios.get('/api/playlists/all');
-    const body = await res.data;
-    if (res.status !== 200) {
-      throw Error(body.message);
-    }
-
-    return (body);
-  }
-
-  // componentDidMount() {
-  //   this.callPlaylistAPI()
-  //     .then(res => this.setState((prevState) => ({
-  //       playlist: {
-  //         ...prevState.playlist,
-  //         songs: [...prevState.playlist.songs, res]
-  //       }
-  //     })))
-  //     .catch(err => console.log(err))
-  // }
-
   render() {
     return (
       <div className="sidenav" id="sidebar">
-        <h1>Playlists</h1>
+        <h3>Admin Dashboard</h3>
+        <Link to="/admin/upload">
+          <h4>Upload</h4>
+        </Link>
+
+        <Link to="/">
+          <h4>Create Playlist</h4>
+        </Link>
       </div>
     );
   }

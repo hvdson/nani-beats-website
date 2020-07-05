@@ -1,40 +1,29 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Link } from 'react-router-dom'
 import { logoutUser } from "../actions/authActions";
-const isEmpty = require('is-empty');
 
-class LandingPage extends Component {
+import Sidenav from "./Sidenav";
+import Upload from "./Upload";
 
+class AdminDashboard extends Component {
   render() {
     const { user } = this.props.auth;
     return (
       <div className="wrapper">
-        <div className="container">
-          <div className="row">
-            <div className="col">
-              <h1>
-                Admin Dashboard
-              </h1>
-            </div>
-          </div>
+        <Sidenav/>
+        <div className="container d-flex justify-content-center">
+          <Switch>
+            <Route exact path={`${this.props.match.path}/upload`} component={Upload} />
+          </Switch>
         </div>
       </div>
     );
   }
 }
 
-function renderUser(user) {
-  if (!isEmpty(user)) {
-    return (<b> Hey there, {user.name.split(" ")[0]} </b>)
-  } else {
-    return (<div>No User</div>)
-  }
-}
-
-LandingPage.propTypes = {
-  logoutUser: PropTypes.func.isRequired,
+AdminDashboard.propTypes = {
   auth: PropTypes.object.isRequired
 };
 
@@ -45,4 +34,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { logoutUser }
-)(LandingPage);
+)(AdminDashboard);
