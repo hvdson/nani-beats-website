@@ -39,7 +39,7 @@ class Upload extends Component {
           </div>
 
           <div className="form-group">
-            <label for="tags">Tags</label>
+            <label for="image">Image</label>
             Gravatar?
           </div>
 
