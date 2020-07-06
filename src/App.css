@@ -180,3 +180,8 @@ ul {
   border-spacing: 0 20px;
   color: white;
 }
+
+.song-img-file {
+  width: 300px;
+  height: 300px;
+}
