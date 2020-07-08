@@ -70,7 +70,7 @@ class Upload extends Component {
     newSong.append('key', this.state.keyLetter + this.state.keyScale)
     newSong.append('length', this.state.length)
     newSong.append('tags', this.state.tags)
-    // newSong.append('imgFile', this.imgFileInput.current.files[0])
+    newSong.append('imgFile', this.imgFileInput.current.files[0])
     newSong.append('audioFile', this.audioFileInput.current.files[0])
       
       
