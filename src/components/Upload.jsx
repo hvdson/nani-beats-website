@@ -10,7 +10,8 @@ class Upload extends Component {
       title: "",
       artistsType: "",
       bpm: 0,
-      key: "",
+      keyLetter: "",
+      keyScale: "",
       length: "",
       tags: "",
       imgFile: "",
@@ -55,32 +56,51 @@ class Upload extends Component {
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label for="title">Title</label>
-            <input className="form-control" id="title" aria-describedby="titleHelp" onChange={this.handleChange} value={this.state.title}/>
+            <input className="form-control" id="title" aria-describedby="titleHelp" onChange={this.handleChange} value={this.state.title} required/>
           </div>
           
           <div className="form-group">
             <label for="artists">Artists</label>
-            <input className="form-control" id="artistsType" aria-describedby="artistsHelp" placeholder="Seperate by comma - E.g: Deez, Nutz" onChange={this.handleChange} value={this.state.aristsType}/>
+            <input className="form-control" id="artistsType" aria-describedby="artistsHelp" placeholder="Seperate by comma - E.g: Deez, Nutz" onChange={this.handleChange} value={this.state.aristsType} required/>
           </div>
 
           <div className="form-group">
             <label for="BPM">BPM</label>
-            <input className="form-control" id="bpm" aria-describedby="bpmHelp" onChange={this.handleChange} value={this.state.bpm}/>
+            <input className="form-control" id="bpm" aria-describedby="bpmHelp" onChange={this.handleChange} value={this.state.bpm} required/>
           </div>
 
-          <div className="form-group">
+          <div class="form-group">
             <label for="key">Key</label>
-            <input className="form-control" id="key" aria-describedby="keyHelp" onChange={this.handleChange} value={this.state.key}/>
+            <div class="row d-flex justify-content-around">
+              <select className="form-control col-4" id="keyLetter" onChange={this.handleChange} value={this.state.keyLetter} required>
+                <option>C</option>
+                <option>C#/Db</option>
+                <option>D</option>
+                <option>D#/Eb</option>
+                <option>E</option>
+                <option>F</option>
+                <option>F#/Gb</option>
+                <option>G</option>
+                <option>G#/Ab</option>
+                <option>A</option>
+                <option>A#/Bb</option>
+                <option>B</option>
+              </select>
+              <select className="form-control col-4" id="keyScale" onChange={this.handleChange} value={this.state.keyScale} required>
+                <option>Major</option>
+                <option>Minor</option>
+              </select>
+            </div>
           </div>
 
           <div className="form-group">
             <label for="length">Length</label>
-            <input className="form-control" id="length" aria-describedby="lengthHelp" onChange={this.handleChange} value={this.state.length}/>
+            <input className="form-control" id="length" aria-describedby="lengthHelp" onChange={this.handleChange} value={this.state.length} required/>
           </div>
 
           <div className="form-group">
             <label for="tags">Tags</label>
-            <input className="form-control" id="tags" aria-describedby="tagHelp" placeholder="Seperate by comma - E.g: Deez, Nutz" onChange={this.handleChange} value={this.state.tags}/>
+            <input className="form-control" id="tags" aria-describedby="tagHelp" placeholder="Seperate by comma - E.g: Deez, Nutz" onChange={this.handleChange} value={this.state.tags} required/>
           </div>
 
           <div className="form-group">
@@ -94,7 +114,7 @@ class Upload extends Component {
 
           <div className="form-group">
             <label for="song">Select song:</label>
-            <input type="file" id="audioFile" name="audioFile" accept="audio/*"/>
+            <input type="file" id="audioFile" name="audioFile" accept="audio/*" ref={this.audioFileInput} onChange={this.handleChange} required/>
           </div>
 
           <button type="submit" className="btn btn-danger">Submit</button>
