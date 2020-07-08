@@ -4,6 +4,7 @@ const express = require('express');
 const users = require('./routes/api/users');
 const playlists = require('./routes/api/playlists');
 const songs = require('./routes/api/songs');
+const admin = require('./routes/api/admin');
 
 const request = require('request');
 const bodyParser = require('body-parser');
@@ -51,6 +52,7 @@ app.use('/', express.static('public'));
 app.use('/api/users', users);
 app.use('/api/playlists', playlists);
 app.use('/api/songs', songs);
+app.use('/api/admin', admin);
 
 app.get('/api/hello', (req, res) => {
   res.send({

@@ -12,6 +12,7 @@
     "bcryptjs": "^2.4.3",
     "classnames": "^2.2.6",
     "concurrently": "^5.2.0",
+    "connect-multiparty": "^2.2.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "downloadjs": "^1.4.7",

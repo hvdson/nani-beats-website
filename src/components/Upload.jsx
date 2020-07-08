@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { withRouter } from 'react-router-dom';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { adminUploadSong } from '../actions/admin/uploadActions'
 
 class Upload extends Component {
   constructor() {
@@ -15,6 +17,9 @@ class Upload extends Component {
       length: "",
       tags: "",
       imgFile: "",
+      audioFile: "",
+      // imgFileInput: null,
+      // audioFileInput: null
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -26,17 +31,57 @@ class Upload extends Component {
     if (e.target.id === "imgFile") {
       let img = this.imgFileInput.current.files[0];
       this.setState({ [e.target.id]: URL.createObjectURL(img)});
+    } else if (e.target.id === "audioFile") {
+      let audio = this.audioFileInput.current.files[0];
+      this.setState({ [e.target.id]: URL.createObjectURL(audio) });
     } else {
       this.setState({ [e.target.id]: e.target.value });
     }
-    console.log(this.imgFileInput.current)
+    console.log(this.audioFileInput.current.files[0])
+    console.log(this.imgFileInput.current.files[0])
   }
+
+  // handleChange(e) {
+  //   if (e.target.id === "imgFile") {
+  //     let img = e.target.files.path;
+  //     this.setState({ [e.target.id]: URL.createObjectURL(img) });
+  //   } else if (e.target.id === "audioFile") {
+  //     this.setState({ [e.target.id]: e.target.files });
+  //   } else {
+  //     this.setState({ [e.target.id]: e.target.value });
+  //   }
+  // }
+
+      //   title: this.state.title,
+      // artistsType: this.state.artistsType,
+      // bpm: this.state.bpm,
+      // key: this.state.keyLetter + this.state.keyScale,
+      // length: this.state.length,
+      // tags: this.state.tags,
+      // imgFile: this.imgFileInput.current.files[0],
+      // audioFile: this.audioFileInput.current.files[0]
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state)
-    console.log(this.imgFileInput.current.files[0])
-    console.log(this.audioFileInput.current.files[0])
+    const newSong = new FormData();
+    newSong.append('title', this.state.title,)
+    newSong.append('artistsType', this.state.artistsType)
+    newSong.append('bpm', this.state.bpm)
+    newSong.append('key', this.state.keyLetter + this.state.keyScale)
+    newSong.append('length', this.state.length)
+    newSong.append('tags', this.state.tags)
+    // newSong.append('imgFile', this.imgFileInput.current.files[0])
+    newSong.append('audioFile', this.audioFileInput.current.files[0])
+      
+      
+      
+      
+      
+    this.props.adminUploadSong(newSong, this.props.history);
+    // console.log(this.state)
+    // console.log(this.imgFileInput.current.files[0])
+    // console.log(this.audioFileInput.current.files[0])
+
   }
 
   // readURL(input) {
@@ -53,6 +98,7 @@ class Upload extends Component {
   render() {
     return (
       <div className="col-6">
+        <h1>Upload</h1>
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label for="title">Title</label>
@@ -114,7 +160,7 @@ class Upload extends Component {
 
           <div className="form-group">
             <label for="song">Select song:</label>
-            <input type="file" id="audioFile" name="audioFile" accept="audio/*" ref={this.audioFileInput} onChange={this.handleChange} required/>
+            <input type="file" id="audioFile" name="audioFile" accept="audio/*" ref={this.audioFileInput} onChange={this.handleChange}/>
           </div>
 
           <button type="submit" className="btn btn-danger">Submit</button>
@@ -134,5 +180,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  null
-)(Upload);
+  { adminUploadSong }
+)(withRouter(Upload));

@@ -5,6 +5,7 @@ require('../../config/passport')(passport);
 // const keys = require('../../config/keys');
 // const db = require('../../config/keys').mongoURI;
 
+// TODO: move this to file or config since it's being duplicated in songs.js & admin.js as well
 const aws = require('aws-sdk');
 const AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID;
 const AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY;

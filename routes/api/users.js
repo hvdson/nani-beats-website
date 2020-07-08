@@ -87,7 +87,7 @@ router.post('/login', (req, res) => {
           }
         );
       } else {
-        return res.status(400).json({ passwordIncorrect: 'Password or email Incorrect'})
+        return res.status(400).json({ passwordIncorrect: 'Email or Password Incorrect'})
       }
     })
   });
