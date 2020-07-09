@@ -1,6 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const fs = require('fs');
+
 const multipartMiddleware = require('connect-multiparty')();
+const multer = require('multer')
+const upload = multer({ dest: 'uploads/' })
+
 const passport = require('passport');
 require('../../config/passport')(passport);
 // const keys = require('../../config/keys');
@@ -27,11 +32,30 @@ const isAdmin = (req, res, next) => {
     res.status(403).send();
   }
 }
+const cUpload = upload.fields([{
+  name: 'imgFile',
+  maxCount: 1
+}, {
+  name: 'audioFile',
+  maxCount: 1
+}])
 
-router.post('/upload', passport.authenticate('jwt', {session: false}), isAdmin, multipartMiddleware, (req, res) => {
-  console.log(req)
+router.post('/upload', passport.authenticate('jwt', {session: false}), isAdmin, cUpload, (req, res) => {
   console.log(req.files)
+  console.log(req.body)
   console.log('inside');
+  
+  fs.unlink(req.files['imgFile'][0].path, (err) => {
+    if (err) throw err;
+    console.log('imgfile deleted');
+  })
+
+  fs.unlink(req.files['audioFile'][0].path, (err) => {
+    if (err) throw err;
+    console.log('audioFile deleted');
+  })
+  
+  
   res.send('it works');
 })
 
