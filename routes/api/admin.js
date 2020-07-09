@@ -1,8 +1,8 @@
+require('dotenv').config()
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 
-const multipartMiddleware = require('connect-multiparty')();
 const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
 
@@ -40,22 +40,62 @@ const cUpload = upload.fields([{
   maxCount: 1
 }])
 
-router.post('/upload', passport.authenticate('jwt', {session: false}), isAdmin, cUpload, (req, res) => {
+
+// const uploadToS3 = async (itemName, item) => {
+//   // console.log(videoName);
+//   // console.log(typeof itemName);
+//   const params = {
+//     Bucket: 'nanibeatswebsite',
+//     Key: `${itemName}`,
+//     ACL: 'public-read',
+//     Body: item,
+//   };
+//   s3.upload(params, function (err, data) {
+//     console.log(err, data);
+//   });
+// }
+
+
+async function uploadToS3(file) {
+  return new Promise(async function (resolve, reject) {
+    const params = {
+      Bucket: 'nanibeatswebsite', // pass your bucket name
+      Key: file.originalname,
+      ACL: 'private',
+      Body: fs.createReadStream(file.path),
+      ContentType: file.mimetype
+    };
+    await s3.upload(params, function (s3Err, data) {
+      if (s3Err) {
+        reject(s3Err);
+      }
+      console.log(`File uploaded successfully at ${data}`);
+      resolve(data);
+    });
+  });
+}
+
+router.post('/upload', cUpload, (req, res) => {
+  console.log(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
   console.log(req.files)
   console.log(req.body)
+  console.log(Object.keys(req.files).length)
   console.log('inside');
-  
-  fs.unlink(req.files['imgFile'][0].path, (err) => {
-    if (err) throw err;
-    console.log('imgfile deleted');
-  })
+  const keys = Object.keys(req.files);
 
-  fs.unlink(req.files['audioFile'][0].path, (err) => {
-    if (err) throw err;
-    console.log('audioFile deleted');
-  })
-  
-  
+  for (let key of keys) {
+    const currFile = req.files[key][0]
+    uploadToS3(currFile).then((result) => {
+      fs.unlink(currFile.path, (err) => {
+        if (err) throw err;
+        console.log(`${currFile.fieldname} deleted`);
+      })
+      console.log(result);
+    }, (err) => {
+      console.log(err)
+    })
+    // console.log(req.files[key][0])
+  }
   res.send('it works');
 })
 
