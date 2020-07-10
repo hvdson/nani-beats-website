@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const isValid = require('is-empty');
 const keys = require('../../config/keys');
 
 // load input validation
@@ -14,9 +13,10 @@ const User = require('../../models/User');
 
 // create register endpoint
 router.post('/register', (req, res) => {
+  const { errors, isValid } = validateRegisterInput(req.body);
   // form validation
-  if (!isValid()) {
-    return res.status(400).json(validateRegisterInput.errors);
+  if (!isValid) {
+    return res.status(400).json(errors);
   }
 
   User.findOne({ 

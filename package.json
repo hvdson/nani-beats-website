@@ -35,6 +35,7 @@
     "redux-thunk": "^2.3.0",
     "save": "^2.4.0",
     "soundmanager2": "^2.97.20170602",
+    "stripe": "^8.69.0",
     "styled-components": "^5.1.0",
     "validator": "^13.0.0",
     "wavesurfer.js": "^3.3.3"

@@ -82,7 +82,7 @@ app.get('/api/s3', (req, res) => {
       } catch (e) {
         console.log('error', e);
       }
-      debugger;
+      
   })();
 });
 

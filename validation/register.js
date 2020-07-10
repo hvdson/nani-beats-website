@@ -17,7 +17,7 @@ module.exports = function validateRegisterInput(data) {
   }
 
   // email chekcs
-  if (Validator.isEmpty(data.email)) {
+  if (Validator.isEmpty(data.email) || !Validator.isEmail(data.email)) {
     errors.email = 'Email is invalid';
   }
 
@@ -27,6 +27,10 @@ module.exports = function validateRegisterInput(data) {
   }
 
   if (Validator.isEmpty(data.passwordConfirm)) {
+    errors.passwordConfirm = 'Please confirm your password';
+  }
+
+  if (!Validator.equals(data.password, data.passwordConfirm)) {
     errors.passwordConfirm = 'Passwords don\'t match';
   }
 

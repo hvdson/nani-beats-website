@@ -57,7 +57,7 @@ class Login extends Component {
           <div style={{ marginTop: "4rem" }} className="row">
             <div className="col s8 offset-s2">
               <Link to="/" className="btn-flat waves-effect">
-                <i class="fas fa-chevron-left"></i> Back to
+                <i className="fas fa-chevron-left"></i> Back to
                 home
               </Link>
               <div className="col s12" style={{ paddingLeft: "11.250px" }}>
