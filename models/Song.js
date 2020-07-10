@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 //Create Schema
 const SongSchema = mongoose.Schema({
-  name: {
+  title: {
     type: String,
     required: true
   },
@@ -12,6 +12,8 @@ const SongSchema = mongoose.Schema({
   bpm: Number,
   key: String,
   tags: Array,
+  length: String,
+  dateAdded: String,
   imgThumbUrl: String,
   songUrl: String,
   playCount: Number,

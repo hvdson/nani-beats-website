@@ -24,6 +24,9 @@ aws.config.update({
 })
 const s3 = new aws.S3();
 const Song = require('../../models/Song');
+const Playlist = require('../../models/Playlist');
+
+const auth = passport.authenticate('jwt', { session: false });
 
 const isAdmin = (req, res, next) => {
   if (req.user.role === 'admin') {
@@ -40,27 +43,15 @@ const cUpload = upload.fields([{
   maxCount: 1
 }])
 
+function selectFolderUploadToS3(fileKey) {
+  return (fileKey === 'imgFile' ? 'images' : 'songs');
+}
 
-// const uploadToS3 = async (itemName, item) => {
-//   // console.log(videoName);
-//   // console.log(typeof itemName);
-//   const params = {
-//     Bucket: 'nanibeatswebsite',
-//     Key: `${itemName}`,
-//     ACL: 'public-read',
-//     Body: item,
-//   };
-//   s3.upload(params, function (err, data) {
-//     console.log(err, data);
-//   });
-// }
-
-
-async function uploadToS3(file) {
+async function uploadToS3(file, fileKey) {
   return new Promise(async function (resolve, reject) {
     const params = {
       Bucket: 'nanibeatswebsite', // pass your bucket name
-      Key: file.originalname,
+      Key: selectFolderUploadToS3(fileKey) + '/' + file.originalname,
       ACL: 'private',
       Body: fs.createReadStream(file.path),
       ContentType: file.mimetype
@@ -69,34 +60,104 @@ async function uploadToS3(file) {
       if (s3Err) {
         reject(s3Err);
       }
-      console.log(`File uploaded successfully at ${data}`);
+      console.log(`File uploaded successfully at ${data.Location}`);
       resolve(data);
     });
   });
 }
 
-router.post('/upload', cUpload, (req, res) => {
-  console.log(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
-  console.log(req.files)
-  console.log(req.body)
-  console.log(Object.keys(req.files).length)
-  console.log('inside');
-  const keys = Object.keys(req.files);
-
-  for (let key of keys) {
-    const currFile = req.files[key][0]
-    uploadToS3(currFile).then((result) => {
-      fs.unlink(currFile.path, (err) => {
-        if (err) throw err;
-        console.log(`${currFile.fieldname} deleted`);
+async function uploadFilesS3ThenUnlink(req) {
+  return new Promise(async (resolve, reject) => {
+    const errors = [];
+    const data = {};
+    const keys = Object.keys(req.files);
+    for (let key of keys) {
+      const currFile = req.files[key][0]
+      await uploadToS3(currFile, key).then((result) => {
+        fs.unlink(currFile.path, (err) => {
+          if (err) {
+            console.error(err);
+            errors.push(err);
+          } 
+          console.log(`${currFile.fieldname} temp file deleted`);
+        })
+        data[key] = result
+      }, (err) => {
+        errors.push(err);
+        console.error(err)
       })
-      console.log(result);
-    }, (err) => {
-      console.log(err)
-    })
-    // console.log(req.files[key][0])
-  }
-  res.send('it works');
+    }
+    if (errors.length > 0) {
+      reject(errors)
+    } else {
+      resolve(data);
+    }
+  })
+}
+
+async function uploadToMongoDB(req, result) {
+  console.log(result)
+  const songUpload = new Song({
+    s3Key: result.audioFile.Key,
+    title: req.body.title,
+    artistsType: req.body.artistsType.split(','),
+    bpm: req.body.bpm,
+    key: req.body.key,
+    length: req.body.length,
+    tags: req.body.tags.split(','),
+    dateAdded: Date.now(),
+    imgThumbUrl: "",
+    signedUrl: "",
+  })
+  songUpload.save((err, song) => {
+    if (err) throw err;
+    else { 
+      console.log('Song successfully uploaded!')
+      uploadToPlaylist_temporary(song)
+      return true;
+    }
+    // should add to playlist here
+  })
+}
+
+// TODO: later will have create playlist feature - this is just for now
+function uploadToPlaylist_temporary(song) {
+  console.log('song:', song)
+  const filter = { name: 'New Nani Heat'}
+  const update = { $push: { songs: song.id}}
+  Playlist.findOneAndUpdate(filter, update, (err, success) => {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log(success);
+    }
+  })
+}
+
+router.post('/upload', cUpload, (req, res) => {
+  uploadFilesS3ThenUnlink(req)
+  .then((result) => uploadToMongoDB(req,result))
+  .then((result) => {
+    console.log(result);
+    res.send('it works');
+  })
+  .catch((err) => console.log(err))
 })
+
+  // todo: refactor
+  // const keys = Object.keys(req.files);
+  // for (let key of keys) {
+  //   const currFile = req.files[key][0]
+  //   uploadToS3(currFile, key).then((result) => {
+  //     fs.unlink(currFile.path, (err) => {
+  //       if (err) throw err;
+  //       console.log(`${currFile.fieldname} temp file deleted`);
+  //     })
+  //     console.log(result);
+  //   }, (err) => {
+  //     console.log(err)
+  //   })
+  // }
+
 
 module.exports = router;

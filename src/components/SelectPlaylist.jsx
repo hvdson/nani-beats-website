@@ -59,7 +59,7 @@ class SelectPlaylist extends Component {
       <div className="select-playlist">
         <h1>Playlists</h1>
         <div className="container">
-          <div className="row p-3">
+          <div className="row p-3 d-flex">
             {keys.map((key => {
               return (this.renderCard(key, allPlaylists[key]));
             }))}

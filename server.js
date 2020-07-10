@@ -12,6 +12,10 @@ const cors = require('cors')
 const proxy = require('express-http-proxy');
 const url = require('url');
 const mongoose = require('mongoose');
+
+// DEBUG: deprecated findOneAndUpdate work around
+mongoose.set('useFindAndModify', false);
+
 const passport = require('passport');
 require('./config/passport')(passport);
 
