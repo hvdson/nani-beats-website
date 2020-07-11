@@ -28,7 +28,9 @@ router.post('/register', (req, res) => {
       const newUser = new User({
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        isSubscribed: false,
+        stripeId: ''
       });
       
       // Hash password before database
@@ -71,7 +73,9 @@ router.post('/login', (req, res) => {
         const payload = {
           id: user.id,
           name: user.name,
-          role: user.role
+          role: user.role,
+          isSubscribed: user.isSubscribed,
+          stripeId: user.stripeId
         };
 
         // Sign token

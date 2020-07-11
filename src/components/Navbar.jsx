@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import nanibeats from '../assets/nanibeatslogo.png'
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from '../actions/authActions';
@@ -10,6 +10,7 @@ class Navbar extends Component {
   onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser();
+    return <Redirect to="/" />
   };
 
   renderAuthButtons() {

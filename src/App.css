@@ -172,8 +172,13 @@ ul {
   height: 10%;
 }
 
-.scrub-ball {
-  
+.subscribe-info {
+  /* background-color: rgb(25, 29, 23); */
+  width: 50%;
+}
+
+.fa-check {
+  color: green;
 }
 
 .table {
@@ -185,4 +190,8 @@ ul {
 .song-img-file {
   width: 300px;
   height: 300px;
+}
+
+h1 {
+  margin: 1.5rem;
 }

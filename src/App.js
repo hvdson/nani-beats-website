@@ -13,12 +13,16 @@ import WebPlayer from './components/WebPlayer';
 import LandingPage from './components/LandingPage';
 import AdminDashboard from './components/AdminDashboard'
 
+// subscribe components
+import Subscribe from './components/subscribe-components/Subscribe';
+
 // auth
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 
 import PrivateRoute from "./components/private-routes/PrivateRoute";
 import AdminRoute from "./components/private-routes/AdminRoute";
+import SubscribeRoute from './components/private-routes/SubscribeRoute';
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -49,9 +53,11 @@ class App extends Component {
             <Route exact path="/" component={LandingPage}/>
             <Route exact path="/register" component={Register}/>
             <Route exact path="/login" component={Login}/>
+            {/* <Route exact path="/subscribe" component={Subscribe}/> */}
             <Switch>
               <PrivateRoute path="/web-player" component={WebPlayer}/>
               <AdminRoute path="/admin" component={AdminDashboard}/>
+              <SubscribeRoute path="/subscribe" component={Subscribe}/>
             </Switch>
           </div>
         </Router>

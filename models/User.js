@@ -19,7 +19,10 @@ const UserSchema = mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  role: String
+  role: String,
+  isSubscribed: Boolean,
+  stripeId: String,
+  subscriptionPlan: String
 });
 
 const User = mongoose.model('users', UserSchema);
