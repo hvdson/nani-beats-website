@@ -24,7 +24,6 @@ class Navbar extends Component {
       return (
         <div>
           {this.buttonMaker('/login', 'Login')}
-          {this.buttonMaker('/register', 'Register')}
         </div>
       )
     }

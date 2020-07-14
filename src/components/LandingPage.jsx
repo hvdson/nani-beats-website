@@ -1,25 +1,53 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { logoutUser } from "../actions/authActions";
 const isEmpty = require('is-empty');
 
 class LandingPage extends Component {
-  onLogoutClick = e => {
+  constructor() {
+    super();
+    this.state = {
+      email: '',
+      submit: false
+    }
+  }
+
+  validateEmail(email) {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
+
+  handleSubmit(e) {
     e.preventDefault();
-    this.props.logoutUser();
+    if (this.validateEmail(this.state.email)) {
+      this.setState({submit: true});
+    } else {
+      alert('please enter a valid email address')
+    }
+   }
+
+  handleChange(e) {
+    console.log(e.target.value)
+    this.setState({ email: e.target.value})
   }
 
   render() {
-    const { user } = this.props.auth;
+    if (this.state.submit) {
+      return <Redirect
+        to={{
+          pathname: '/register',
+          state: { email: this.state.email }
+        }}
+      />
+    }
     return (
       <div className="wrapper">
         <div className="container">
           <div className="row">
             <div className="col">
               <h1>
-                {/* {renderUser(user)} */}
                   Your next hit is waiting.
               </h1>
 
@@ -28,9 +56,18 @@ class LandingPage extends Component {
                 <br/>
                 Every month.
               </h3>
-              <Link className="btn btn-lg btn-danger" to='/register'>
-                Start Your FREE MONTH
-              </Link>
+
+              <div className="d-flex justify-content-center" onSubmit={e => this.handleSubmit(e)}>
+                <form className="input-group input-group-lg col-8">
+                  <input id="email" value={this.state.email} type="text" className="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Email Address" onChange={e => this.handleChange(e)} required/>
+                  <button className="btn btn-lg btn-danger" type="submit">
+                    Start Your FREE MONTH
+                  </button>
+                </form>              
+              </div>
+
+
+
               <p>
                 Then monthly for less than the price of your phone bill.
               </p>
