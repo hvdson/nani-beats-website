@@ -9,6 +9,7 @@ import {
   useElements,
 } from '@stripe/react-stripe-js';
 import { Redirect } from 'react-router-dom';
+import { updateUserSubscription } from '../../actions/authActions';
 import axios from 'axios';
 
 require('dotenv').config({
@@ -34,7 +35,6 @@ const Payment = (props) => {
   const stripe = useStripe();
   const elements = useElements();
   const [subscribing, setSubscribing] = useState(false); 
-  const [accountInformation, setAccountInformation] = useState(false);
   let [errorToDisplay, setErrorToDisplay] = useState('');
 
   function retryInvoiceWithNewPaymentMethod({ paymentMethodId, invoiceId }) {
@@ -163,6 +163,31 @@ const Payment = (props) => {
     }
   }
 
+  
+
+  // function onSubscriptionComplete(result) {
+  //   console.log(result);
+  //   if (result && !result.subscription) {
+  //     const subscription = { id: result.invoice.subscription };
+  //     result.subscription = subscription;
+  //     localStorage.removeItem('latestInvoicePaymentIntentStatus')
+  //     localStorage.removeItem('latestInvoiceId')
+  //   }
+  //   axios.post('/api/stripe/save-subscription', {
+  //     stripeId: props.auth.user.stripeId
+  //   }).then((res) => {
+  //     if (res.error) {
+  //       // The card had an error when trying to attach it to a customer.
+  //       throw res.error;
+  //     }
+  //     return res;
+  //   }).then(() => {
+  //     console.log('it works!')
+  //     setSubscribing(false);
+  //     setAccountInformation(result)
+  //   })
+  // }
+
   function onSubscriptionComplete(result) {
     console.log(result);
     if (result && !result.subscription) {
@@ -171,20 +196,12 @@ const Payment = (props) => {
       localStorage.removeItem('latestInvoicePaymentIntentStatus')
       localStorage.removeItem('latestInvoiceId')
     }
-    axios.post('/api/stripe/save-subscription', {
-      stripeId: props.auth.user.stripeId
-    }).then((res) => {
-      if (res.error) {
-        // The card had an error when trying to attach it to a customer.
-        throw res.error;
-      }
-      return res;
-    }).then(() => {
-      console.log('it works!')
-      setSubscribing(false);
-      setAccountInformation(result)
-    })
-  }
+    
+    console.log('it works!')
+    setSubscribing(false);
+    props.updateUserSubscription(props.auth.user.stripeId)
+    // setAccountInformation(result)
+  }  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -233,90 +250,102 @@ const Payment = (props) => {
   }
 
   // render
-    return (
-      <div className="wrapper">
-        <div className="container">
-          <div id="payment-form" className="flex justify-center">
-            <div className="w-full inline-block border p-4 rounded-md">
-              <div className="font-bold text-xl mb-2">
-                Enter your card details. <br />
+    if (props.auth.user.isSubscribed) {
+      return (
+        <Redirect
+          to={{
+            pathname: '/web-player',
+          }}
+        />
+      );
+    } else {
+      return (
+        <div className="wrapper">
+          <div className="container">
+            <div id="payment-form" className="flex justify-center">
+              <div className="w-full inline-block border p-4 rounded-md">
+                <div className="font-bold text-xl mb-2">
+                  Enter your card details. <br />
                 Your subscription will start now.
               </div>
-              <p className="text-gray-700 text-base">
-                → Total due now <span>{productInfo.price}</span>
-              </p>
-              <p className="text-gray-700 text-base mb-4">
-                → Subscribing to{' '}
-                <span className="font-bold">{productInfo.name}</span>
-              </p>
+                <p className="text-gray-700 text-base">
+                  → Total due now <span>{productInfo.price}</span>
+                </p>
+                <p className="text-gray-700 text-base mb-4">
+                  → Subscribing to{' '}
+                  <span className="font-bold">{productInfo.name}</span>
+                </p>
 
-              <div className="w-full">
-                <div className="flex flex-wrap -mx-3 mb-2">
+                <div className="w-full">
+                  <div className="flex flex-wrap -mx-3 mb-2">
 
-                  <div className="input-group col-8">
-                    <label className="col-sm-3 col-form-label">
-                      Full name
+                    <div className="input-group col-8">
+                      <label className="col-sm-3 col-form-label">
+                        Full name
                     </label>
 
-                    <input
-                      className="form-control"
-                      id="name"
-                      type="text"
-                      placeholder="First and last name"
-                      required
-                    />
+                      <input
+                        className="form-control"
+                        id="name"
+                        type="text"
+                        placeholder="First and last name"
+                        required
+                      />
+                    </div>
                   </div>
-                </div>
-                <form id="payment-form" onSubmit={e => handleSubmit(e)}>
-                  <div className="flex flex-wrap -mx-3 mb-3">
-                    <div className="w-full px-3 mb-0">
-                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                        Card
+                  <form id="payment-form" onSubmit={e => handleSubmit(e)}>
+                    <div className="flex flex-wrap -mx-3 mb-3">
+                      <div className="w-full px-3 mb-0">
+                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                          Card
                       </label>
-                      <div
-                        className=""
-                        id="card-element"
-                      >
-                        <CardElement
-                          options={{
-                            style: {
-                              base: {
-                                fontSize: '16px',
-                                color: '#32325d',
-                                fontFamily:
-                                  '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif',
-                                '::placeholder': {
-                                  color: '#a0aec0',
+                        <div
+                          className=""
+                          id="card-element"
+                        >
+                          <CardElement
+                            options={{
+                              style: {
+                                base: {
+                                  fontSize: '16px',
+                                  color: '#32325d',
+                                  fontFamily:
+                                    '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif',
+                                  '::placeholder': {
+                                    color: '#a0aec0',
+                                  },
+                                },
+                                invalid: {
+                                  color: '#9e2146',
                                 },
                               },
-                              invalid: {
-                                color: '#9e2146',
-                              },
-                            },
-                          }}
-                        />
-                      </div>
-                      <div className="text-gray-700 text-base mt-2" role="alert">
-                        {errorToDisplay ? errorToDisplay : null}
+                            }}
+                          />
+                        </div>
+                        <div className="text-gray-700 text-base mt-2" role="alert">
+                          {errorToDisplay ? errorToDisplay : null}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <button
-                    id="submit-info"
-                    className=""
-                    type="submit"
-                  >
-                    <div className="">
-                      <div>{subscribing ? 'Subscribing...' : 'Subscribe'}</div>
-                    </div>
-                  </button>
-                </form>
+                    <button
+                      id="submit-info"
+                      className=""
+                      type="submit"
+                    >
+                      <div className="">
+                        <div>{subscribing ? 'Subscribing...' : 'Subscribe'}</div>
+                      </div>
+                    </button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
-        </div> 
-      </div>
-  )
+        </div>
+      )
+    }
+
+    
 }
 
 Payment.propTypes = {
@@ -329,5 +358,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  null,
+  { updateUserSubscription },
 )(Payment);

@@ -30,6 +30,17 @@ export const loginUser = userData => dispatch => {
     }));
 };
 
+export const updateUserSubscription = userStripeId => dispatch => {
+  axios.post("/api/stripe/save-subscription", { stripeId: userStripeId })
+  .then(res => {
+    dispatch(setCurrentUser(res.data));
+  })
+  .catch(err => dispatch({
+    type: GET_ERRORS,
+    payload: err.response.data
+  }));
+}
+
 // Set logged in user
 export const setCurrentUser = decoded => {
   return {
