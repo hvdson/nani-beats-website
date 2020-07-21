@@ -12,6 +12,15 @@ import { Redirect } from 'react-router-dom';
 import { updateUserSubscription } from '../../actions/authActions';
 import axios from 'axios';
 
+/* 
+TODO: 
+- Finish building billing form - change relative to country 
+  for reference: https://stripe-payments-demo.appspot.com/
+
+- handle payment with action - throws error when using card number 4000002760003184
+ https://stripe.com/en-ca/guides/strong-customer-authentication
+*/
+
 require('dotenv').config({
   path: '../.env'
 });
@@ -163,31 +172,6 @@ const Payment = (props) => {
     }
   }
 
-  
-
-  // function onSubscriptionComplete(result) {
-  //   console.log(result);
-  //   if (result && !result.subscription) {
-  //     const subscription = { id: result.invoice.subscription };
-  //     result.subscription = subscription;
-  //     localStorage.removeItem('latestInvoicePaymentIntentStatus')
-  //     localStorage.removeItem('latestInvoiceId')
-  //   }
-  //   axios.post('/api/stripe/save-subscription', {
-  //     stripeId: props.auth.user.stripeId
-  //   }).then((res) => {
-  //     if (res.error) {
-  //       // The card had an error when trying to attach it to a customer.
-  //       throw res.error;
-  //     }
-  //     return res;
-  //   }).then(() => {
-  //     console.log('it works!')
-  //     setSubscribing(false);
-  //     setAccountInformation(result)
-  //   })
-  // }
-
   function onSubscriptionComplete(result) {
     console.log(result);
     if (result && !result.subscription) {
@@ -281,17 +265,90 @@ const Payment = (props) => {
 
                     <div className="input-group col-8">
                       <label className="col-sm-3 col-form-label">
-                        Full name
-                    </label>
-
+                        First name
+                      </label>
                       <input
                         className="form-control"
                         id="name"
                         type="text"
-                        placeholder="First and last name"
-                        required
+                        placeholder="First Name"
+                        // required
+                      />
+
+                      <label className="col-sm-3 col-form-label">
+                        Last name
+                      </label>
+                      <input
+                        className="form-control"
+                        id="name"
+                        type="text"
+                        placeholder="Last Name"
+                        // required
                       />
                     </div>
+
+                    <div className="input-group col-8">
+                      <label className="col-sm-3 col-form-label">
+                        Address
+                      </label>
+                      <input
+                        className="form-control"
+                        id="address"
+                        type="text"
+                        // required
+                      />
+                    </div>
+
+                    <div className="input-group col-8">
+                      <label className="col-sm-3 col-form-label">
+                        City
+                      </label>
+                      <input
+                        className="form-control"
+                        id="city"
+                        type="text"
+                        // required
+                      />
+                    </div>
+                    
+                    <div className="input-group col-8">
+                      <label className="col-sm-3 col-form-label">
+                        State
+                      </label>
+                      <input
+                        className="form-control"
+                        id="State"
+                        type="text"
+                        // required
+                      />
+
+                      <label className="col-sm-3 col-form-label">
+                        Zip Code
+                      </label>
+                      <input
+                        className="form-control"
+                        id="Zip"
+                        type="text"
+                        // required
+                      />
+                    </div>
+
+                    <div className="input-group col-8">
+                      <label className="col-sm-3 col-form-label">
+                        Country
+                      </label>
+                      <input
+                        className="form-control"
+                        id="Country"
+                        type="text"
+                        // required
+                      />
+                    </div>
+
+                    
+
+
+
                   </div>
                   <form id="payment-form" onSubmit={e => handleSubmit(e)}>
                     <div className="flex flex-wrap -mx-3 mb-3">

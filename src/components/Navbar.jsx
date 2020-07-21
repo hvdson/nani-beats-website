@@ -22,9 +22,8 @@ class Navbar extends Component {
               {this.props.auth.user.email}
             </button>
           <div className="dropdown-menu">
-            <a className="dropdown-item" href="#">Action</a>
-            <a className="dropdown-item" href="#">Another action</a>
-            <a className="dropdown-item" href="#">Something else here</a>
+            <a className="dropdown-item" href="/web-player">Web Player</a>
+            <a className="dropdown-item" href="/web-player">My Account</a>
             <div className="dropdown-divider"></div>
             <div>
               {this.buttonMaker(null, 'Logout', true)}
