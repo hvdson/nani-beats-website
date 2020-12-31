@@ -48,28 +48,26 @@ if (localStorage.jwtToken) {
 
 const stripePromise = loadStripe('pk_test_pkbIXrGG51rS5PPfD080QSpc');
 
-class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <Elements stripe={stripePromise}>
-          <Router>
-            <div className="App">
-              <Navbar/>
-              <Route exact path="/" component={LandingPage}/>
-              <Route exact path="/register" component={Register}/>
-              <Route exact path="/login" component={Login}/>
-              <Switch>
-                <PrivateRoute path="/web-player" component={WebPlayer}/>
-                <AdminRoute path="/admin" component={AdminDashboard}/>
-                <SubscribeRoute path="/subscribe" component={Subscribe}/>
-              </Switch>
-            </div>
-          </Router>
-        </Elements>
-      </Provider>
-    );
-  }
+function App() {
+  return (
+    <Provider store={store}>
+      <Elements stripe={stripePromise}>
+        <Router>
+          <div className="App">
+            <Navbar/>
+            <Route exact path="/" component={LandingPage}/>
+            <Route exact path="/register" component={Register}/>
+            <Route exact path="/login" component={Login}/>
+            <Switch>
+              <PrivateRoute path="/web-player" component={WebPlayer}/>
+              <AdminRoute path="/admin" component={AdminDashboard}/>
+              <SubscribeRoute path="/subscribe" component={Subscribe}/>
+            </Switch>
+          </div>
+        </Router>
+      </Elements>
+    </Provider>
+  );
 }
 
 export default App;
