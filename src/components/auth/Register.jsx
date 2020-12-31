@@ -180,93 +180,89 @@ function Register(props) {
     props.registerUser(newUser, props.history);
   }
 
-    // const { errors } = formErrors;
-  
-    return (
-      <div className="wrapper">
-        <div className="container">
-          <div className="col">
-            <Link to="/" className="btn-flat waves-effect">
-              <i className="fas fa-chevron-left"></i> Back to
-              home
-            </Link>
-            <div className="col s12">
-              <h4>
-                <b>Register</b> below
-              </h4>
-              <p className="grey-text text-darken-1">
-                Already have an account? <Link to="/login">Log in</Link>
-              </p>
-            </div>
+  return (
+    <div className="wrapper">
+      <div className="container">
+        <div className="col">
+          <Link to="/" className="btn-flat waves-effect">
+            <i className="fas fa-chevron-left"></i> Back to
+            home
+          </Link>
+          <div className="col s12">
+            <h4>
+              <b>Register</b> below
+            </h4>
+            <p className="grey-text text-darken-1">
+              Already have an account? <Link to="/login">Log in</Link>
+            </p>
           </div>
-          <form noValidate className="col" onSubmit={onSubmit}>
-            <div className="form-group row">
-              <label for="staticEmail" class="col-sm-3 col-form-label">Email</label>
-              <input
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-                error={errors.email}
-                id="email"
-                type="email"
-                className={classnames("form-control", "col-sm-9", {
-                  invalid: errors.email
-                })}
-              />
-              <span className="red-text">{errors.email}</span>
-            </div>
-            <div className="form-group row">
-              <label class="col-sm-3 col-form-label">Name</label>
-              <input
-                onChange={(e) => setName(e.target.value)}
-                value={name}
-                error={errors.name}
-                id="name"
-                type="text"
-                className={classnames("form-control", "col-sm-9", {
-                  invalid: errors.name
-                })}
-              />
-              <span className="red-text">{errors.name}</span>
-            </div>
-            <div className="form-group row">
-              <label class="col-sm-3 col-form-label">Password</label>
-              <input
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
-                error={errors.password}
-                id="password"
-                type="password"
-                className={classnames("form-control", "col-sm-9",{
-                  invalid: errors.password
-                })}
-              />
-              <span className="red-text">{errors.password}</span>
-            </div>
-            <div className="form-group row">
-              <label class="col-sm-3 col-form-label">Confirm Password</label>
-              <input
-                onChange={(e) => setPasswordConfirm(e.target.value)}
-                value={passwordConfirm}
-                error={errors.passwordConfirm}
-                id="passwordConfirm"
-                type="password"
-                className={classnames("form-control", "col-sm-9", {
-                  invalid: errors.passwordConfirm
-                })}
-              />
-              <span className="red-text">{errors.passwordConfirm}</span>
-            </div>
-            <div className="col">
-              <button type="submit" className="btn btn-lg btn-primary">
-                Sign up
-              </button>
-            </div>
-          </form>
-          
         </div>
+        <form noValidate className="col" onSubmit={onSubmit}>
+          <div className="form-group row">
+            <label for="staticEmail" class="col-sm-3 col-form-label">Email</label>
+            <input
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+              error={errors.email}
+              id="email"
+              type="email"
+              className={classnames("form-control", "col-sm-9", {
+                invalid: errors.email
+              })}
+            />
+            <span className="red-text">{errors.email}</span>
+          </div>
+          <div className="form-group row">
+            <label class="col-sm-3 col-form-label">Name</label>
+            <input
+              onChange={(e) => setName(e.target.value)}
+              value={name}
+              error={errors.name}
+              id="name"
+              type="text"
+              className={classnames("form-control", "col-sm-9", {
+                invalid: errors.name
+              })}
+            />
+            <span className="red-text">{errors.name}</span>
+          </div>
+          <div className="form-group row">
+            <label class="col-sm-3 col-form-label">Password</label>
+            <input
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              error={errors.password}
+              id="password"
+              type="password"
+              className={classnames("form-control", "col-sm-9",{
+                invalid: errors.password
+              })}
+            />
+            <span className="red-text">{errors.password}</span>
+          </div>
+          <div className="form-group row">
+            <label class="col-sm-3 col-form-label">Confirm Password</label>
+            <input
+              onChange={(e) => setPasswordConfirm(e.target.value)}
+              value={passwordConfirm}
+              error={errors.passwordConfirm}
+              id="passwordConfirm"
+              type="password"
+              className={classnames("form-control", "col-sm-9", {
+                invalid: errors.passwordConfirm
+              })}
+            />
+            <span className="red-text">{errors.passwordConfirm}</span>
+          </div>
+          <div className="col">
+            <button type="submit" className="btn btn-lg btn-primary">
+              Sign up
+            </button>
+          </div>
+        </form>
       </div>
-    )
-
+    </div>
+  )
 }
 
 
